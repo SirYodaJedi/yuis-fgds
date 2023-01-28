@@ -1965,11 +1965,15 @@
 		2 : "blue_flag" : 0 : "-- only trigger if player is carrying blue flag"
 	]
 ]
-@SolidClass = trigger_objective_info : "Players in this field will see a message saying that they are near an objective.\n\nAlso, if targeting a dynamitable objective, the dynamite must be armed inside\n\nof the trigger to blow up the objective.\n  track		Mandatory, this text will be appended to You are near \n  target		You may target dynamitable objectives\n  score		If targeting a dynamitable objective, give this score when blown.\n  AXIS_OBJECTIVE  -- Set if targeting an objective owned by AXIS, then only \n  ALLIED_OBJECTIVE -- Set if targeting an objective owned by ALLIES, then only "
+@SolidClass = trigger_objective_info : "Players in this field will see a message saying that they are near an objective.\n\nAlso, if targeting a dynamitable objective, the dynamite must be armed inside of the trigger to blow up the objective."
 [
+	track(string) : Location name :  : "Mandatory, this text will be appended to ''You are near ''"
+	target(string) : Target :  : "You may target dynamitable objectives"
+	score(string) : Score :  : "If targeting a dynamitable objective, give this score when blown."
+	
 	spawnflags(flags) = 
 	[
-		1 : "axis_objective" : 0
-		2 : "allied_objective" : 0
+		1 : "axis_objective" : 0 : "Set if targeting an objective owned by AXIS, then only allied dynamite will blow it up."
+		2 : "allied_objective" : 0 : "Set if targeting an objective owned by ALLIES, then only axis dynamite will blow it up."
 	]
 ]
