@@ -1782,8 +1782,15 @@
 @PointClass size(-4 -4 -4, 4 4 4) color(255 255 0) = target_alarm : "does nothing yet (effectively a relay right now)"
 [
 ]
-@PointClass size(-32 -32 -16, 32 32 16) color(255 0 0) = target_smoke : "delay = 100 = one millisecond default this is the maximum smoke that will show up\n\ntime = 5000 default before the smoke disipates\n\nduration = 2000 before the smoke starts to alpha\n\nstart_size = 24 default\n\nend_size = 96 default\n\nwait	= default is 50 the rate at which it will travel up"
+@PointClass size(-32 -32 -16, 32 32 16) color(255 0 0) = target_smoke : "1 second = 1000\n\n1 FRAME = 100"
 [
+	delay(integer) : Delay : 100 : "this is the maximum smoke that will show up"
+	time(integer) : Fade out time : 5000 : "Time lapsed before the smoke disipates"
+	duration(integer) : Duration : 2000 : "Duration before the smoke starts to alpha"
+	start_size(integer) : Start size : 24 : ""
+	end_size(integer) : End size : 96 : ""
+	wait(integer) : Speed : 50 : "the rate at which it will travel up"
+	
 	spawnflags(flags) = 
 	[
 		1 : "black" : 0
@@ -1969,7 +1976,7 @@
 [
 	track(string) : Location name :  : "Mandatory, this text will be appended to ''You are near ''"
 	target(string) : Target :  : "You may target dynamitable objectives"
-	score(string) : Score :  : "If targeting a dynamitable objective, give this score when blown."
+	score(integer) : Score :  : "If targeting a dynamitable objective, give this score when blown."
 	
 	spawnflags(flags) = 
 	[
