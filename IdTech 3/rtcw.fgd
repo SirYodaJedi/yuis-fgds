@@ -1665,12 +1665,12 @@
 [
 	scriptname(string) : Scriptname : : "name used for scripting purposes (REQUIRED=='game_manager')"
 ]
-@SolidClass = worldspawn : "DHM - Nerve :: Worldspawn spawnflags to indicate if a gametype is not supported\n\nEvery map should have exactly one worldspawn."
+@SolidClass = worldspawn : "Worldspawn spawnflags to indicate if a gametype is not supported\n\nEvery map should have exactly one worldspawn."
 [
-	music(string) : Music : : "Music wav file"
+	music(string) : Music Track : : "Music wav file"
 	gravity(string) : Gravity : : "800 is default gravity"
 	message(string) : Message : : "Text to print during connection process"
-	ambient(string) : Ambient : : "Ambient light value (must use '_color')"
+	ambient(string) : Ambient Light : : "Ambient light value (must use '_color')"
 	_color(color1) : "RGB color" : "1 1 0.5" : "Ambient light color (must be used with 'ambient')"
 	sun(string) : Sun : : "Shader to use for 'sun' image"
 	_blocksize(string) : _blocksize : : "q3map always splits the BSP tree along the planes X=blocksize*n and Y=_blocksize*n. Default _blocksize value is 1024. Increase the _blocksize using larger powers of 2 to reduce compile times on very large maps with low structural brush density."
@@ -1711,7 +1711,7 @@
 ]
 @PointClass size(-8 -8 -8, 8 8 8) color(255 0 0) = target_speaker : "A global sound will play full volume throughout the level.\n\nActivator sounds will play on the player that activated the target.\n\nGlobal and activator sounds can't be combined with looping.\n\nNormal sounds play each time the target is used.\n\nLooped sounds will be toggled by use functions.\n\nMultiple identical looping sounds will just increase volume without any speed cost."
 [
-	noise(string) : Noise : : "wav file to play"
+	noise(string) : Sound : : "wav file to play"
 	wait(string) : Wait : : "Seconds between auto triggerings, 0 = don't auto trigger"
 	random(string) : Random : : "wait variance, default is 0"
 	spawnflags(flags) = 
