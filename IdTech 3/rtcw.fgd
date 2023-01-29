@@ -204,32 +204,28 @@
 	]
 ]
 
-//
-// --- You Are Here!!! ---
-//
-
 @PointClass size(-8 -8 -8, 8 8 8) offset(0 0 8) color(255 255 0) studio("models/powerups/clipboard/clipboard.md3") = item_clipboard : "We currently use:\n\nclip_interrogation\n\nclip_codeddispatch\n\nclip_alertstatus"
 [
-	model(studio) : Model : : "- model to display in the world.  defaults to 'models/powerups/clipboard/clipboard.md3' (the clipboard laying flat is 'clipboard2.md3')"
-	popup(string) : Popup : : "- menu to popup.  no default since you won't want the same clipboard laying around. (clipboard will display a 'put popup here' message)"
-	notebookpage(string) : Notebookpage : : "- when clipboard is picked up, this page (menu) will be added to your notebook (FIXME: TODO: more info goes here)"
+	model(studio) : "Model" : "models/powerups/clipboard/clipboard.md3" : "World model (the clipboard laying flat is 'clipboard2.md3')"
+	popup(string) : "Popup" : "" : "Menu to popup. No default since you won't want the same clipboard laying around. (clipboard will display a 'put popup here' message)"
+	notebookpage(string) : "Notebook page" : : "When clipboard is picked up, this page (menu) will be added to your notebook (FIXME: TODO: more info goes here)"
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		4 : "persistant" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		4 : "Persistant" : 0
 	]
 ]
 
 @PointClass size(-8 -8 -8, 8 8 8) offset(0 0 8) color(255 255 0) studio("models/powerups/treasure/goldbar.md3") = item_treasure : "Items the player picks up that are just used to tally a score at end-level"
 [
-	model(studio) : Model : : "defaults to 'models/powerups/treasure/goldbar.md3'"
-	noise(string) : Noise : : "sound to play on pickup.  defaults to 'sound/pickup/treasure/gold.wav'"
-	message(string) : Message : : "what to call the item when it's picked up.  defaults to Treasure Item (SA: temp)"
+	model(studio) : "Model" : "models/powerups/treasure/goldbar.md3" : ""
+	noise(string) : "Sound" : "sound/pickup/treasure/gold.wav" : "Sound to play on pickup."
+	message(string) : "In-game item name" : : "What to call the item when it's picked up.  defaults to Treasure Item (SA: temp)"
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
 	]
 ]
 
@@ -237,9 +233,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -247,9 +243,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -257,19 +253,19 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
-@PointClass size(-16 -16 -16, 16 16 16) offset(0 0 16) color(77 77 255) studio("models/powerups/health/health_t1.md3") = item_health_turkey : "multi-stage health item.\n\ngives amount on first use based on skill:\n\nskill 1: 50\n\nskill 2: 50\n\nskill 3: 50\n\nskill 4: 40\n\nskill 5: 30\n\nthen gives 15 on finishing up\n\nplayer will only eat what he needs.  health at 90, turkey fills up and leaves remains (leaving 15).  health at 5 you eat the whole thing."
+@PointClass size(-16 -16 -16, 16 16 16) offset(0 0 16) color(77 77 255) studio("models/powerups/health/health_t1.md3") = item_health_turkey : "Multi-stage health item.\n\ngives amount on first use based on skill:\n\nskill 1: 50\n\nskill 2: 50\n\nskill 3: 50\n\nskill 4: 40\n\nskill 5: 30\n\nthen gives 15 on finishing up\n\nplayer will only eat what he needs.  health at 90, turkey fills up and leaves remains (leaving 15).  health at 5 you eat the whole thing."
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -277,9 +273,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -287,8 +283,8 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -296,8 +292,8 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -305,9 +301,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -315,9 +311,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -325,9 +321,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -335,8 +331,8 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -344,9 +340,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -354,9 +350,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -364,9 +360,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -374,9 +370,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -384,9 +380,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -394,9 +390,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -404,20 +400,24 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
 @PointClass size(-16 -16 -16, 16 16 16) offset(0 0 16) color(77 77 255) studio("models\weapons2\mp40\mp40.md3") = weapon_mp40
 [
-	stand(string) : Stand : : "values:"
+	stand(choices) : Stand : : "Default (no value): laying in a default position on it's side\nRack Mount (2): upright, barrel pointing up, slightly angled"
+	[
+		"" : "Default"
+		"2" : "Rack Mount"
+	]
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -425,9 +425,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -435,9 +435,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -445,9 +445,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -455,9 +455,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -465,9 +465,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -475,9 +475,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -485,9 +485,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -495,9 +495,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -505,9 +505,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -515,9 +515,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -525,9 +525,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -535,9 +535,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -545,9 +545,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -555,9 +555,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -565,9 +565,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -575,9 +575,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -586,7 +586,7 @@
 	spawnflags(flags) = 
 	[
 		1 : "suspended" : 0
-		2 : "spin" : 0
+		2 : "Spinning" : 0
 		8 : "respawn" : 0
 	]
 ]
@@ -595,9 +595,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -605,9 +605,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -615,9 +615,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -625,9 +625,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -635,9 +635,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -645,19 +645,19 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
-@PointClass size(-16 -16 -16, 16 16 16) offset(0 0 16) color(77 77 255) studio("models/powerups/ammo/dynamite.md3") = ammo_dynamite : " -------- MODEL FOR RADIANT ONLY - DO NOT SET THIS AS A KEY --------"
+@PointClass size(-16 -16 -16, 16 16 16) offset(0 0 16) color(77 77 255) studio("models/powerups/ammo/dynamite.md3") = ammo_dynamite : ""
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -665,9 +665,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -675,9 +675,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -685,9 +685,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -695,9 +695,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -705,9 +705,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -715,9 +715,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -725,9 +725,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -735,9 +735,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -745,9 +745,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -755,9 +755,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -765,9 +765,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -775,9 +775,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -785,19 +785,19 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) color(77 77 255) = holdable_15 : "        {"
+@PointClass size(-8 -8 -8, 8 8 8) color(77 77 255) studio("models/powerups/holdable/15.md3") = holdable_15 : ""
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -805,9 +805,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -815,9 +815,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -825,9 +825,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -835,9 +835,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -845,9 +845,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -855,9 +855,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -865,9 +865,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -875,9 +875,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -885,9 +885,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -895,9 +895,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -905,9 +905,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -915,9 +915,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -925,9 +925,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -935,9 +935,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -945,9 +945,9 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
 
@@ -955,18 +955,22 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "suspended" : 0
-		2 : "spin" : 0
-		8 : "respawn" : 0
+		1 : "Suspended" : 0
+		2 : "Spinning" : 0
+		8 : "Respawn" : 0
 	]
 ]
+
+// 
+// ---- You Are Here
+// 
 
 @PointClass size(-8 -8 -8, 8 8 8) color(255 0 255) studio() = alarm_box : "You need to have an origin brush as part of this entity\n\ncurrent alarm box model is (8 x 16 x 28)\n\nteamed alarm_boxes work in tandem (switches/lights syncronize)\n\ntarget a box to dlights to have them activate/deactivate with the system (use a stylestring that matches the cycletime for the alarmbox sound)\n\nalarm sound locations are also placed in the dlights, so wherever you place an attached dlight, you will hear the alarm\n\nplace the origin at the center of your trigger box"
 [
 	health(string) : Health : : "defaults to 10"
-	noise(string) : Noise : : "the sound to play over the system (this would be the siren sound)"
+	noise(string) : "Sound" : : "the sound to play over the system (this would be the siren sound)"
 	team(string) : Team : : "key/value is valid for teamed alarm boxes"
-	model(studio) : Model : : "the model used is models/mapobjects/electronics/alarmbox.md3"
+	model(studio) : "Model" : : "the model used is models/mapobjects/electronics/alarmbox.md3"
 	spawnflags(flags) = 
 	[
 		1 : "start_on" : 0 : "means the button is pushed in, any dlights are cycling, and alarms are sounding"
@@ -1087,7 +1091,7 @@
 
 @PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) studio() = misc_model
 [
-	model(studio) : Model : : "arbitrary .md3 file to display"
+	model(studio) : "Model" : : "arbitrary .md3 file to display"
 	modelscale(string) : Modelscale : : "scale multiplier (defaults to 1x)"
 	modelscale_vec(string) : Modelscale_vec : : "scale multiplier (defaults to 1 1 1, scales each axis as requested)"
 	modelscale_vec(string) : Modelscale_vec : : "- Set scale per-axis.  Overrides modelscale, so if you have both, the modelscale is ignored"
@@ -1095,7 +1099,7 @@
 
 @PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) studio() = misc_gamemodel : "md3 placed in the game at runtime (rather than in the bsp)"
 [
-	model(studio) : Model : : "arbitrary .md3 file to display"
+	model(studio) : "Model" : : "arbitrary .md3 file to display"
 	modelscale(string) : Modelscale : : "scale multiplier (defaults to 1x, and scales uniformly)"
 	modelscale_vec(string) : Modelscale_vec : : "scale multiplier (defaults to 1 1 1, scales each axis as requested)"
 	trunk(string) : Trunk : : "diameter of solid core (used for trace visibility and collision (not ai pathing))"
@@ -1299,7 +1303,7 @@
 @SolidClass = func_door : "NOMONSTER   monsters will not trigger this door\n     0 - nosound (default)\n     1 - metal\n     2 - stone\n     3 - lab\n     4 - wood\n     5 - iron/jail\n     6 - portcullis\n     7 - wood (quiet)"
 [
 	key(string) : Key : : "-1 for locked, key number for which key opens, 0 for open.  default '0' unless door is targeted.  (trigger_aidoor entities targeting this door do /not/ affect the key status)"
-	model2(studio) : Model : : ".md3 model to also draw"
+	model2(studio) : "Model" : : ".md3 model to also draw"
 	angle(string) : Angle : : "determines the opening direction"
 	targetname(target_source) : Name : : "if set, no touch field will be spawned and a remote button or trigger field activates the door."
 	speed(string) : Speed : : "movement speed (100 default)"
@@ -1330,14 +1334,14 @@
 	height(string) : Height : : "total height of movement, defaults to model height"
 	speed(string) : Speed : : "overrides default 200."
 	dmg(string) : Dmg : : "overrides default 2"
-	model2(studio) : Model : : ".md3 model to also draw"
+	model2(studio) : "Model" : : ".md3 model to also draw"
 	color(string) : Color : : "constantLight color"
 	light(string) : Light : : "constantLight radius"
 ]
 
 @SolidClass = func_button : "When a button is touched, it moves some distance in the direction of it's angle, triggers all of it's targets, waits some time, then returns to it's original position where it can be triggered again."
 [
-	model2(studio) : Model : : ".md3 model to also draw"
+	model2(studio) : "Model" : : ".md3 model to also draw"
 	angle(string) : Angle : : "determines the opening direction"
 	target(target_destination) : Target : : "all entities with a matching targetname will be used"
 	speed(string) : Speed : : "override the default 40 speed"
@@ -1375,10 +1379,10 @@
 
 @SolidClass = func_train_rotating : "A train is a mover that moves between path_corner target points.\n\nThis train can also rotate along the X Y Z\n\nTrains MUST HAVE AN ORIGIN BRUSH.\n\nThe train spawns at the first target it is pointing at.\n\nOn the path corner:\n\nspeed    departure speed from that corner \n\nrotate   angle change for X Y Z to next corner \n\nduration duration for angle change (overrides speed)"
 [
-	model2(studio) : Model : : ".md3 model to also draw"
+	model2(studio) : "Model" : : ".md3 model to also draw"
 	dmg(string) : Dmg : : "default	2"
 	speed(string) : Speed : : "default 100"
-	noise(string) : Noise : : "looping sound to play when the train is in motion"
+	noise(string) : "Sound" : : "looping sound to play when the train is in motion"
 	target(target_destination) : Target : : "next path corner"
 	color(string) : Color : : "constantLight color"
 	light(string) : Light : : "constantLight radius"
@@ -1397,7 +1401,7 @@
 
 @SolidClass = func_static : "A bmodel that just sits there, doing nothing.  Can be used for conditional walls and models.\n\nIf targeted, it will toggle existance when triggered\n\nWhen using pain you will need to specify the delay time\n\nvalue of 1 = 1 sec 2 = 2 sec so on...\n\ndefault is 1 sec you can use decimals \n\ndelay \n\nshard\n\nwill spawn rubble\n\nshard default is 4\n\nshard =\n\nshard_glass = 0,\n\nshard_wood = 1,\n\nshard_metal = 2,\n\nshard_ceramic = 3,\n\nshard_pebbles = 4"
 [
-	model2(studio) : Model : : ".md3 model to also draw"
+	model2(studio) : "Model" : : ".md3 model to also draw"
 	color(string) : Color : : "constantLight color"
 	light(string) : Light : : "constantLight radius"
 	example(string) : Example : : ""
@@ -1412,7 +1416,7 @@
 
 @SolidClass = func_rotating : "You need to have an origin brush as part of this entity.\n\nThe center of that brush will be the point around which it is rotated. It will rotate around the Z axis by default.  You can check either the X_AXIS or Y_AXIS box to change that."
 [
-	model2(studio) : Model : : ".md3 model to also draw"
+	model2(studio) : "Model" : : ".md3 model to also draw"
 	speed(string) : Speed : : "determines how fast it moves; default value is 100."
 	dmg(string) : Dmg : : "damage to inflict when blocked (2 default)"
 	color(string) : Color : : "constantLight color"
@@ -1428,7 +1432,7 @@
 
 @SolidClass = func_bobbing : "Normally bobs on the Z axis"
 [
-	model2(studio) : Model : : ".md3 model to also draw"
+	model2(studio) : "Model" : : ".md3 model to also draw"
 	height(string) : Height : : "amplitude of bob (32 default)"
 	speed(string) : Speed : : "seconds to complete a bob cycle (4 default)"
 	phase(string) : Phase : : "the 0.0 to 1.0 offset in the cycle to start at"
@@ -1444,7 +1448,7 @@
 
 @SolidClass = func_pendulum : "You need to have an origin brush as part of this entity.\n\nPendulums always swing north / south on unrotated models.  Add an angles field to the model to allow rotation in other directions.\n\nPendulum frequency is a physical constant based on the length of the beam and gravity."
 [
-	model2(studio) : Model : : ".md3 model to also draw"
+	model2(studio) : "Model" : : ".md3 model to also draw"
 	speed(string) : Speed : : "the number of degrees each way the pendulum swings, (30 default)"
 	phase(string) : Phase : : "the 0.0 to 1.0 offset in the cycle to start at"
 	dmg(string) : Dmg : : "damage to inflict when blocked (2 default)"
@@ -1455,7 +1459,7 @@
 @SolidClass = func_door_rotating : "You need to have an origin brush as part of this entity.\n\nThe center of that brush will be the point around which it is rotated. It will rotate around the Z axis by default.  You can check either the X_AXIS or Y_AXIS box to change that (only one axis allowed. If both X and Y are checked, the default of Z will be used).\n\nSHOOT-THRU	Bullets don't stop when they hit the door.  Set shoot_thru_scale with bullet damage scale (see below)\n     0 - nosound (default)\n     1 - metal\n     2 - stone\n     3 - lab\n     4 - wood\n     5 - iron/jail\n     6 - portcullis\n     7 - wood (quiet)"
 [
 	key(string) : Key : : "-1 for locked, key number for which key opens, 0 for open.  default '0' unless door is targeted.  (trigger_aidoor entities targeting this door do /not/ affect the key status)"
-	model2(studio) : Model : : ".md3 model to also draw"
+	model2(studio) : "Model" : : ".md3 model to also draw"
 	degrees(string) : Degrees : : "determines how many degrees it will turn (90 default)"
 	speed(string) : Speed : : "movement speed (100 default)"
 	closespeed(string) : Closespeed : : "optional different movement speed for door closing"
@@ -1497,7 +1501,7 @@
 
 @SolidClass = func_explosive : "Any brush that you want to explode or break apart.  If you want an explosion, set dmg and it will do a radius explosion of that amount at the center of the bursh.\n\nthe default sounds are:\n  wood	- sound/world/boardbreak.wav\n  glass	- sound/world/glassbreak.wav\n  metal	- sound/world/metalbreak.wav\n  gibs	- sound/player/gibsplit1.wav\n  brick	- sound/world/brickfall.wav\n  stone	- sound/world/stonefall.wav\n  fabric	- sound/world/metalbreak.wav	// (SA) temp"
 [
-	model2(studio) : Model : : "optional md3 to draw over the solid clip brush. As of wolf 1.33, this does not work correctly in moltiplayer. The model always appears at map origin."
+	model2(studio) : "Model" : : "optional md3 to draw over the solid clip brush. As of wolf 1.33, this does not work correctly in moltiplayer. The model always appears at map origin."
 	numLivingFrames(string) : NumLivingFrames : : "- how many frames to loop while the ent is 'alive' (model should have two animations: living->dead. living always starts at frame '0')"
 	numDeadFrames(string) : NumDeadFrames : : "- how many frames to play when the ent 'dies' ('nnnFrames' parameters must go together)"
 	wait(string) : Wait : : "- how long (in seconds) to leave the model after it's 'dead'.  '-1' leaves forever."
@@ -1509,7 +1513,7 @@
 	scriptname(string) : Scriptname : : "- script whose death is triggered when the object is destroyed"
 	type(string) : Type : : "- type of debris (glass, wood, metal, gibs, brick, rock, fabric) default is wood"
 	mass(string) : Mass : : "- defaults to 75.  This determines how much debris is emitted when it explodes.  You get one large chunk per 100 of mass (up to 8) and one small chunk per 25 of mass (up to 16).  So 800 gives the most."
-	noise(string) : Noise : : "- sound to play when triggered.  The explosive will default to a sound that matches it's 'type'.  Use the sound name nosound (case in-sensitive) if you want it silent."
+	noise(string) : "Sound" : : "- sound to play when triggered.  The explosive will default to a sound that matches it's 'type'.  Use the sound name nosound (case in-sensitive) if you want it silent."
 	fxdensity(string) : Fxdensity : : "size of explosion 1 - 100 (default is 10)"
 	spawnflags(flags) = 
 	[
@@ -1674,8 +1678,8 @@
 
 @PointClass size(-8 -8 -16, 8 8 16) color(77 128 179) studio() = props_ExploPart : "for wood:\n  it can be one of the following 64 48 32 24 16 8\n\nfor concrete:\n\nfor stone:"
 [
-	model(studio) : Model : : "will load a discreet model"
-	noise(string) : Noise : : "will load looping sound for the model"
+	model(studio) : "Model" : : "will load a discreet model"
+	noise(string) : "Sound" : : "will load looping sound for the model"
 	target(target_destination) : Target : : "point to an infonotnull to specify dir default will be up"
 	speed(string) : Speed : : "default to 900"
 	type(string) : Type : : "wood concrete or stone"
@@ -1684,8 +1688,8 @@
 
 @PointClass size(-8 -8 0, 8 8 16) color(153 179 179) studio() = props_decoration : "you will need to specify the bounding box for the entity"
 [
-	model2(studio) : Model : : "will specify the model to load"
-	noise(string) : Noise : : "the looping sound entity is to make"
+	model2(studio) : "Model" : : "will specify the model to load"
+	noise(string) : "Sound" : : "the looping sound entity is to make"
 	type(string) : Type : : "type of debris (glass, wood, metal, ceramic, rubble) default is wood"
 	count(string) : Count : : "how much debris ei. default 4 pieces"
 	high(string) : High : : "default is 4"
@@ -1707,7 +1711,7 @@
 
 @SolidClass = props_decorBRUSH : "must have an origin brush"
 [
-	model2(studio) : Model : : "will specify the model to load"
+	model2(studio) : "Model" : : "will specify the model to load"
 	noise(string) : Sound File : : "the looping sound entity is to make"
 	type(string) : Type : : "type of debris (glass, wood, metal, ceramic, rubble) default is wood"
 	count(integer) : Count : : "how much debris ei. default 4 pieces"
@@ -1729,8 +1733,8 @@
 [
 	modelscale(string) : Modelscale : : "- Scale multiplier (defaults to 1.0 and scales uniformly)"
 	modelscale_vec(string) : Modelscale_vec : : "- Set scale per-axis.  Overrides modelscale, so if you have both the modelscale is ignored"
-	model2(studio) : Model : : "will specify the model to load"
-	noise(string) : Noise : : "the looping sound entity is to make"
+	model2(studio) : "Model" : : "will specify the model to load"
+	noise(string) : "Sound" : : "the looping sound entity is to make"
 	type(string) : Type : : "type of debris (glass, wood, metal, ceramic, rubble) default is wood"
 	count(string) : Count : : "how much debris ei. default 4 pieces"
 	high(string) : High : : "default is 4"
@@ -1760,8 +1764,8 @@
 
 @PointClass size(-8 -8 0, 8 8 128) color(153 77 51) studio() = props_statue : "you will need to specify the bounding box for the entity"
 [
-	model2(studio) : Model : : "will specify the model to load"
-	noise(string) : Noise : : "the sound entity is to make"
+	model2(studio) : "Model" : : "will specify the model to load"
+	noise(string) : "Sound" : : "the sound entity is to make"
 	type(string) : Type : wood : "type of debris (glass, wood, metal, ceramic, rubble)"
 	count(string) : Count : : "how much debris ei. default 4 pieces"
 	high(string) : High : 4 : ""
@@ -1780,8 +1784,8 @@
 
 @SolidClass = props_statueBRUSH : "needs an origin brush\n\nTHE damage has been disabled at the moment"
 [
-	model2(studio) : Model : : "will specify the model to load"
-	noise(string) : Noise : : "the sound entity is to make"
+	model2(studio) : "Model" : : "will specify the model to load"
+	noise(string) : "Sound" : : "the sound entity is to make"
 	type(string) : Type : : "type of debris (glass, wood, metal, ceramic, rubble) default is wood"
 	count(string) : Count : : "how much debris ei. default 4 pieces"
 	frames(string) : Frames : : "how many frames of animation to play"
@@ -1798,7 +1802,7 @@
 
 @PointClass size(-12 -21 -12, 12 21 12) color(153 179 77) studio("models/mapobjects/furniture/footlocker.md3") = props_footlocker : "the default sounds are:\n  wood	- sound/world/boardbreak.wav\n  glass	- sound/world/glassbreak.wav\n  metal	- sound/world/metalbreak.wav\n  gibs	- sound/player/gibsplit1.wav\n  brick	- sound/world/brickfall.wav\n  stone	- sound/world/stonefall.wav\n  fabric	- sound/world/metalbreak.wav	// (SA) temp"
 [
-	noise(string) : Noise : : "the sound entity is to make upon death"
+	noise(string) : "Sound" : : "the sound entity is to make upon death"
 	locknoise(string) : Locknoise : : "the locked sound to play"
 	wait(string) : Wait : : "denotes how long the wait is going to be before the locked sound is played again default is 1 sec"
 	health(string) : Health : : "default is 1"
@@ -1824,7 +1828,7 @@
 [
 	modelscale(string) : Modelscale : 1 : "Scale multiplier (defaults to 1, and scales uniformly)"
 	modelscale_vec(string) : Modelscale_vec : : "Set scale per-axis.  Overrides modelscale, so if you have both the modelscale is ignored"
-	model2(studio) : Model : : "optional md3 to draw over the solid clip brush"
+	model2(studio) : "Model" : : "optional md3 to draw over the solid clip brush"
 	scriptname(string) : Scriptname : : "name used for scripting purposes (like aiName in AI scripting)"
 	health(string) : Health : : "optionally make this entity damagable"
 	spawnflags(flags) = 
@@ -1837,7 +1841,7 @@
 
 @PointClass size(-16 -16 -24, 16 16 64) color(128 64 255) studio() = script_model_med : "MEDIUM SIZED scripted entity, used for animating a model, moving it around, etc\n\nSOLID spawnflag means this entity will clip the player and AI, otherwise they can walk\n\nstraight through it"
 [
-	model(studio) : Model : : "the full path of the model to use"
+	model(studio) : "Model" : : "the full path of the model to use"
 	scriptname(string) : Scriptname : : "name used for scripting purposes (like aiName in AI scripting)"
 	spawnflags(flags) = 
 	[
@@ -1864,7 +1868,7 @@
 [
 	music(string) : Music Track : : "Music wav file"
 	gravity(string) : Gravity : : "800 is default gravity"
-	message(string) : Message : : "Text to print during connection process"
+	message(string) : "Message" : : "Text to print during connection process"
 	ambient(string) : Ambient Light : : "Ambient light value (must use '_color')"
 	_color(color1) : "RGB color" : "1 1 0.5" : "Ambient light color (must be used with 'ambient')"
 	sun(string) : Sun : : "Shader to use for 'sun' image"
@@ -1904,7 +1908,7 @@
 
 @PointClass size(-8 -8 -8, 8 8 8) color(255 0 0) = target_print : "If private, only the activator gets the message.  If no checks, all clients get the message."
 [
-	message(string) : Message : : "text to print"
+	message(string) : "Message" : : "text to print"
 	spawnflags(flags) = 
 	[
 		1 : "redteam" : 0
@@ -2029,7 +2033,7 @@
 	rampup(string) : Rampup : : "how much time it will take to reach maximum pitch and yaw in seconds"
 	rampdown(string) : Rampdown : : "how long till effect ends after rampup is reached in seconds"
 	startnoise(string) : Startnoise : : "startingsound"
-	noise(string) : Noise : : "the looping sound entity is to make"
+	noise(string) : "Sound" : : "the looping sound entity is to make"
 	endnoise(string) : Endnoise : : "endsound"
 	duration(string) : Duration : : "the amount of time the effect is to last ei 1.0 sec 3.6 sec"
 	spawnflags(flags) = 
@@ -2089,7 +2093,7 @@
 
 @PointClass size(-16 -16 0, 16 16 128) color(153 230 153) studio() = team_WOLF_checkpoint : "This is the flagpole players touch in Capture and Hold game scenarios.\n\nIt will call specific trigger funtions in the map script for this object.\n\nWhen allies capture, it will call allied_capture.\n\nWhen axis capture, it will call axis_capture."
 [
-	model(studio) : Model : : "model to use (will use same animations as flagpole however)"
+	model(studio) : "Model" : : "model to use (will use same animations as flagpole however)"
 	scriptname(string) : Scriptname : : "name of script which contains allied_capture and axis_capture triggers"
 	spawnflags(flags) = 
 	[
