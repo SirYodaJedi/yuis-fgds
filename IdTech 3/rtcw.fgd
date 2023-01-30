@@ -180,11 +180,6 @@
 	model(studio) : "Model" : "models/powerups/treasure/goldbar.md3" : ""
 	noise(string) : "Sound" : "sound/pickup/treasure/gold.wav" : "Sound to play on pickup."
 	message(string) : "In-game item name" : : "What to call the item when it's picked up.  defaults to Treasure Item (SA: temp)"
-	spawnflags(flags) = 
-	[
-		1 : "Suspended" : 0
-		2 : "Spinning" : 0
-	]
 ]
 
 @PointClass base(Base_ItemFlags) size(-16 -16 -16, 16 16 16) offset(0 0 16) color(77 77 255) studio("models/powerups/health/health_s.md3") = item_health_small []
