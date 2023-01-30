@@ -359,10 +359,6 @@
 	]
 ]
 
-// 
-// ---- You Are Here
-// 
-
 ///
 ///
 ///
@@ -381,7 +377,7 @@
 	]
 	spawnflags(flags) = 
 	[
-		1 : "Initial" : 0
+		1 : "Initial Spawn" : 0
 	]
 ]
 
@@ -433,21 +429,29 @@
 [
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) = light : "Non-displayed light.\n\nNonlinear checkbox gives inverse square falloff instead of linear \n\nAngle adds light:surface angle calculations (only valid for Linear lights) (wolf)\n\nLights pointed at a target will be spotlights."
+// 
+// ---- You Are Here
+// 
+
+@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) = light : "Non-displayed light.\n\nLights pointed at a target will be spotlights."
 [
-	light(string) : Light : : "overrides the default 300 intensity."
-	radius(string) : Radius : : "overrides the default 64 unit radius of a spotlight at the target point."
-	fade(string) : Fade : : "falloff/radius adjustment value. multiply the run of the slope by fade (1.0f default) (only valid for Linear lights) (wolf)"
-	q3map_non-dynamic(string) : Q3map_non-dynamic : : "specifies that this light should not contribute to the world's 'light grid' and therefore will not light dynamic models in the game.(wolf)"
+	light(integer) : "Light" : "300" : "overrides the default 300 intensity."
+	radius(integer) : "Radius" : "64" : "overrides the default 64 unit radius of a spotlight at the target point."
+	fade(string) : "Fade" : "1.0f" : "falloff/radius adjustment value. multiply the run of the slope by fade (1.0f default) (only valid for Linear lights) (wolf)"
+	//q3map_non-dynamic(choices) : "Non-dynamic" : "0" : "specifies that this light should not contribute to the world's 'light grid' and therefore will not light dynamic models in the game.(wolf)"
+	//[
+	//	"0" : "False"
+	//	"1" : "True"
+	//]
 	_color(color1) : "RGB color" : "1 1 0.5" : "weighted RGB value of light color"
 	spawnflags(flags) = 
 	[
-		1 : "nonlinear" : 0
-		2 : "angle" : 0
+		1 : "Non-Linear" : 0 : "gives inverse square falloff instead of linear"
+		2 : "Angle" : 0 : "adds light_surface angle calculations (only valid for Linear lights)"
 		4 : "negative_spot" : 0
 		8 : "negative_point" : 0
-		16 : "q3map_non" : 0
-		64 : "dynamic" : 0
+		16 : "Non-dynamic" : 0 : "This light should not contribute to the world's 'light grid' and therefore will not light dynamic models in the game."
+		64 : "Dynamic" : 0
 	]
 ]
 
