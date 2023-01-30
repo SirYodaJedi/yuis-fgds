@@ -141,6 +141,10 @@
 	skin(string) : "Skin" : "blackguard/default" : "the .skin file to use for this character (must exist in the player characters directory, otherwise 'blackguard/default' is used)"
 ]
 
+///
+///
+///
+
 @PointClass size(-18 -18 -24, 18 18 48) color(255 128 0) = ai_marker : "AI marker"
 [
 	spawnflags(flags) = 
@@ -159,6 +163,10 @@
 		1 : "Start off" : 0
 	]
 ]
+
+///
+///
+///
 
 @PointClass size(-8 -8 -8, 8 8 8) offset(0 0 8) color(255 255 0) studio("models/powerups/clipboard/clipboard.md3") = item_clipboard : "We currently use:\n\nclip_interrogation\n\nclip_codeddispatch\n\nclip_alertstatus"
 [
@@ -336,28 +344,44 @@
 
 @PointClass base(Base_ItemFlags) size(-8 -8 -8, 8 8 8) color(255 255 0) studio("models/powerups/keys/key.md3") = key_key16 : "key 16\n\npickup sound : sound/pickup/keys/key16.wav" []
 
+///
+///
+///
+
+@PointClass size(-8 -8 -8, 8 8 8) color(255 0 255) studio(models/mapobjects/electronics/alarmbox.md3) = alarm_box : "You need to have an origin brush as part of this entity\n\ncurrent alarm box model is (8 x 16 x 28)\n\nteamed alarm_boxes work in tandem (switches/lights syncronize)\n\ntarget a box to DLights to have them activate/deactivate with the system (use a stylestring that matches the cycletime for the alarmbox sound)\n\nalarm sound locations are also placed in the DLights, so wherever you place an attached dlight, you will hear the alarm\n\nplace the origin at the center of your trigger box"
+[
+	health(string) : "Health" : 10 : 
+	noise(string) : "Sound" : : "the sound to play over the system (this would be the siren sound)"
+	team(string) : "Team" : : "key/value is valid for teamed alarm boxes"
+	spawnflags(flags) = 
+	[
+		1 : "Start On" : 0 : "means the button is pushed in, any DLights are cycling, and alarms are sounding"
+	]
+]
+
 // 
 // ---- You Are Here
 // 
 
-@PointClass size(-8 -8 -8, 8 8 8) color(255 0 255) studio(models/mapobjects/electronics/alarmbox.md3) = alarm_box : "You need to have an origin brush as part of this entity\n\ncurrent alarm box model is (8 x 16 x 28)\n\nteamed alarm_boxes work in tandem (switches/lights syncronize)\n\ntarget a box to dlights to have them activate/deactivate with the system (use a stylestring that matches the cycletime for the alarmbox sound)\n\nalarm sound locations are also placed in the dlights, so wherever you place an attached dlight, you will hear the alarm\n\nplace the origin at the center of your trigger box"
-[
-	health(string) : Health : : "defaults to 10"
-	noise(string) : "Sound" : : "the sound to play over the system (this would be the siren sound)"
-	team(string) : Team : : "key/value is valid for teamed alarm boxes"
-	spawnflags(flags) = 
-	[
-		1 : "start_on" : 0 : "means the button is pushed in, any dlights are cycling, and alarms are sounding"
-	]
-]
+///
+///
+///
 
 @PointClass size(-18 -18 -24, 18 18 48) offset(0 0 24) color(255 0 255) = info_player_deathmatch : "potential spawning position for deathmatch games.\n\nThe first time a player enters the game, they will be at an 'initial' spot.\n\nTargets will be fired when someone spawns in on them.\n\nIf the start position is targeting an entity, the players camera will start out facing that ent (like an info_notnull)"
 [
-	nobots(string) : Nobots : : "will prevent bots from using this spot."
-	nohumans(string) : Nohumans : : "will prevent non-bots from using this spot."
+	nobots(choices) : "No Bots" : : "will prevent bots from using this spot."
+	[
+		"0" : "Bots Can Use"
+		"1" : "Prevent Bot usage"
+	]
+	nohumans(choices) : "No Humans" : : "will prevent non-bots from using this spot."
+	[
+		"0" : "Humans Can Use"
+		"1" : "Prevent Human Usage"
+	]
 	spawnflags(flags) = 
 	[
-		1 : "initial" : 0
+		1 : "Initial" : 0
 	]
 ]
 
@@ -380,10 +404,14 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "axis" : 0
-		2 : "allied" : 0
+		1 : "Axis" : 0
+		2 : "Allied" : 0
 	]
 ]
+
+///
+///
+///
 
 @SolidClass = func_group : "Used to group brushes together just for editor convenience.  They are turned into normal brushes by the utilities."
 [
@@ -447,7 +475,7 @@
 	fields(string) : Fields : : ""
 	adist(string) : Adist : : "- radius of 'wakeup' box.  player passing closer than distance activates grabber (def: 64)"
 	bdist(string) : Bdist : : "- radius of 'attack' box.  player passing into this gets a swipe.  (def: 32)"
-	health(string) : Health : : "- how much damage grabber can take after 'wakeup' (def: 100)"
+	health(string) : "Health" : : "- how much damage grabber can take after 'wakeup' (def: 100)"
 	range(string) : Range : : "- when attacking, how far from the origin the grabber can strike (def: 64)"
 	dmg(string) : Dmg : : "- max damage to give on a successful strike (def: 10)"
 	wait(string) : Wait : : "- how long to wait between strikes if the player stays within the 'attack' box (def: see below)"
@@ -537,7 +565,7 @@
 	random(string) : Random : : "- how far away to drift from the target. (def: 0.0)"
 	width(string) : Width : : "- width of the bolts (def: 20)"
 	count(string) : Count : : "- number of bolts to fire per impact point.  (def: 2)"
-	dlightsize(string) : Dlightsize : : "- how big to make the attached light.  (def: 500)"
+	DLightsize(string) : DLightsize : : "- how big to make the attached light.  (def: 500)"
 	spawnflags(flags) = 
 	[
 		1 : "start_on" : 0 : "means it starts out active, the default is to start off and fire when triggered"
@@ -575,7 +603,7 @@
 [
 	style(string) : Style : : "value is an int from 1-19 that contains a pre-defined 'flicker' string."
 	stylestring(string) : Stylestring : : "set your own 'flicker' string.  (ex. klmnmlk). NOTE: this should be all lowercase"
-	offset(string) : Offset : : "change the initial index in a style string.  So val of 3 in the above example would start this light at 'N'.  (used to get dlights using the same style out of sync)."
+	offset(string) : Offset : : "change the initial index in a style string.  So val of 3 in the above example would start this light at 'N'.  (used to get DLights using the same style out of sync)."
 	atten(string) : Atten : : "offset from the alpha values of the stylestring.  stylestring of ddeeffzz with an atten of -1 would result in ccddeeyy"
 	shader(string) : Shader : : "name of shader to apply"
 	sound(string) : Sound : : "sound to loop every cycle (this actually just plays the sound at the beginning of each cycle)"
@@ -674,6 +702,10 @@
 [
 ]
 
+///
+///
+///
+
 @SolidClass = func_door : "NOMONSTER   monsters will not trigger this door\n     0 - nosound (default)\n     1 - metal\n     2 - stone\n     3 - lab\n     4 - wood\n     5 - iron/jail\n     6 - portcullis\n     7 - wood (quiet)"
 [
 	key(string) : Key : : "-1 for locked, key number for which key opens, 0 for open.  default '0' unless door is targeted.  (trigger_aidoor entities targeting this door do /not/ affect the key status)"
@@ -687,8 +719,8 @@
 	dmg(string) : Dmg : : "damage to inflict when blocked (2 default)"
 	color(string) : Color : : "constantLight color"
 	light(string) : Light : : "constantLight radius"
-	health(string) : Health : : "if set, the door must be shot open"
-	team(string) : Team : : "team name.  other doors with same team name will open/close in syncronicity"
+	health(string) : "Health" : : "if set, the door must be shot open"
+	team(string) : "Team" : : "team name.  other doors with same team name will open/close in syncronicity"
 	shoot_thru_scale(string) : Shoot_thru_scale : : "Multiplier for how much damage bullets do that have passed through the door.  Effectively how much damage the door 'absorbs'.  0.0 - 1.0 (0.0 will turn SHOOT-THRU off, 1.0 is full damage)"
 	type(string) : Type : : "use sounds based on construction of door:"
 	spawnflags(flags) = 
@@ -721,7 +753,7 @@
 	speed(string) : Speed : : "override the default 40 speed"
 	wait(string) : Wait : : "override the default 1 second wait (-1 = never return)"
 	lip(string) : Lip : : "override the default 4 pixel lip remaining at end of move"
-	health(string) : Health : : "if set, the button must be killed instead of touched"
+	health(string) : "Health" : : "if set, the button must be killed instead of touched"
 	color(string) : Color : : "constantLight color"
 	light(string) : Light : : "constantLight radius"
 	spawnflags(flags) = 
@@ -843,7 +875,7 @@
 	light(string) : Light : : "constantLight radius"
 	shoot_thru_scale(string) : Shoot_thru_scale : : "Multiplier for how much damage bullets do that have passed through the door.  Effectively how much damage the door 'absorbs'.  0.0 - 1.0 (0.0 will turn SHOOT-THRU off, 1.0 is full damage)"
 	type(string) : Type : : "use sounds based on construction of door:"
-	team(string) : Team : : "team name.  other doors with same team name will open/close in syncronicity"
+	team(string) : "Team" : : "team name.  other doors with same team name will open/close in syncronicity"
 	spawnflags(flags) = 
 	[
 		2 : "toggle" : 0
@@ -882,7 +914,7 @@
 	NOTE(string) : NOTE : : "if you use model2, you must have an origin brush in the explosive with the center of the origin at the origin of the model"
 	item(string) : Item : : "- when it explodes, pop this item out with the debirs (use QUAKED name. ex: item_health_small)"
 	dmg(string) : Dmg : : "- how much radius damage should be done, defaults to 0"
-	health(string) : Health : : "- defaults to 100.  If health is set to '0' the brush will not be shootable."
+	health(string) : "Health" : : "- defaults to 100.  If health is set to '0' the brush will not be shootable."
 	targetname(target_source) : Name : : "- if set, no touch field will be spawned and a remote button or trigger field triggers the explosion."
 	scriptname(string) : Scriptname : : "- script whose death is triggered when the object is destroyed"
 	type(string) : Type : : "- type of debris (glass, wood, metal, gibs, brick, rock, fabric) default is wood"
@@ -916,6 +948,10 @@
 	]
 ]
 
+///
+///
+///
+
 @PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) = props_box_32
 [
 ]
@@ -939,7 +975,7 @@
 @PointClass size(-8 -8 -8, 8 8 8) color(204 118 41) = props_gunsparks : "the default direction is strait up use info_no_null for alt direction\n\nthis entity must be used to see the effect"
 [
 	speed(string) : Speed : : "default is 20"
-	health(string) : Health : : "number to spawn default is 4"
+	health(string) : "Health" : : "number to spawn default is 4"
 ]
 
 @PointClass size(-8 -8 -8, 8 8 8) color(204 118 41) = props_smokedust : "health = how many pieces 16 is default"
@@ -1179,7 +1215,7 @@
 	noise(string) : "Sound" : : "the sound entity is to make upon death"
 	locknoise(string) : Locknoise : : "the locked sound to play"
 	wait(string) : Wait : : "denotes how long the wait is going to be before the locked sound is played again default is 1 sec"
-	health(string) : Health : : "default is 1"
+	health(string) : "Health" : : "default is 1"
 	spawnitem(string) : Spawnitem : : "- will spawn this item unpon death use the pickup_name ei 9mm"
 	type(string) : Type : : "- type of debris (glass, wood, metal, gibs, brick, rock, fabric) default is wood"
 	mass(string) : Mass : : "- defaults to 75.  This determines how much debris is emitted.  You get one large chunk per 100 of mass (up to 8) and one small chunk per 25 of mass (up to 16).  So 800 gives the most."
@@ -1198,13 +1234,17 @@
 	]
 ]
 
+///
+///
+///
+
 @SolidClass = script_mover : "Scripted brush entity. A simplified means of moving brushes around based on events.\n\nRequires an origin brush."
 [
 	modelscale(string) : Modelscale : 1 : "Scale multiplier (defaults to 1, and scales uniformly)"
 	modelscale_vec(string) : Modelscale_vec : : "Set scale per-axis.  Overrides modelscale, so if you have both the modelscale is ignored"
 	model2(studio) : "Model" : : "optional md3 to draw over the solid clip brush"
 	scriptname(string) : Scriptname : : "name used for scripting purposes (like aiName in AI scripting)"
-	health(string) : Health : : "optionally make this entity damagable"
+	health(string) : "Health" : : "optionally make this entity damagable"
 	spawnflags(flags) = 
 	[
 		1 : "Triggered Spawn" : 0
@@ -1238,6 +1278,10 @@
 	scriptname(string) : Scriptname : : "name used for scripting purposes (REQUIRED=='game_manager')"
 ]
 
+///
+///
+///
+
 @SolidClass = worldspawn : "Worldspawn spawnflags to indicate if a gametype is not supported\n\nEvery map should have exactly one worldspawn."
 [
 	music(string) : Music Track : : "Music wav file"
@@ -1260,6 +1304,10 @@
 		4 : "no_checkpoint" : 0
 	]
 ]
+
+///
+///
+///
 
 @PointClass size(-8 -8 -8, 8 8 8) color(255 0 0) = target_give : "Gives the activator all the items pointed to."
 [
@@ -1416,6 +1464,10 @@
 	]
 ]
 
+///
+///
+///
+
 @PointClass size(-18 -18 -24, 18 18 48) color(128 0 0) = team_CTF_redplayer : "Only in CTF games.  Red players spawn here at game start.\n\nAs of wolf version 1.32 using alertentity on the player start points and spawn\n\npoints targetname toggles it's active/inactive state."
 [
 	spawnflags(flags) = 
@@ -1478,6 +1530,10 @@
 	]
 ]
 
+///
+///
+///
+
 @PointClass size(-8 -8 -8, 8 8 8) color(128 179 77) = camera_cam
 [
 	track(string) : Track : : "is the targetname of the entity providing the starting direction use an info_notnull "
@@ -1498,6 +1554,10 @@
 @SolidClass = camera_reset_player : "touched will record the players position and fire off its targets and or cameras\n\nused will reset the player back to his last position"
 [
 ]
+
+///
+///
+///
 
 @SolidClass = trigger_multiple : "Variable sized repeatable trigger.  Must be targeted at one or more entities.\n\nso, the basic time between firing is a random time between"
 [
