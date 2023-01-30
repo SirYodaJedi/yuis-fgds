@@ -1538,8 +1538,8 @@
 
 @SolidClass = trigger_hurt : "Any entity that touches this will be hurt.\n\nIt does dmg points of damage each server frame\n\nTargeting the trigger will toggle its on / off state.\n\ndefault is zero\n\nthe entity must be used first before it will count down its life "
 [
-	dmg(string) : Dmg : : "default 5 (whole numbers only)"
-	life(string) : Life : : "time this brush will exist if value is zero will live for ever ei 0.5 sec 2.sec"
+	dmg(integer) : "Damage" : "5" : "default 5 (whole numbers only)"
+	life(integer) : "Life" : "0" : "time this brush will exist if value is zero will live for ever ei 0.5 sec 2.sec"
 	spawnflags(flags) = 
 	[
 		1 : "start_off" : 0
@@ -1582,7 +1582,7 @@
 
 @SolidClass = trigger_flagonly : "Player must be carrying the proper flag for it to trigger.\n\nIt will call the death function in the object's script."
 [
-	scriptName(string) : ScriptName : : "The object name in the script file"
+	scriptName(string) : "Script Name" : : "The object name in the script file"
 	spawnflags(flags) = 
 	[
 		1 : "red_flag" : 0 : "-- only trigger if player is carrying red flag"
@@ -1592,8 +1592,8 @@
 
 @SolidClass = trigger_objective_info : "Players in this field will see a message saying that they are near an objective.\n\nAlso, if targeting a dynamitable objective, the dynamite must be armed inside of the trigger to blow up the objective."
 [
-	track(string) : Location name :  : "Mandatory, this text will be appended to ''You are near ''"
-	target(string) : Target :  : "You may target dynamitable objectives"
+	track(string) : "Location name" :  : "Mandatory, this text will be appended to ''You are near ''"
+	target(string) : "Target" :  : "You may target dynamitable objectives"
 	score(integer) : Score :  : "If targeting a dynamitable objective, give this score when blown."
 	
 	spawnflags(flags) = 
