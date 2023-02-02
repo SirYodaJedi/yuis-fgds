@@ -60,6 +60,15 @@
 	]
 ]
 
+@BaseClass = Base_WeatherParticles
+[
+	health(integer) : "Density" : "32" : ""
+	spawnflags(flags) = 
+	[
+		1 : "turbulent" : 0
+	]
+]
+
 //
 // Unsorted
 //
@@ -365,16 +374,8 @@
 
 @PointClass size(-18 -18 -24, 18 18 48) offset(0 0 24) color(255 0 255) = info_player_deathmatch : "potential spawning position for deathmatch games.\n\nThe first time a player enters the game, they will be at an 'initial' spot.\n\nTargets will be fired when someone spawns in on them.\n\nIf the start position is targeting an entity, the players camera will start out facing that ent (like an info_notnull)"
 [
-	nobots(choices) : "No Bots" : : "will prevent bots from using this spot."
-	[
-		"0" : "Bots Can Use"
-		"1" : "Prevent Bot usage"
-	]
-	nohumans(choices) : "No Humans" : : "will prevent non-bots from using this spot."
-	[
-		"0" : "Humans Can Use"
-		"1" : "Prevent Human Usage"
-	]
+	nobots(boolean) : "No Bots" : : "will prevent bots from using this spot."
+	nohumans(boolean) : "No Humans" : : "will prevent non-bots from using this spot."
 	spawnflags(flags) = 
 	[
 		1 : "Initial Spawn" : 0
@@ -429,15 +430,11 @@
 [
 ]
 
-// 
-// ---- You Are Here
-// 
-
 @PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) = light : "Non-displayed light.\n\nLights pointed at a target will be spotlights."
 [
 	light(integer) : "Light" : "300" : "overrides the default 300 intensity."
 	radius(integer) : "Radius" : "64" : "overrides the default 64 unit radius of a spotlight at the target point."
-	fade(string) : "Fade" : "1.0f" : "falloff/radius adjustment value. multiply the run of the slope by fade (1.0f default) (only valid for Linear lights) (wolf)"
+	fade(float) : "Fade" : "1.0f" : "falloff/radius adjustment value. multiply the run of the slope by fade (1.0f default) (only valid for Linear lights) (wolf)"
 	//q3map_non-dynamic(choices) : "Non-dynamic" : "0" : "specifies that this light should not contribute to the world's 'light grid' and therefore will not light dynamic models in the game.(wolf)"
 	//[
 	//	"0" : "False"
@@ -455,65 +452,87 @@
 	]
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) = lightJunior : "Non-displayed light that only affects dynamic game models, but does not contribute to lightmaps\n\nNonlinear checkbox gives inverse square falloff instead of linear \n\nAngle adds light:surface angle calculations (only valid for Linear lights) (wolf)\n\nLights pointed at a target will be spotlights."
+@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) = lightJunior : "Non-displayed light that only affects dynamic game models, but does not contribute to lightmaps"
 [
-	light(string) : Light : : "overrides the default 300 intensity."
-	radius(string) : Radius : : "overrides the default 64 unit radius of a spotlight at the target point."
-	fade(string) : Fade : : "falloff/radius adjustment value. multiply the run of the slope by fade (1.0f default) (only valid for Linear lights) (wolf)"
+	light(integer) : "Light" : "300" : "overrides the default 300 intensity."
+	radius(integer) : "Radius" : "64" : "overrides the default 64 unit radius of a spotlight at the target point."
+	fade(float) : "Fade" : "1.0f" : "falloff/radius adjustment value. multiply the run of the slope by fade (1.0f default) (only valid for Linear lights) (wolf)"
 	_color(color1) : "RGB color" : "1 1 0.5" : "weighted RGB value of light color"
 	spawnflags(flags) = 
 	[
-		1 : "nonlinear" : 0
-		2 : "angle" : 0
+		1 : "Non-Linear" : 0 : "gives inverse square falloff instead of linear"
+		2 : "Angle" : 0 : "adds light_surface angle calculations (only valid for Linear lights)"
 		4 : "negative_spot" : 0
 		8 : "negative_point" : 0
 	]
 ]
 
-@PointClass size(-32 -32 -24, 32 32 -16) color(255 0 0) = misc_teleporter_dest : "Point teleporters at these.\n\nNow that we don't have teleport destination pads, this is just\n\nan info_notnull"
+@PointClass size(-32 -32 -24, 32 32 -16) color(255 0 0) iconsprite("sprites/VHE/info_target.spr") = misc_teleporter_dest : "Point teleporters at these.\n\nNow that we don't have teleport destination pads, this is just\n\nan info_notnull"
 [
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) color(255 0 0) = misc_grabber_trap : "If you do not set a wait value, then it will default to the duration of the animations.  (so since the first attack animation is 11 frames long and plays at 15 fps, the default wait after using attack 1 would be 11/15, or 0.73 seconds)\n\ngrabber media:\n\nmodel - models/misc/grabber/grabber.md3\n\nwake sound - models/misc/grabber/grabber_wake.wav\n\nattack sound - models/misc/grabber/grabber_attack.wav\n\npain sound - models/misc/grabber/grabber_pain.wav\n\nThe current frames are:\n\nfirst frame\n    |   looping frames\n        |   fps\n            |   damage at frame\n                |"
+@PointClass size(-8 -8 -8, 8 8 8) color(255 0 0) = misc_grabber_trap : "Grabber trap"
 [
-	fields(string) : Fields : : ""
-	adist(string) : Adist : : "- radius of 'wakeup' box.  player passing closer than distance activates grabber (def: 64)"
-	bdist(string) : Bdist : : "- radius of 'attack' box.  player passing into this gets a swipe.  (def: 32)"
-	health(string) : "Health" : : "- how much damage grabber can take after 'wakeup' (def: 100)"
-	range(string) : Range : : "- when attacking, how far from the origin the grabber can strike (def: 64)"
-	dmg(string) : Dmg : : "- max damage to give on a successful strike (def: 10)"
-	wait(string) : Wait : : "- how long to wait between strikes if the player stays within the 'attack' box (def: see below)"
+	// test this model for editor use:
+	// studio(models/misc/grabber/grabber.md3)
+	
+	adist(integer) : "Wakeup Radius" : "64" : "Radius of 'wakeup' box.  player passing closer than distance activates grabber (def: 64)"
+	bdist(integer) : "Attack Radius" : "32" : "Radius of 'attack' box.  player passing into this gets a swipe.  (def: 32)"
+	health(integer) : "Health" : "100" : "How much damage grabber can take after 'wakeup' (def: 100)"
+	range(integer) : "Range" : "64" : "When attacking, how far from the origin the grabber can strike (def: 64)"
+	dmg(integer) : "Damage" : "10" : "Max damage to give on a successful strike (def: 10)"
+	wait(integer) : "Wait" : : "How long to wait between strikes if the player stays within the 'attack' box (def: see FGD)"
+	
+	// If you do not set a "wait" value, then it will default to the duration of the animations.  (so since the first attack animation is 11 frames long and plays at 15 fps, the default wait after using attack 1 would be 11/15, or 0.73 seconds)
+
+	// grabber media:
+	// model - "models/misc/grabber/grabber.md3"
+	// wake sound - "models/misc/grabber/grabber_wake.wav"
+	// attack sound - "models/misc/grabber/grabber_attack.wav"
+	// pain sound - "models/misc/grabber/grabber_pain.wav"
+
+	// The current frames are:
+	// first frame
+	// |   length
+	// 	// |   looping frames
+	// 	// 	// |   fps
+	// 	// 	// 	// |   damage at frame
+	// 	// 	// 	// 	// |
+	// 0   6   6   5   0  (main idle)
+	// 5   21  21  7   0  (random idle)
+	// 25  11  10  15  7  (attack big swipe)
+	// 35  16  0   15  6  (attack small swipe)
+	// 50  16  0   15  7  (attack grab)
+	// 66  1   1   15  0  (starting position)
 ]
 
-@PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) = misc_spotlight
+@PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) = misc_spotlight : "Spotlight (*not active yet*)"
 [
-	target(target_destination) : Target : : "- .camera (spline) file for light to track.  do not specify file extension."
+	target(target_destination) : Target : : "'.camera' (spline) file for light to track. Do not specify file extension."
 	spawnflags(flags) = 
 	[
 		1 : "start_on" : 0
-		2 : "back_and_forth" : 0 : "- when end of target spline is hit, reverse direction rather than looping (looping is default)"
+		2 : "Back and Forth" : 0 : "when end of target spline is hit, reverse direction rather than looping (looping is default)"
 	]
 ]
 
-@PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) studio() = misc_model
+@PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) studio() = misc_model : "Model embedded into BSP file when compiling (allows lightmapping)"
 [
-	model(studio) : "Model" : : "arbitrary .md3 file to display"
-	modelscale(string) : Modelscale : : "scale multiplier (defaults to 1x)"
-	modelscale_vec(string) : Modelscale_vec : : "scale multiplier (defaults to 1 1 1, scales each axis as requested)"
-	modelscale_vec(string) : Modelscale_vec : : "- Set scale per-axis.  Overrides modelscale, so if you have both, the modelscale is ignored"
+	model(studio) : "Model" : "" : "arbitrary .md3 file to display"
+	modelscale(float) : "Model Scale" : "1.0" : "scale multiplier (defaults to 1x)"
+	modelscale_vec(string) : "Model Scale (vectors)" : "1 1 1" : "Set scale per-axis.  Overrides modelscale, so if you have both, the modelscale is ignored"
 ]
 
 @PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) studio() = misc_gamemodel : "md3 placed in the game at runtime (rather than in the bsp)"
 [
-	model(studio) : "Model" : : "arbitrary .md3 file to display"
-	modelscale(string) : Modelscale : : "scale multiplier (defaults to 1x, and scales uniformly)"
-	modelscale_vec(string) : Modelscale_vec : : "scale multiplier (defaults to 1 1 1, scales each axis as requested)"
-	trunk(string) : Trunk : : "diameter of solid core (used for trace visibility and collision (not ai pathing))"
-	trunkheight(string) : Trunkheight : : "height of trunk"
-	modelscale_vec(string) : Modelscale_vec : : "- Set scale per-axis.  Overrides modelscale, so if you have both, the modelscale is ignored"
+	model(studio) : "Model" : "" : "arbitrary .md3 file to display"
+	modelscale(float) : :"Model Scale" : "1.0" : "scale multiplier (defaults to 1x, and scales uniformly)"
+	modelscale_vec(string) : "Model Scale (vectors)" : "1 1 1" : "Set scale per-axis.  Overrides modelscale, so if you have both, the modelscale is ignored"
+	trunk(float) : Trunk : : "diameter of solid core (used for trace visibility and collision (not ai pathing))"
+	trunkheight(string) : "Trunk Height" : : "height of trunk"
 	spawnflags(flags) = 
 	[
-		1 : "orient_lod" : 0 : "- if flagged, the entity will yaw towards the player when the LOD switches"
+		1 : "Orient LoD" : 0 : "If flagged, the entity will yaw towards the player when the LOD switches"
 	]
 ]
 
@@ -535,59 +554,60 @@
 
 @PointClass size(-8 -8 -8, 8 8 8) color(0 0 255) = misc_portal_camera : "The target for a misc_portal_director.  You can set either angles or target another entity to determine the direction of view."
 [
-	roll(string) : Roll : : "an angle modifier to orient the camera around the target vector;"
+	roll(angles) : "Angle" : : "an angle modifier to orient the camera around the target vector;"
 	spawnflags(flags) = 
 	[
-		1 : "slowrotate" : 0
-		2 : "fastrotate" : 0
+		1 : "Slow Rotation" : 0
+		2 : "Fast Rotation" : 0
 	]
 ]
 
-@PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) = shooter_mortar : "Lobs a mortar so that it will pass through the info_notnull targeted by this entity\n\nif LAUNCH_FX is checked a smoke effect will play at the origin of this entity.\n\nif FLASH_FX is checked a muzzle flash effect will play at the origin of this entity."
+@PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) = shooter_mortar : "Lobs a mortar so that it will pass through the info_notnull targeted by this entity."
 [
-	random(string) : Random : : "the number of degrees of deviance from the target. (1.0 default)"
+	random(float) : "Deviance" : "1.0" : "the number of degrees of deviance from the target. (1.0 default)"
 	spawnflags(flags) = 
 	[
-		1 : "smoke_fx" : 0
-		2 : "flash_fx" : 0
+		1 : "Smoke FX" : 0 : "A smoke effect will play at the origin of this entity."
+		2 : "Flash FX" : 0 : "A muzzle flash effect will play at the origin of this entity."
 	]
 ]
 
 @PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) = shooter_rocket : "Fires at either the target or the current direction."
 [
-	random(string) : Random : : "the number of degrees of deviance from the target. (1.0 default)"
+	random(float) : "Deviance" : "1.0" : "the number of degrees of deviance from the target. (1.0 default)"
 ]
 
 @PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) = shooter_zombiespit : "Fires at either the target or the current direction."
 [
-	random(string) : Random : : "the number of degrees of deviance from the target. (1.0 default)"
+	random(float) : "Deviance" : "1.0" : "the number of degrees of deviance from the target. (1.0 default)"
 ]
 
 @PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) = shooter_tesla
 [
-	sticktime(string) : Sticktime : : "- how long each bolt should 'stick' to an impact point (def: .5)"
-	random(string) : Random : : "- how far away to drift from the target. (def: 0.0)"
-	width(string) : Width : : "- width of the bolts (def: 20)"
-	count(string) : Count : : "- number of bolts to fire per impact point.  (def: 2)"
-	DLightsize(string) : DLightsize : : "- how big to make the attached light.  (def: 500)"
+	sticktime(float) : "Stick Time" : "0.5" : "How long each bolt should 'stick' to an impact point (def: .5)"
+	random(float) : "Drift" : "0.0" : "How far away to drift from the target. (def: 0.0)"
+	width(integer) : "Width" : "20" : "Width of the bolts (def: 20)"
+	count(integer) : "Count" : : "Number of bolts to fire per impact point.  (def: 2)"
+	dlightsize(integer) : "Dynamic Light Size" : "500" : "How big to make the attached light.  (def: 500)"
+	color(color1) : "Dynamic Light Color" : "" : ""	
 	spawnflags(flags) = 
 	[
-		1 : "start_on" : 0 : "means it starts out active, the default is to start off and fire when triggered"
-		2 : "dlight" : 0 : "will have a built-in dlight flashing too (use color picker to set color of dlight. (def: blue) )"
+		1 : "Start On" : 0 : "Starts out active, the default is to start off and fire when triggered"
+		2 : "Dynamic Light" : 0 : "will have a built-in dlight flashing too (use color picker to set color of dlight. (def: blue) )"
 	]
 ]
 
 @PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) = shooter_grenade : "Fires at either the target or the current direction."
 [
-	random(string) : Random : : "is the number of degrees of deviance from the target. (1.0 default)"
+	random(float) : "Deviance" : "1.0" : "is the number of degrees of deviance from the target. (1.0 default)"
 ]
 
 @PointClass size(-16 -16 -16, 16 16 16) color(255 0 0) = shooter_sniper : "Fires at either the target or the current direction."
 [
-	random(string) : Random : : "is the number of degrees of deviance from the target. (1.0 default)"
-	damage(string) : Damage : : "the amount of damage sniper will cause when he hits his target default is 10"
-	radius(string) : Radius : : "is the dist the target would need to travel before sniper lost his beat default 256"
-	delay(string) : Delay : : "is the rate of fire defaults to 1 sec"
+	random(float) : "Deviance" : "1.0" : "is the number of degrees of deviance from the target. (1.0 default)"
+	damage(integer) : "Damage" : "10" : "the amount of damage sniper will cause when he hits his target default is 10"
+	radius(integer) : "Radius" : "256" : "is the dist the target would need to travel before sniper lost his beat default 256"
+	delay(integer) : "Delay" : : "is the rate of fire defaults to 1 sec"
 ]
 
 @SolidClass = sniper_brush : "this should be a volume that will encompase the area where the sniper target assigned to the\n\nbrush would fire at the player"
@@ -596,101 +616,73 @@
 
 @PointClass size(-4 -4 -4, 4 4 4) color(0 255 0) = corona : "Use color picker to set color or key color.  values are 0.0-1.0 for each color (rgb)."
 [
-	scale(string) : Scale : : "will designate a multiplier to the default size.  (so 2.0 is 2xdefault size, 0.5 is half)"
+	scale(float) : "Scale" : "1.0" : "will designate a multiplier to the default size.  (so 2.0 is 2xdefault size, 0.5 is half)"
+	color(color1) : "Color" : "" : ""
 	spawnflags(flags) = 
 	[
-		1 : "start_off" : 0
+		1 : "Start Off" : 0
 	]
 ]
 
-@PointClass size(-12 -12 -12, 12 12 12) color(0 255 0) = dlight : "Stylestring characters run at 10 cps in the game. (meaning the alphabet, at 24 characters, would take 2.4 seconds to cycle)\n\nUse color picker to set color or key color.  values are 0.0-1.0 for each color (rgb)."
+@PointClass size(-12 -12 -12, 12 12 12) color(0 255 0) = dlight : "Dynamic Light\n\nStylestring characters run at 10 cps in the game. (meaning the alphabet, at 24 characters, would take 2.4 seconds to cycle)\n\nUse color picker to set color or key color.  values are 0.0-1.0 for each color (rgb)."
 [
-	style(string) : Style : : "value is an int from 1-19 that contains a pre-defined 'flicker' string."
-	stylestring(string) : Stylestring : : "set your own 'flicker' string.  (ex. klmnmlk). NOTE: this should be all lowercase"
-	offset(string) : Offset : : "change the initial index in a style string.  So val of 3 in the above example would start this light at 'N'.  (used to get DLights using the same style out of sync)."
-	atten(string) : Atten : : "offset from the alpha values of the stylestring.  stylestring of ddeeffzz with an atten of -1 would result in ccddeeyy"
-	shader(string) : Shader : : "name of shader to apply"
-	sound(string) : Sound : : "sound to loop every cycle (this actually just plays the sound at the beginning of each cycle)"
-	styles(string) : Styles : : ""
+	style(choices) : "Flicker Preset" : : "value is an int from 1-19 that contains a pre-defined 'flicker' string."
+	[
+		1 : "mmnmmommommnonmmonqnmmo"
+		2 : "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba"
+		3 : "mmmmmaaaaammmmmaaaaaabcdefgabcdefg"
+		4 : "ma"
+		5 : "jklmnopqrstuvwxyzyxwvutsrqponmlkj"
+		6 : "nmonqnmomnmomomono"
+		7 : "mmmaaaabcdefgmmmmaaaammmaamm"
+		8 : "aaaaaaaazzzzzzzz"
+		9 : "mmamammmmammamamaaamammma"
+		10 : "abcdefghijklmnopqrrqponmlkjihgfedcba"
+		11 : "mmnommomhkmmomnonmmonqnmmo"
+		12 : "kmamaamakmmmaakmamakmakmmmma"
+		13 : "kmmmakakmmaaamammamkmamakmmmma"
+		14 : "mmnnoonnmmmmmmmmmnmmmmnonmmmmmmm"
+		15 : "mmmmnonmmmmnmmmmmnonmmmmmnmmmmmmm"
+		16 : "zzzzzzzzaaaaaaaa"
+		17 : "zzzzzzzzaaaaaaaaaaaaaaaa"
+		18 : "aaaaaaaazzzzzzzzaaaaaaaa"
+		19 : "aaaaaaaaaaaaaaaazzzzzzzz"
+	]
+	stylestring(string) : "Style String" : : "set your own 'flicker' string.  (ex. klmnmlk). NOTE: this should be all lowercase"
+	offset(integer) : "Offset" : : "change the initial index in a style string.  So val of 3 in the above example would start this light at 'N'.  (used to get DLights using the same style out of sync)."
+	atten(string) : "Attenuation" : : "offset from the alpha values of the stylestring.  stylestring of ddeeffzz with an atten of -1 would result in ccddeeyy"
+	color(color1) : "Light Color" : "" : ""
+	shader(string) : "Material" : : "Name of material in .SHADER file to apply"
+	sound(string) : "Sound" : : "sound to loop every cycle (this actually just plays the sound at the beginning of each cycle)"
 	spawnflags(flags) = 
 	[
-		1 : "forceactive" : 0 : "- toggle makes sure this light stays alive in a map even if the user has r_dynamiclight set to 0."
-		2 : "startoff" : 0 : "- means the dlight doesn't spawn in until ent is triggered"
-		4 : "onetime" : 0 : "- when the dlight is triggered, it will play through it's cycle once, then shut down until triggered again"
+		1 : "Force Active" : 0 : "toggle makes sure this light stays alive in a map even if the user has r_dynamiclight set to 0."
+		2 : "Start Off" : 0 : "means the dlight doesn't spawn in until ent is triggered"
+		4 : "Play Once" : 0 : "when the dlight is triggered, it will play through it's cycle once, then shut down until triggered again"
 	]
 ]
 
-@PointClass size(-256 -256 -16, 256 256 16) color(255 0 0) = misc_snow256 : "health = density defaults to 32"
-[
-	spawnflags(flags) = 
-	[
-		1 : "turbulent" : 0
-	]
-]
+@PointClass base(Base_WeatherParticles) size(-256 -256 -16, 256 256 16) color(255 0 0) = misc_snow256 : "" []
+@PointClass base(Base_WeatherParticles) size(-128 -128 -16, 128 128 16) color(255 0 0) = misc_snow128 : "" []
+@PointClass base(Base_WeatherParticles) size(-64 -64 -16, 64 64 16) color(255 0 0) = misc_snow64 : "" []
+@PointClass base(Base_WeatherParticles) size(-32 -32 -16, 32 32 16) color(255 0 0) = misc_snow32 : "" []
 
-@PointClass size(-128 -128 -16, 128 128 16) color(255 0 0) = misc_snow128 : "health = density defaults to 32"
-[
-	spawnflags(flags) = 
-	[
-		1 : "turbulent" : 0
-	]
-]
+@PointClass base(Base_WeatherParticles) size(-8 -8 0, 8 8 16) color(255 0 0) = misc_bubbles8 : "" []
+@PointClass base(Base_WeatherParticles) size(-16 -16 0, 16 16 16) color(255 0 0) = misc_bubbles16 : "" []
+@PointClass base(Base_WeatherParticles) size(-32 -32 0, 32 32 16) color(255 0 0) = misc_bubbles32 : "" []
+@PointClass base(Base_WeatherParticles) size(-64 -64 0, 64 64 64) color(255 0 0) = misc_bubbles64 : "" []
 
-@PointClass size(-64 -64 -16, 64 64 16) color(255 0 0) = misc_snow64 : "health = density defaults to 32"
+@PointClass size(-16 -16 -24, 16 16 24) color(255 0 0) = misc_mg42 : ""
 [
+	harc(integer) : "Horizontal Fire Arc" : "115" : ""
+	varc(integer) : "Vertical Fire Arc" : "45" : ""
+	health(integer) : "Health" : "50" : "how much damage can it take"
+	damage(integer) : "Damage" : "" : "determines how much the weapon will inflict if a non player uses it"
+	accuracy(float) : "Accuracy" : "1.0" : "An entry of 0.5 would make it 50% accurate"
 	spawnflags(flags) = 
 	[
-		1 : "turbulent" : 0
-	]
-]
-
-@PointClass size(-32 -32 -16, 32 32 16) color(255 0 0) = misc_snow32 : "health = density defaults to 32"
-[
-	spawnflags(flags) = 
-	[
-		1 : "turbulent" : 0
-	]
-]
-
-@PointClass size(-8 -8 0, 8 8 16) color(255 0 0) = misc_bubbles8 : "health = density defaults to 32"
-[
-	spawnflags(flags) = 
-	[
-		1 : "turbulent" : 0
-	]
-]
-
-@PointClass size(-16 -16 0, 16 16 16) color(255 0 0) = misc_bubbles16 : "health = density defaults to 32"
-[
-	spawnflags(flags) = 
-	[
-		1 : "turbulent" : 0
-	]
-]
-
-@PointClass size(-32 -32 0, 32 32 16) color(255 0 0) = misc_bubbles32 : "health = density defaults to 32"
-[
-	spawnflags(flags) = 
-	[
-		1 : "turbulent" : 0
-	]
-]
-
-@PointClass size(-64 -64 0, 64 64 64) color(255 0 0) = misc_bubbles64 : "health = density defaults to 32"
-[
-	spawnflags(flags) = 
-	[
-		1 : "turbulent" : 0
-	]
-]
-
-@PointClass size(-16 -16 -24, 16 16 24) color(255 0 0) = misc_mg42 : "harc = horizonal fire arc Default is 115\n\nvarc = vertical fire arc Default is 45\n\nhealth = how much damage can it take default is 50\n\ndamage = determines how much the weapon will inflict if a non player uses it"
-[
-	accuracy(string) : Accuracy : : "all guns are 100% accurate an entry of 0.5 would make it 50% "
-	spawnflags(flags) = 
-	[
-		1 : "high" : 0
-		2 : "notripod" : 0
+		1 : "High" : 0
+		2 : "No Tripod" : 0
 	]
 ]
 
@@ -698,17 +690,22 @@
 [
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) color(77 179 204) = misc_spawner : "use the pickup name\n  when this entity gets used it will spawn an item \n\nthat matches its spawnitem field\n\ne.i.\n\nspawnitem "
+@PointClass size(-8 -8 -8, 8 8 8) color(77 179 204) = misc_spawner : "use the pickup name\n  when this entity gets used it will spawn an item \n\nthat matches its spawnitem field (such as 9mm"
+[
+	spawnitem(string) : : "9mm" :
+]
+
+@PointClass size(-16 -16 -16, 16 16 16) color(102 230 179) = misc_firetrails : "This entity must target the plane its going to be attached to\n\nits use function will turn the fire stream effect on and off\n\nan alert entity call will kill it"
 [
 ]
 
-@PointClass size(-16 -16 -16, 16 16 16) color(102 230 179) = misc_firetrails : "This entity must target the plane its going to be attached to\n  its use function will turn the fire stream effect on and off\n  an alert entity call will kill it"
-[
-]
+///
+///
+///
 
-///
-///
-///
+//
+// --- You Are Here ---
+//
 
 @SolidClass = func_door : "NOMONSTER   monsters will not trigger this door\n     0 - nosound (default)\n     1 - metal\n     2 - stone\n     3 - lab\n     4 - wood\n     5 - iron/jail\n     6 - portcullis\n     7 - wood (quiet)"
 [
@@ -1343,7 +1340,7 @@
 	]
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) color(255 0 0) = target_speaker : "A global sound will play full volume throughout the level.\n\nActivator sounds will play on the player that activated the target.\n\nGlobal and activator sounds can't be combined with looping.\n\nNormal sounds play each time the target is used.\n\nLooped sounds will be toggled by use functions.\n\nMultiple identical looping sounds will just increase volume without any speed cost."
+@PointClass size(-8 -8 -8, 8 8 8) color(255 0 0) iconsprite("sprites/speaker.spr") = target_speaker : "A global sound will play full volume throughout the level.\n\nActivator sounds will play on the player that activated the target.\n\nGlobal and activator sounds can't be combined with looping.\n\nNormal sounds play each time the target is used.\n\nLooped sounds will be toggled by use functions.\n\nMultiple identical looping sounds will just increase volume without any speed cost."
 [
 	noise(string) : Sound : : "wav file to play"
 	wait(string) : Wait : : "Seconds between auto triggerings, 0 = don't auto trigger"
@@ -1371,7 +1368,7 @@
 [
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) color(255 255 0) = target_relay : "This doesn't perform any actions except fire its targets.\n\nThe activator can be forced to be from a certain team.\n\nif RANDOM is checked, only one of the targets will be fired, not all of them\n\nthis key is currently an int (1-16) which matches the id of a key entity (key_key1 = 1, etc)\n\nBy default this sound is sound/movers/doors/default_door_locked.wav"
+@PointClass size(-8 -8 -8, 8 8 8) color(255 255 0) iconsprite("sprites/VHE/trigger_relay.spr") = target_relay : "This doesn't perform any actions except fire its targets.\n\nThe activator can be forced to be from a certain team.\n\nif RANDOM is checked, only one of the targets will be fired, not all of them\n\nthis key is currently an int (1-16) which matches the id of a key entity (key_key1 = 1, etc)\n\nBy default this sound is sound/movers/doors/default_door_locked.wav"
 [
 	key(string) : Key : : "specifies an item you can be carrying that affects the operation of this relay"
 	lockednoise(string) : Lockednoise : : "specifies a .wav file to play if the relay is used and the player doesn't have the necessary key."
