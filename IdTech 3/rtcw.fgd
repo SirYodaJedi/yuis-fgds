@@ -646,31 +646,40 @@
 // --- You Are Here ---
 //
 
-@SolidClass = func_door : "NOMONSTER   monsters will not trigger this door\n     0 - nosound (default)\n     1 - metal\n     2 - stone\n     3 - lab\n     4 - wood\n     5 - iron/jail\n     6 - portcullis\n     7 - wood (quiet)"
+@SolidClass = func_door : "Brush-based sliding door"
 [
-	key(string) : Key : : "-1 for locked, key number for which key opens, 0 for open.  default '0' unless door is targeted.  (trigger_aidoor entities targeting this door do /not/ affect the key status)"
+	key(integer) : Key : "0" : "-1 for locked, key number for which key opens, 0 for open.  default '0' unless door is targeted.  (trigger_aidoor entities targeting this door do /not/ affect the key status)"
 	model2(studio) : "Model" : : ".md3 model to also draw"
-	angle(string) : Angle : : "determines the opening direction"
-	targetname(target_source) : Name : : "if set, no touch field will be spawned and a remote button or trigger field activates the door."
-	speed(string) : Speed : : "movement speed (100 default)"
-	closespeed(string) : Closespeed : : "optional different movement speed for door closing"
-	wait(string) : Wait : : "wait before returning (3 default, -1 = never return)"
-	lip(string) : Lip : : "lip remaining at end of move (8 default)"
-	dmg(string) : Dmg : : "damage to inflict when blocked (2 default)"
-	color(string) : Color : : "constantLight color"
-	light(string) : Light : : "constantLight radius"
-	health(string) : "Health" : : "if set, the door must be shot open"
+	angle(integer) : "Opening Angle" : : "determines the opening direction"
+	targetname(target_source) : "Name" : : "if set, no touch field will be spawned and a remote button or trigger field activates the door."
+	speed(integer) : "Speed" : "100" : "movement speed (100 default)"
+	closespeed(integer) : "Close Speed" : : "optional different movement speed for door closing"
+	wait(integer) : "Wait" : "3" : "wait before returning (3 default, -1 = never return)"
+	lip(integer) : "Lip" : "8" : "lip remaining at end of move (8 default)"
+	dmg(integer) : "Damage" : : "damage to inflict when blocked (2 default)"
+	color(color1) : "Color" : : "constantLight color"
+	light(integer) : "Light" : : "constantLight radius"
+	health(integer) : "Health" : : "if set, the door must be shot open"
 	team(string) : "Team" : : "team name.  other doors with same team name will open/close in syncronicity"
-	shoot_thru_scale(string) : Shoot_thru_scale : : "Multiplier for how much damage bullets do that have passed through the door.  Effectively how much damage the door 'absorbs'.  0.0 - 1.0 (0.0 will turn SHOOT-THRU off, 1.0 is full damage)"
-	type(string) : Type : : "use sounds based on construction of door:"
+	shoot_thru_scale(float) : "Penetration Damage Multiplier" : "1.0" : "Multiplier for how much damage bullets do that have passed through the door.  Effectively how much damage the door 'absorbs'.  0.0 - 1.0 (0.0 will turn SHOOT-THRU off, 1.0 is full damage)"
+	type(choices) : "Type" : "0" : "use sounds based on construction of door"
+	[
+		 "0" : "No Sound (default)"
+		 "1" : "Metal"
+		 "2" : "Stone"
+		 "3" : "Lab"
+		 "4" : "Wood"
+		 "5" : "Iron/Jail"
+		 "6" : "Portcullis"
+		 "7" : "Wood (Quiet)"
+	]
 	spawnflags(flags) = 
 	[
-		1 : "start_open" : 0 : "the door to moves to its destination when spawned, and operate in reverse.  It is used to temporarily or permanently close off an area when triggered (not useful for touch or takedamage doors)."
-		2 : "toggle" : 0 : "wait in both the start and end states for a trigger event."
-		4 : "crusher" : 0
-		8 : "touch" : 0
-		16 : "shoot" : 0 : "-THRU	Bullets don't stop when they hit the door.  Set shoot_thru_scale with bullet damage scale (see below)"
-		64 : "thru" : 0
+		1 : "Start Open" : 0 : "the door to moves to its destination when spawned, and operate in reverse.  It is used to temporarily or permanently close off an area when triggered (not useful for touch or takedamage doors)."
+		2 : "Is Toggled" : 0 : "wait in both the start and end states for a trigger event."
+		4 : "Crusher" : 0
+		8 : "Touch to Open" : 0
+		16 : "Can Shoot Through" : 0 : "Bullets don't stop when they hit the door.  Set shoot_thru_scale with bullet damage scale (see below)"
 	]
 ]
 
@@ -698,12 +707,7 @@
 	light(string) : Light : : "constantLight radius"
 	spawnflags(flags) = 
 	[
-		1 : "x" : 0
-		2 : "x" : 0
-		4 : "x" : 0
 		8 : "touch" : 0
-		16 : "x" : 0
-		32 : "x" : 0
 		64 : "stayopen" : 0
 	]
 ]
