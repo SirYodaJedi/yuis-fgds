@@ -6,8 +6,6 @@
 //
 // Last updated by Paril for re-release
 
-// Includes stuff from the tools for lighting etc
-@include "ericw_tools.fgd" 
 
 //
 // worldspawn
