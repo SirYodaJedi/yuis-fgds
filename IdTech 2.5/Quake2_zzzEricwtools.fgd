@@ -1,7 +1,7 @@
 @BaseClass = EWT_base_Worldspawn
 [
 	light(float) : "Ambient light" : "0" : "Set a global minimum light level of 'n' across the whole map. This is an easy way to eliminate completely dark areas of the level, however you may lose some contrast as a result, so use with care. Default 0"
-	_minlight_color(color) : "Minlight color R G B" : "255 255 255" : "Specify red(r), green(g) and blue(b) components for the colour of the minunlight. RGB component values are between 0 and 255 (between 0 and 1 is also accepted). Default is white light (255 255 255)"
+	_minlight_color(color255) : "Minlight color R G B" : "255 255 255" : "Specify red(r), green(g) and blue(b) components for the colour of the minunlight. RGB component values are between 0 and 255 (between 0 and 1 is also accepted). Default is white light (255 255 255)"
 	_minlightMottle(choices) : "Use mottle effect on minlight surfaces" : 1 =
 	[
 		0 : "Off"
@@ -16,11 +16,11 @@
 	_sunlight(float) : "Sunlight" : "0" : "Set the brightness of the sunlight coming from an unseen sun in the sky. Sky brushes (or more accurately bsp leafs with sky contents) will emit sunlight at an angle specified by the _sun_mangle key. Default 0"
 	_sun_mangle(string) : "Sun mangle (Yaw pitch roll)" : "0 -90 0" : "Specifies the direction of sunlight using yaw(x), pitch(y) and roll(z) in degrees. Yaw specifies the angle around the Z-axis from 0 to 359 degrees and pitch specifies the angle from 90 (straight up) to -90 (straight down). Roll has no effect, so use any value (e.g. 0). Default is straight down (0 -90 0)"
 	_sunlight_penumbra(float) : "Sunlight penumbra in degrees" : "0" : "Specifies the penumbra width, in degrees, of sunlight. Useful values are 3-4 for a gentle soft edge, or 10-20+ for more diffuse sunlight. Default is 0"
-	_sunlight_color(color) : "Sunlight color R G B" : "255 255 255" : "Specify red(r), green(g) and blue(b) components for the colour of the sunlight. RGB component values are between 0 and 255 (between 0 and 1 is also accepted). Default is white light (255 255 255)"
+	_sunlight_color(color255) : "Sunlight color R G B" : "255 255 255" : "Specify red(r), green(g) and blue(b) components for the colour of the sunlight. RGB component values are between 0 and 255 (between 0 and 1 is also accepted). Default is white light (255 255 255)"
 	_sunlight2(float) : "Sunlight hemisphere brightness" : "0" : "Set the brightness of a large dome of lights positioned around the map (16K unit radius). Useful for simulating higly diffused light (e.g. cloudy skies) in outdoor areas. Default 0"
-	_sunlight2_color(color) : "Sunlight hemisphere color R G B" : "255 255 255" : "Specifies the colour of _sunlight2, same format as _sunlight_color. Default is white light (255 255 255)"
+	_sunlight2_color(color255) : "Sunlight hemisphere color R G B" : "255 255 255" : "Specifies the colour of _sunlight2, same format as _sunlight_color. Default is white light (255 255 255)"
 	_sunlight3(float) : "Sunlight ground brightness" : "0" : "Set the brightness of a large dome of lights positioned around the map (16K unit radius). Useful for simulating higly diffused light (e.g. cloudy skies) in outdoor areas. Default 0"
-	_sunlight3_color(color) : "Sunlight ground color R G B" : "255 255 255" : "Specifies the colour of _sunlight2, same format as _sunlight_color. Default is white light (255 255 255)"
+	_sunlight3_color(color255) : "Sunlight ground color R G B" : "255 255 255" : "Specifies the colour of _sunlight2, same format as _sunlight_color. Default is white light (255 255 255)"
 
 	
 	
@@ -66,7 +66,7 @@
 @BaseClass = EWT_base_PointLight
 [
 	light(float) : "Brightness" : "300" : "Set the light intensity. Negative values are also allowed and will cause the entity to subtract light cast by other entities."
-	_color(color) : "Light color"
+	_color(color1) : "Light color"
 	wait(float) : "Fade distance multiplier" : "1" : "Scale the fade distance of the light by 'n'. Values of n more than 1 make the light fade more quickly with distance, and values less than 1 make the light fade more slowly (and thus reach further)."
 	delay(choices) : "Attenuation" :  : "Select an attenuation formula for the light"  = [
 		0 : "Linear falloff (Default)"
@@ -160,7 +160,7 @@
 	_dirt(float) : "Dirt mapping (override)"
 	_minlight(float) : "Min light for all surface"
 	_minlight_exclude(string) : "Exclude texture from minlight"
-	_mincolor(color) : "Min light color"
+	_mincolor(color1) : "Min light color"
 	_shadow(choices) : "Cast Shadows" = [
 		0 : "Do Nothing"
 		1 : "Cast shadows"

@@ -1294,7 +1294,7 @@
     height(float) : "Height thrown upward" : "200"
 ]
 
-@PointClass base(EditorFlags, Targetable, UseTargets) color(128 128 128) iconsprite("sprites/hammer/logic_relay.spr") = trigger_relay : "Relay trigger" []
+@PointClass base(EditorFlags, Targetable, UseTargets) color(128 128 128) iconsprite("sprites/hammer/trigger_relay.spr") = trigger_relay : "Relay trigger" []
 
 @SolidClass base(trigger_relay) = trigger_once : "Single fire trigger"
 [
@@ -1542,10 +1542,10 @@
     delay(float) : "Delay": "0.5" : "Time in seconds after transition starts to fully end"
 	wait(float) : "Wait" : "0.0" : "Time in seconds before a re-trigger will occur; mainly for Blend"
     fog_density(float) : "density value of fog, 0-1"
-    fog_color(color) : "color value of fog, 3d vector with values between 0-1 (r g b)"
+    fog_color(color1) : "color value of fog, 3d vector with values between 0-1 (r g b)"
     fog_sky_factor(float) : "sky_factor value of fog, 0-1"
     fog_density_off(float) : "transition density value of fog, 0-1"
-    fog_color_off(color) : "transition color value of fog, 3d vector with values between 0-1 (r g b)"
+    fog_color_off(color1) : "transition color value of fog, 3d vector with values between 0-1 (r g b)"
     fog_sky_factor_off(float) : "transition sky_factor value of fog, 0-1"
 
     heightfog_falloff(float) : "falloff value of heightfog, 0-1"
