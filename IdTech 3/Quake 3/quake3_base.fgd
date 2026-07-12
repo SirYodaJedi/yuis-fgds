@@ -26,12 +26,31 @@
 [
 	// can't use "shader" KV type in Worldspawn due to JACK bug with texture browser
 	
+	_comment(string) : "Editor Comment" : : "Field that is ignored by the game and compilers. Can be used for quick locational notes when mapping."
 	message(string) : "Logon Message" : "TODO - set map name" : "Text to print at user logon. Used for name of level."
-	music(sound) : "Music File" : : "Path/name of looping .wav file used for level's music (e.g. music/sonic5.wav). Specifying two files, like 'music/fla22k_04_intro.wav music/fla22k_04_loop.wav' will make former to play once and latter looped then.\nMust be stereo. The game will print warning if the sample rates aren't 22050 Hz, but 44100 and 11025 are perfectly valid (but 44 kHz results in a lot of file bloat, and 11 kHz sounds horrible, so sticking to 22 kHz is recommended).\n\nWAV file extension is automatically applied (OGG if Quake Live) if no file extension is specified."
+	author(string) : "Primary Map Author" : : "Quake Live only, but might as well fill it out."
+	author2(string) : "Secondary Map Author" : : "Quake Live only, but might as well fill it out."
+	music(sound) : "Music File" : : "Path/name of looping .wav file used for level's music (e.g. music/sonic5.wav). Specifying two files, like 'music/fla22k_04_intro.wav music/fla22k_04_loop.wav' will make former to play once and latter looped then.\nMust be stereo. The game will print warning if the sample rates aren't 22050 Hz, but 44100 and 11025 are perfectly valid (but 44 kHz results in a lot of file bloat, and 11 kHz sounds horribly muffled, so sticking to 22 kHz is recommended).\n\nWAV file extension is automatically applied (OGG if Quake Live) if no file extension is specified."
 	gravity(float) : "Gravity" : 800 : "Gravity of level (default normal gravity: 800)."
+	disable_loadout(string) : "Prohibited weapons (Quake Live)" : : "Quake Live only: Space-delineated list "
 	
-	// Team Arena atmospheric effects (TODO CONFIRM - also in Quake Live?)
-	enableDust(choices) : "Enable Dust" : 1 : "Team Arena only. Draw dust particles when walking on materials with ''surfaceParm dust''. " =
+	// "g",		// WP_GAUNTLET
+	// "mg",	// WP_MACHINEGUN
+	// "sg",	// WP_SHOTGUN
+	// "gl",	// WP_GRENADE_LAUNCHER
+	// "rl",	// WP_ROCKET_LAUNCHER
+	// "lg",	// WP_LIGHTNING
+	// "rg",	// WP_RAILGUN
+	// "pg",	// WP_PLASMAGUN
+	// "bfg",	// WP_BFG
+	// "gh",	// WP_GRAPPLING_HOOK
+	// "ng",	// WP_NAILGUN
+	// "pl",	// WP_PROX_LAUNCHER
+	// "cg",	// WP_CHAINGUN
+	// "hmg",	// WP_HMG
+	
+	// Team Arena atmospheric effects
+	enableDust(choices) : "Enable Dust" : 1 : "Team Arena and Quake Live only. Draw dust particles when walking on materials with ''surfaceParm dust''. " =
 	[
 		"" : "No"
 		1 : "Yes"
@@ -45,12 +64,12 @@
 	// Q3MAP2 keys
 	gridsize(string) : "Dynamic Light Granularity" : "64 64 128" : "Granularity of the lightgrid, created by q3map, which is used to dynamically light certain game objects, like players and items. Value is three integers separated by spaces, representing number of units between grid points in X Y Z. Default gridsize value is 64 64 128. Use larger powers of 2 to reduce BSP size and compile time on very large maps."
 	_blocksize(string) : "BSP Block Size" : "1024 1024 1024" : "Map compiler splits the BSP tree along axial planes (X, Y and Z) for optimization. It does it as often, as specified in _blocksize key for respective axis (in units) (default 1024 1024 1024, 0 = disable, setting single value 'N' equals to setting 'N N N'). I.e. lower values result in more splits and vice versa. Increase the blocksize using larger powers of 2 to reduce compile times on very large maps with a low structural brush density. Maps, having flat architecture, might work better with horizontal splits disabled ('N N 0')."
-	_ambient(float) : "Ambient Intensity" : 0 : "Adds a constant value to overall lighting (default 0, range 0 - 255). Only recommended use is small values for cosmetic purposes, as high values will have a tendency to flatten out variations in light and shade."
-	_color(color1) : "Ambient Color" : "1 1 1" : "RGB color value for ambient and other global light parameters (default is 1 1 1)."
-	_minlight(float) : "Min Lightmap Intensity" : 0 : "Minimum light value, levelwide. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Therefore use is highly not recommended!"
-	_minvertexlight(float) : "Min Vertex Intensity" : 0 : "Minimum vertex lighting, levelwide."
-	_mingridlight(float) : "Min Dynamic Intensity" : 0 : "Minimum lightgrid (dynamic entity lighting) levelwide."
-	_floodlight(string) : "Floodlight" : "240 240 255 1024 128 1" : "A sextet of values r g b dist intensity directional_power to set global floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
+	_ambient(float) : "Ambient Intensity" :  : "Adds a constant value to overall lighting (default 0, range 0 - 255). Use is not recommended. It has a tendency to flatten out variations in light and shade."
+	_color(color1) : "Ambient Color" :  : "RGB color value for ambient and other global light parameters (default is 1 1 1)."
+	_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value, levelwide. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
+	_minvertexlight(float) : "Min Vertex Intensity" : : "Minimum vertex lighting, levelwide. Not recommended."
+	_mingridlight(float) : "Min Dynamic Intensity" : : "Minimum lightgrid (dynamic entity lighting) levelwide."
+	_floodlight(string) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set global floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
 	_keeplights(choices) : "Keep Light Entities" : : "Keep light* entities in the BSP. Normally stripped out by the BSP process and read from the .map file by the lighting phase." =
 	[
 		"" : "No"
@@ -71,7 +90,7 @@
 	_lightmapscale(float) : "Lightmap Scale" : "1.0" : "Floating point value, scaling the resolution of lightmaps on brushes/patches in the world. Can be overridden in func_group (or other entities) (default 1.0)."
 	_castshadows(integer) : "Shadow Caster Level" : 1 : "Allows per-entity control over shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
 	_receiveshadows(integer) : "Shadow Receiver Level" : 1 : "Allows per-entity control over shadow reception. Defaults to 1 on everything (world shadows). 0 = receives NO shadows. > 1 = receive shadows only from corresponding keyed entities (see above) and world. < 1 = receive shadows ONLY from corresponding keyed entities."
-	_celshader(string) : key="_celshader" : : "Sets the cel shader used for this geometry. Note: Omit the textures/ prefix."
+	_celshader(string) : "Cel Shader" : : "Sets the cel shader used for this geometry. Note: Omit the textures/ prefix."
 	_style1alphaGen(string) : "Style Light alphaGen" : : "Values takes standard shader waveform functions (e.g. wave sin 0.5 0.3 0.25 1.5)\nAdditional keyvalues can be added as-needed, up to _style31alphaGen."
 	_style1rgbGen(string) : "Style Light rgbGen" : : "Values take standard shader waveform functions (e.g. wave sin 0.5 0.3 0.25 1.5)\nAdditional keyvalues can be added as-needed, up to _style31rgbGen."
 	
@@ -87,11 +106,18 @@
 
 @BaseClass = Angles
 [
-	angle(float) : "Yaw Angle (deprecated)" : : "Like `angles`, but only affects the Z axis."
+	// `angle` is commented-out because Jack annoyingly prioritizes it even if empty
+	//angle(float) : "Yaw Angle (deprecated)" : : "Like `angles`, but only affects the Z axis."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Individual control of PITCH, YAW, and ROLL (default 0 0 0)."
 ]
 
-@BaseClass = GameModes
+@BaseClass = EditorComment
+[
+	_comment(string) : "Editor Comment" : : "Field that is ignored by the game and compilers. Can be used for quick locational notes when mapping."
+]
+
+// All runtime entities have this, so include _comment. 
+@BaseClass base(EditorComment) = GameModes
 [
 	notfree(choices) : "Not in FFA" : : "When set to 1, entity will not spawn in Free for All and Tournament modes." =
 	[
@@ -103,22 +129,37 @@
 		"" : "No"
 		1 : "Yes"
 	]
-	notsingle(choices) : "Not in Singleplayer" : : "When set to 1, entity will not spawn in Single Player mode (bot play mode)." =
+	notsingle(choices) : "Not in Singleplayer" : : "When set to 1, entity will not spawn in Single Player mode (bot play mode). Ignored in Quake Live." =
 	[
 		"" : "No"
 		1 : "Yes"
 	]
-	notq3a(choices) : "Not in Base Quake III" : : "When set to 1, entity will not spawn in base Quake III Arena." =
+	notq3a(choices) : "Not in Base Quake III" : : "When set to 1, entity will not spawn in base Quake III Arena. Ignored in Quake Live." =
 	[
 		"" : "No"
 		1 : "Yes"
 	]
-	notta(choices) : "Not in Team Arena" : : "When set to 1, entity will not spawn in the Team Arena expansion." =
+	notta(choices) : "Not in Team Arena" : : "When set to 1, entity will not spawn in the Team Arena expansion. Ignored in Quake Live." =
 	[
 		"" : "No"
 		1 : "Yes"
 	]
-	gametype(string) : "Game Type" : : "Space delineated list of gametypes that will spawn this entity. If null, it will spawn in all game modes.\nQ3A values: ffa tournament single team ctf.\nQ3TA values: oneflag obelisk harvester teamtournament."
+	gametype(string) : "In Game Types" : : "Space delineated list of gametypes that will spawn this entity. If null, it will spawn in all game modes.\nQ3A values: ffa tournament single team ctf.\nQ3TA values: oneflag obelisk harvester teamtournament.\nQL values: ffa duel race tdm ca ctf 1f ob har ft dom ad rr"
+	not_gametype(string) : "Not in Game Types (Quake Live)" : : "Quake Live only. Like gametype, but inverted; any gametypes listed here will cause the entity to *not* spawn."
+	// Quake Live gametypes: 
+	// ffa		(free for all)
+	// duel		(duel)
+	// race		(race)
+	// tdm		(team deathmatch)
+	// ca		(clan arena)
+	// ctf		(capture the flag)
+	// 1f		(one flag)
+	// har		(harvester)
+	// ft		(freezetag)
+	// dom		(domination)
+	// ad		(attack & defend)
+	// rr		(red rover)
+	// name values in Q3A and Q3TA should be more self explantatory
 ]
 
 @BaseClass = TargetName
@@ -157,6 +198,12 @@
 	_shader(shader) : "Terrain MetaShader" : : "Path to the metashader used to assign textures to the terrain entity. Note: Omit the textures/ prefix."
 	_celshader(shader) : "Cel Shader" : : "Sets the cel shader used for this geometry. Note: Omit the textures/ prefix."
 	_receiveshadows(integer) : "Shadow Receiver Level" : 1 : "Allows per-entity control over shadow reception. Defaults to 1 on everything (world shadows). 0 = receives NO shadows. > 1 = receive shadows only from corresponding keyed entities (see above) and world. < 1 = receive shadows ONLY from corresponding keyed entities."
+	_ambient(float) : "Ambient Intensity" :  : "Adds a constant value to overall lighting (default 0, range 0 - 255). Use is not recommended. It has a tendency to flatten out variations in light and shade."
+	_color(color1) : "Ambient Color" :  : "RGB color value for ambient and other global light parameters (default is 1 1 1)."
+	_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value. If _minvertexlight and _mingridlight are unset, affects vertex colors and lightgrid in additon to lightmap. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
+	_minvertexlight(float) : "Min Vertex Intensity" : : "Minimum vertex lighting."
+	_mingridlight(float) : "Min Dynamic Intensity" : : "Minimum lightgrid (dynamic entity lighting)."
+	_floodlight(string) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set global floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
 ]
 
 @BaseClass base(GameModes, Brushwork) = BModels
@@ -199,7 +246,7 @@
 // Editor-only entities
 //
 
-@PointClass studio() = _editor_model2_visualizer : "Editor-only entity to display a model at an arbitrary location. Designed to visualize model2 for func_ models in-editor. Does not exist in-game, so it doesn't count towards entity limits."
+@PointClass studio() base(EditorComment) = _editor_model2_visualizer : "Editor-only entity to display a model at an arbitrary location. Designed to visualize model2 for func_ models in-editor. Does not exist in-game, so it doesn't count towards entity limits."
 [
 	model2(studio) : "Model to display in editor"
 	sequence(integer) : "Frame to display" : 0 : "This should match _frame2 of the entity with a model2."
@@ -210,18 +257,18 @@
 // Q3Map2 Entities
 //
 
-@SolidClass = _decal : "Compiler-only entity that specifies a decal to be projected. Should contain 1 or more patch meshes (curves) and target an info_null entity. Patch mesh should be using a shader with polygonoffset (or other blending methods) or z-fighting will occur. The distance between the center of the _decal entity and the target is the axis and distance of projection."
+@SolidClass base(EditorComment) = _decal : "Compiler-only entity that specifies a decal to be projected. Should contain 1 or more patch meshes (curves) and target an info_null entity. Patch mesh should be using a shader with polygonoffset (or other blending methods) or z-fighting will occur. The distance between the center of the _decal entity and the target is the axis and distance of projection."
 [
 	target(target_destination) : "Target" : : "The name of the entity targeted for projection."
 ]
 
-@PointClass size(-4 -4 -4, 4 4 4) color(197 225 255) base(Angles) flags(Angle) = _skybox : "Compiler-only entity that specifies the origin of a ''3D skybox'' (a wholly contained, separate area of the map), similar to some games portal skies. When compiled with Q3Map2, the skybox surfaces will be visible from any place where sky is normally visible. It will cast shadows on the normal parts of the map, and can be used with cloud layers and other effects."
+@PointClass size(-4 -4 -4, 4 4 4) color(197 225 255) base(EditorComment,Angles) flags(Angle) = _skybox : "Compiler-only entity that specifies the origin of a ''3D skybox'' (a wholly contained, separate area of the map), similar to some games portal skies. When compiled with Q3Map2, the skybox surfaces will be visible from any place where sky is normally visible. It will cast shadows on the normal parts of the map, and can be used with cloud layers and other effects."
 [
 	angle(integer) : "Yaw" : 0 : "Rotation angle of the sky surfaces."
 	_scale(float) : "Scale" : "64" : "Scaling factor (default 64), good values are between 50 and 300, depending on the map."
 ]
 
-@PointClass size(-16 -16 -16, 16 16 16) color(255 128 64) base(Angles) flags(Angle) studio() = misc_model : "Generic placeholder for inserting models to map. Model triangles are baked to BSP.\n\nSee FGD comment for valid clipping combinations.\n\nMD3, ASE, 3DS, OBJ, FM, LWO, MD2, MDC, MS3D model formats are supported."
+@PointClass size(-16 -16 -16, 16 16 16) color(255 128 64) base(EditorComment,Angles) flags(Angle) studio() = misc_model : "Generic placeholder for inserting models to map. Model triangles are baked to BSP.\n\nSee FGD comment for valid clipping combinations.\n\nMD3, ASE, 3DS, OBJ, FM, LWO, MD2, MDC, MS3D model formats are supported, as well as a whole bunch of other AssImp formats."
 [
 	model(studio) : "Model File" : : "Path/name of model to use (e.g. models/mapobjects/teleporter/teleporter.md3)."
 	//frame(integer) : "Model Frame" : : "Frame of model to load (doesn't work)."
@@ -272,7 +319,7 @@
 	]
 ]
 
-@SolidClass = func_group base(Brushwork) : "This is not an entity as such. It is strictly an editor utility to group world brushes and patches together for convenience (selecting, moving, copying, applying special compilation parameters etc). You cannot group entities with this. Func_group contents are merged into worldspawn entity during compilation process.\n\nTo make a func_group into a terrain entity, refer to the Terrain Construction documentation."
+@SolidClass base(EditorComment,Brushwork) = func_group : "This is not an entity as such. It is strictly an editor utility to group world brushes and patches together for convenience (selecting, moving, copying, applying special compilation parameters etc). You cannot group entities with this. Func_group contents are merged into worldspawn entity during compilation process.\n\nTo make a func_group into a terrain entity, refer to the Terrain Construction documentation."
 [
 	_castshadows(integer) : "Shadow Caster Level" : 1 : "Allows per-entity control over shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
 	
@@ -292,9 +339,9 @@
 // Lights
 //
 
-@BaseClass = LightBase
+@BaseClass base(EditorComment) = LightBase
 [
-	targetname(string) : "Target Name (unused)" : : "Toggled lights are not supported."
+	targetname(string) : "Target Name (unused)" : : "Toggled lights are not supported." // for clarity when porting
 	light(float) : "Brightness" : 300 : "Overrides the default 300 intensity. Negative values may be used for negative lights."
 	_color(color1) : "RGB color" : "1 1 1" : "Weighted RGB value of light color (default 1.0 1.0 1.0 = white)."
 	target(target_destination) : "Spotlight Target" : : "Lights pointed at a target (info_null) will be spotlights."
@@ -325,7 +372,7 @@
 	]
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) = light : "Non-displayed point light source. The -pointscale and -scale arguments to Q3Map2 affect the brightness of these lights. The -skyscale argument affects brightness of entity sun lights."
+@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) base(LightBase) = light : "Non-displayed point light source. The -pointscale and -scale arguments to Q3Map2 affect the brightness of these lights. The -skyscale argument affects brightness of entity sun lights."
 [
 	style(integer) : "Lightstyle" : : "Light style index number associated with worldspawn light style. Values are between 1 and 31."	
 	_flare(choices) : "Emit default flare" : : "Emit a flare using the default flare material (`flareshader`). Requires -flares in -bsp stage." =
@@ -336,7 +383,9 @@
 	_flareshader(string) : "Flare Shader" : : "Full path to material to emit flare using. Requires -flares in -bsp stage."
 ]
 
-@PointClass size(-6 -6 -6, 6 6 6) iconsprite("sprites/light.spr") flags(Light) = lightJunior : "Non-displayed point light source THAT ONLY AFFECTS ENTITIES (lightgrid). The -pointscale and -scale arguments to Q3Map2 affect the brightness of these lights. The -skyscale argument affects brightness of entity sun lights." []
+@PointClass size(-6 -6 -6, 6 6 6) iconsprite("sprites/light.spr") flags(Light) base(LightBase) = lightJunior : "Non-displayed point light source THAT ONLY AFFECTS ENTITIES (lightgrid). The -pointscale and -scale arguments to Q3Map2 affect the brightness of these lights. The -skyscale argument affects brightness of entity sun lights." []
+
+@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) base(light) = light_spot : "All classnames prefixed with `light` except lightJunior act the same as `light`; I just use this separate classname as an alias for clarity." []
 
 //
 // Ammo
@@ -458,7 +507,7 @@
 [
 	count(integer) : "Health Given" : 50 : "Sets the amount of hit points given to the player when item is picked up (default 50)."
 ]
-@PointClass base(ItemHealth_LongWaitWait) color(0 0 255) studio("models/powerups/health/mega_cross.md3", "models/powerups/health/mega_sphere.md3") = item_health_mega : "Blue M bubble - 100 Health. Adds 100 health points to current health up to a maximum of 200."
+@PointClass base(ItemHealth_LongWait) color(0 0 255) studio("models/powerups/health/mega_cross.md3", "models/powerups/health/mega_sphere.md3") = item_health_mega : "Blue M bubble - 100 Health. Adds 100 health points to current health up to a maximum of 200."
 [
 	count(integer) : "Health Given" : 100 : "Sets the amount of hit points given to the player when item is picked up (default 100)."
 ]
@@ -526,7 +575,8 @@
 
 @SolidClass base(BModels,TargetShader) = func_button : "When a button is touched by a player, it moves in the direction set by the `angles` key, triggers all its targets, stays pressed by an amount of time set by the `wait` key, then returns to it's original position where it can be operated again."
 [
-	angle(float) : "Yaw Angle (deprecated)" : : "Determines the direction in which the button will move (up = -1, down = -2)."
+	// `angle` is commented-out because Jack annoyingly prioritizes it even if empty
+	//angle(float) : "Yaw Angle (deprecated)" : : "Determines the direction in which the button will move (up = -1, down = -2)."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Pitch and yaw moving direction angles of button (default 0 0). The roll angle does not apply."
 	target(target_destination) : "Target" : : "All entities with a matching targetname will be triggered."
 	targetname(target_source) : "Target Name" : : "If set, other entities can be used to activate the button along with touch or damage way of doing this."
@@ -542,7 +592,8 @@
 
 @SolidClass base(BModels,TargetShader) = func_door : "Normal sliding door entity. By default, the door will activate when player walks close to it or when damage is inflicted to it."
 [
-	angle(float) : "Yaw Angle (deprecated)" : : "Determines the opening direction of door (up = -1, down = -2)."
+	// `angle` is commented-out because Jack annoyingly prioritizes it even if empty
+	//angle(float) : "Yaw Angle (deprecated)" : : "Determines the opening direction of door (up = -1, down = -2)."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Pitch and yaw moving direction angles of door (default 0 0). The roll angle does not apply."
 	target(target_destination) : "Target When Opened" : : "Fired when the door opens; but not *not* when it closes."
 	targetname(target_source) : "Target Name" : : "If set, a func_button or trigger is required to activate the door (unless using health key)."
@@ -560,12 +611,15 @@
 	[
 		1 : "Start Open" : 0 : "The door will spawn in the open state and operate in reverse."
 		4 : "Crusher" : 0 : "Door will not reverse direction when blocked and will keep damaging players until they die or get out of the way."
+		16 : "Need Silver Key (Quake Live)" : 0 : "Quake Live only: require item_key_silver or item_key_master to open this door. Takes precedence over targetname and health."
+		32 : "Need Gold Key (Quake Live)" : 0 : "Quake Live only: require item_key_gold or item_key_master to open this door. Takes precedence over targetname and health."
 	]
 ]
 
 @SolidClass base(TargetName, BModels) = func_pendulum : "Solid entity that describes a pendulum back and forth rotation movement. Rotates on the X axis by default. Pendulum frequency is a physical constant based on the height of the entity and gravity. Blocking the pendulum instantly kills a player\n\nYou need to have an origin brush (textured by common/origin) as part of this entity. The center of that brush will be the point through which the rotation axis passes."
 [
-	angle(float) : "Yaw Angle (deprecated)" : : "Angle offset of axis of rotation from default X axis (default 0)."
+	// `angle` is commented-out because Jack annoyingly prioritizes it even if empty
+	//angle(float) : "Yaw Angle (deprecated)" : : "Angle offset of axis of rotation from default X axis (default 0)."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" :  : "Pitch, yaw and roll offsets of axis of rotation from default X axis (default 0 0 0)."
 	speed(float) : "Max Swing Angle" : 30 : "Angle of swing arc in either direction from initial position (default 30)."
 	phase(float) : "Swing Phase" : 0 : "Sets the start offset of the swinging cycle. Values must be 0 < phase < 1. Any integer phase value is the same as no offset (default 0)."
@@ -611,19 +665,20 @@
 // Info entities
 //
 
-@PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) = info_camp : "This attracts bots which have a camping preference in their AI characteristics. It should be placed at least 32 units away from any brush surface.\n\nExamples of bots which have a high camping preference are: Razor, Tank Jr., Grunt, Patriot and Doom.\nExamples of bots which have a low camping preference are: Klesk, Mynx, Sarge, Keel and Xaero."
+@PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) base(TargetName,GameModes) = info_camp : "This attracts bots which have a camping preference in their AI characteristics. It should be placed at least 32 units away from any brush surface.\n\nExamples of bots which have a high camping preference are: Razor, Tank Jr., Grunt, Patriot and Doom.\nExamples of bots which have a low camping preference are: Klesk, Mynx, Sarge, Keel and Xaero."
 [
 	range(float) : "Range" : : "Number of units that the bot can move away from camp entity while camping on it."
 	weight(float) : "Weight" : : "Number that is compared against the weight assigned to all the other camp spots in the map to determine if a bot chooses to camp there. The value is normalized against all other weight values."
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) base(TargetName,GameModes) = info_notnull : "Used as a positional target for entities that can use directional pointing. A target_position can be used instead of this but was kept in Q3A for legacy purposes." []
+@PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) base(TargetName,GameModes) iconsprite("sprites/dod/envtarget.spr") = info_notnull : "Used as a positional target for entities that can use directional pointing. A target_position can be used instead of this but was kept in Q3A for legacy purposes." []
 
-@PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) base(TargetName) = info_null : "Used as a positional target for light entities to create a spotlight effect. Deleted immediately in its spawn function, so it should never count towards entity limits." []
+@PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) base(TargetName,EditorComment) = info_null : "Used as a positional target for light entities to create a spotlight effect. Deleted immediately in its spawn function, so it should never count towards entity limits." []
 
-@PointClass size(-16 -16 -16, 16 16 16) color(255 0 255) flags(Angle) = info_player_intermission : "Camera for intermission screen between matches. This also automatically generates the podium for bot arena matches (see notes). Can be aimed by setting the `angles` key or by targeting an aiming entity. Use only one per level.\n\nIn genuine bot arena matches, the podium for the 1st, 2nd and 3rd place players at the end of the match is generated by this entity. The podium's origin will automatically be located 128 units in the direction of the camera's view and 84 units down from the y height of the view line at that point. It will also always be generated on a level plane regardless of the pointing angle of the camera so if that angle is too steep, part of the podium model might not be visible. Make sure you leave at least 106 units of free space in front of where the camera points to otherwise the podium model won't be visible at all."
+@PointClass size(-16 -16 -16, 16 16 16) color(255 0 255) flags(Angle) iconsprite("sprites/camera.spr") base(GameModes) = info_player_intermission : "Camera for intermission screen between matches. This also automatically generates the podium for bot arena matches (see notes). Can be aimed by setting the `angles` key or by targeting an aiming entity. Use only one per level.\n\nIn genuine bot arena matches, the podium for the 1st, 2nd and 3rd place players at the end of the match is generated by this entity. The podium's origin will automatically be located 128 units in the direction of the camera's view and 84 units down from the y height of the view line at that point. It will also always be generated on a level plane regardless of the pointing angle of the camera so if that angle is too steep, part of the podium model might not be visible. Make sure you leave at least 106 units of free space in front of where the camera points to otherwise the podium model won't be visible at all."
 [
-	angle(float) : "Yaw Angle (deprecated)" : : "Yaw angle of sight direction."
+	// `angle` is commented-out because Jack annoyingly prioritizes it even if empty
+	//angle(float) : "Yaw Angle (deprecated)" : : "Yaw angle of sight direction."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Orientation of camera, if target is absent (default 0 0 0)."
 	target(target_destination) : "Camera Target" : : "Point this to an info_notnull or target_position entity to set the camera's pointing angles."
 ]
@@ -634,7 +689,8 @@
 
 @PointClass size(-8 -8 -8, 8 8 8) color(255 128 64) flags(Angle) base(GameModes) iconsprite("sprites/camera.spr") = misc_portal_camera : "Portal camera. This camera is used to project its view onto a portal surface in the level through the intermediary of a misc_portal_surface entity. Use the `angles` KV or target a target_position or info_notnull entity to set the camera's pointing direction.."
 [
-	angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of the portal camera (default 0)."
+	// `angle` is commented-out because Jack annoyingly prioritizes it even if empty
+	//angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of the portal camera (default 0)."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This sets the pitch and yaw aiming angles of the portal camera (default 0 0). Use roll key to set roll angle."
 	roll(float) : "Roll Angle" : : "Roll angle of camera. For axial directions a value of 0 is upside down and 180 is the same as the player's view. For other sorts of directions values of 90 and -90 may work (inconsistent math). Irrelevant if either of the rotation spawnflags are enabled."
 	target(target_destination) : "Camera Target" : : "Point this to a target_position entity to set the camera's pointing direction. Roll KV is still required."
@@ -647,12 +703,13 @@
 	]
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) color(255 128 64) base(GameModes)= misc_portal_surface : "Portal surface indicator. This will ''lock on'' the brush face closest to it and identify as a portal. The view displayed on the portal surface is the view of the misc_portal_camera that this entity targets. Also used for mirrors.\n\nThe entity must be no farther than 64 units away from the portal surface to lock onto it.\nTo make a mirror, apply the `common/mirror` shader to the surface, place this entity near it but don't target a misc_portal_camera.\nTo make a portal, you need to use a shader with `alphagen portal`, for instance `textures/sfx/portal_sfx`."
+@PointClass size(-8 -8 -8, 8 8 8) color(255 128 64) base(GameModes) = misc_portal_surface : "Portal surface indicator. This will ''lock on'' the brush face closest to it and identify as a portal. The view displayed on the portal surface is the view of the misc_portal_camera that this entity targets. Also used for mirrors.\n\nThe entity must be no farther than 64 units away from the portal surface to lock onto it.\nTo make a mirror, apply the `common/mirror` shader to the surface, place this entity near it but don't target a misc_portal_camera.\nTo make a portal, you need to use a shader with `alphagen portal`, for instance `textures/sfx/portal_sfx`."
 [
 	target(target_destination) : "Target misc_portal_camera" : : "Point this to a misc_portal_camera that sees the view you want to display on the portal."
 ]
 
-@PointClass size(-16 -16 -24, 16 16 32) offset(0 0 24) color(255 128 64) flags(Angle) base(TargetName,Angles,GameModes) = misc_teleporter_dest : "Teleport destination location point for trigger_teleporter and target_teleporter entities. Angles dictate facing direction.\n\nTechnically, any runtime entity can be used, but using this entity helps with clarity for hull size and angles." []
+// originally color(255 128 64); changed to be more distinct from deathmatch spawns
+@PointClass size(-16 -16 -24, 16 16 32) offset(0 0 24) color(170 0 255) flags(Angle) base(TargetName,Angles,GameModes) = misc_teleporter_dest : "Teleport destination location point for trigger_teleporter and target_teleporter entities. Angles dictate facing direction.\n\nTechnically, any runtime entity can be used, but using this entity helps with clarity for hull size and angles." []
 
 //
 // Paths
@@ -713,10 +770,11 @@
 
 @BaseClass base(GameModes) size(-8 -8 -8, 8 8 8) color(255 0 128) flags(Angle) = ShooterBase
 [
-	angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of shooter."
+	// `angle` is commented-out because Jack annoyingly prioritizes it even if empty
+	//angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of shooter."
 	targetname(target_source) : "Target Name" : : "Activating trigger points to this."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This sets the pitch and yaw aiming angles of shooter (default 0 0). The roll angle does not apply."
-	target(target_destination) : "Target to shoot at" : : "This points to a target_position entity for aiming the shooter; takes precidence over `angles`."
+	target(target_destination) : "Target to shoot at" : : "This points to a target_position entity for aiming the shooter; takes precedence over `angles`."
 	random(float) : "Angle Variance" : 1 : "Random aiming variance in degrees (range 0 - 90, default 1).\n\nWhen the random key is set, its value is used to calculate a maximum angle deviation from the normal trajectory formed by a straight line between the shooter and the aiming entity it targets. The final trajectory will be a random value anywhere between no deviation at all (0) to maximum deviation (value of the random key / 2). Setting random key to 0 won't disable random, setting it to 180, 360, 0.0000001, or 1e-7 will do."
 ]
 
@@ -757,9 +815,10 @@
 
 @PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) flags(Angle) base(TargetName,GameModes) = target_laser : "Toggleable laser beam. Appearance is broken, damage is applied only to movers with health key, so it may be used for logic circuits."
 [
-	angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of laser."
+	// `angle` is commented-out because Jack annoyingly prioritizes it even if empty
+	//angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of laser."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This sets the pitch and yaw aiming angles of laser (default 0 0). The roll angle does not apply."
-	target(target_destination) : "Laser Target" : : "Point this to a target_position entity to set the laser's aiming direction. Takes precidence over `angles`."
+	target(target_destination) : "Laser Target" : : "Point this to a target_position entity to set the laser's aiming direction. Takes precedence over `angles`."
 	dmg(integer) : "Damage" : 5 : "Number of points of damage inflicted per server frame (default 5 - integer values only)."
 	spawnflags(flags) = 
 	[
@@ -782,7 +841,7 @@
 	]
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) base(TargetName,GameModes) = target_position : "Aiming target for entities like light, misc_portal_camera and trigger_push (jump pads) in particular. Acts same as info_notnull." []
+@PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) base(TargetName,GameModes) iconsprite("sprites/dod/envtarget.spr") = target_position : "Aiming target for entities like light, misc_portal_camera and trigger_push (jump pads) in particular. Acts same as info_notnull." []
 
 @PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) base(GameModes,TargetName) = target_print : "This will print a message on the center of the screen when triggered. By default, all clients will see the message."
 [
@@ -797,14 +856,15 @@
 
 @PointClass size(-8 -8 -8, 8 8 8) color(128 128 128) flags(Angle) base(GameModes) = target_push : "This can be used to create jump pads and launch ramps. The direction of push can be set by the `angles` KV or pointing to a target_position or info_notnull entity. Unlike trigger_push, this is NOT client side predicted and must be activated by a trigger.\n\nTo make a jump pad or launch ramp, create a trigger_multiple where the jump must originate. Place the target_push directly above the trigger_multiple and place the target_position entity at the highest point of the jump. Target the trigger_multiple to the target_push and target the target_push to the target_position/info_notnull (or set the target_push's `angles` KV). Note, that, when using aiming by target_position, it MUST be located higher, than target_push, while in `angles` scenario player may be pushed downwards too."
 [
-	angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of push entity."
+	// `angle` is commented-out because Jack annoyingly prioritizes it even if empty
+	//angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of push entity."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This sets the pitch and yaw aiming angles of push entity (default 0 0). The roll angle does not apply."
 	speed(float) : "Push Speed" : 1000 : "Speed of push (default 1000). Has no effect if entity targets an aiming entity."
-	target(target_destination) : "Push Target" : : "This points to the aiming entity to which the player will jump. Takes precidence over `angles`."
+	target(target_destination) : "Push Target" : : "This points to the aiming entity to which the player will jump. Takes precedence over `angles`."
 	targetname(target_source) : "Target Name" : : "The activating trigger points to this. Push originates from the location of the trigger."
 	spawnflags(flags) = 
 	[
-		1 : "Bounce Pad" : 1 : "If set, trigger will play `sound/world/jumppad.wav` instead of `sound/misc/windfly.wav` noise when activated (recommended, as windfly is missing in a vanilla installation, so it would need to be included in your PK3)."
+		1 : "Bounce Pad" : 1 : "If set, trigger will play `sound/world/jumppad.wav` instead of `sound/misc/windfly.wav` noise when activated (recommended, as windfly is missing in a vanilla installation, so it would need to be included in your PK3).\nQuake Live doesn't play any sound at all if this spawnflag is unchecked."
 	]
 ]
 
@@ -825,7 +885,7 @@
 	count(integer) : "Frags Given" : 1 : "Number of frag points to give to player (default 1)."
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) color(0 179 179) base(TargetName,GameModes) = target_speaker : "`Sound generating entity that plays .wav files. Normal non-looping sounds play each time the target_speaker is triggered. Looping sounds can be set to play by themselves (no activating trigger) or be toggled on/off by a trigger.\n\nThe combination of the `wait` and `random` keys can be used to play non-looping sounds without requiring an activating trigger but both keys must be used together. The value of the `random` key is used to calculate a minimum and a maximum delay. The final time delay will be a random value anywhere between the minimum and maximum values: (min delay = wait - random) (max delay = wait + random).`\n\nUnlike Quake I+II, looping is handled purely via entity code; loop cues in the WAV are not parsed."
+@PointClass size(-8 -8 -8, 8 8 8) color(0 179 179) base(TargetName,GameModes) iconsprite("sprites/speaker.spr") = target_speaker : "`Sound generating entity that plays .wav files. Normal non-looping sounds play each time the target_speaker is triggered. Looping sounds can be set to play by themselves (no activating trigger) or be toggled on/off by a trigger.\n\nThe combination of the `wait` and `random` keys can be used to play non-looping sounds without requiring an activating trigger but both keys must be used together. The value of the `random` key is used to calculate a minimum and a maximum delay. The final time delay will be a random value anywhere between the minimum and maximum values: (min delay = wait - random) (max delay = wait + random).`\n\nUnlike Quake I+II, looping is handled purely via entity code; loop cues in the WAV are not parsed."
 [
 	noise(sound) : "Sound File" : : "Path/name of .wav file to play (e.g. `sound/world/growl1.wav` - see notes). Must be mono.\n\nWAV file extension will be automatically applied unless present, even if another file extension is present, except in Spearmint. This means that using `filename.ogg` will load `filename.ogg.wav` in vanilla, but `filename.ogg` proper in Spearmint.\n`developer 1` will complain in the console if the sound is 8-bit and/or isn't 22050 Hz, but 8-bit WAVs and 44100 Hz or 11025 Hz WAVs are completely allowed (there even are vanilla sounds that break the rules).\n\nThe path portion value of the `noise` key can be replaced by the implicit folder character `*` for triggered sounds that belong to a particular player model. For example, if you want to create a ''bottomless pit'' in which the player screams and dies when he falls into, you would place a trigger_multiple over the floor of the pit and target a target_speaker with it. Then, you would set the `noise` key to `*falling1.wav`. The * character means the current player model's sound folder. So if your current player model is Visor, * = sound/player/visor, if your current player model is Sarge, * = sound/player/sarge, etc. This cool feature provides an excellent way to create ''player-specific'' triggered sounds in your levels."
 	random(float) : "Repeat Variance" : : "Random time variance in seconds added or subtracted from wait delay (wait key must be set - see notes)."
