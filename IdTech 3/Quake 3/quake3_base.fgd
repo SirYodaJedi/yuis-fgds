@@ -16,6 +16,8 @@
 // Refactored and expanded by SirYodaJedi
 //
 
+// TODO - utilize BaseClasses to move the actually important KVs upwards.
+
 @mapsize(-65536, 65536)
 
 //
@@ -68,7 +70,7 @@
 	_color(color1) : "Ambient Color" :  : "RGB color value for ambient and other global light parameters (default is 1 1 1)."
 	_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value, levelwide. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
 	_minvertexlight(float) : "Min Vertex Intensity" : : "Minimum vertex lighting, levelwide. Not recommended."
-	_mingridlight(float) : "Min Dynamic Intensity" : : "Minimum lightgrid (dynamic entity lighting) levelwide."
+	_mingridlight(float) : "Min Lightgrid Intensity" : : "Minimum lightgrid (dynamic entity lighting) levelwide."
 	_floodlight(string) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set global floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
 	_keeplights(choices) : "Keep Light Entities" : : "Keep light* entities in the BSP. Normally stripped out by the BSP process and read from the .map file by the lighting phase." =
 	[
@@ -200,10 +202,9 @@
 	_receiveshadows(integer) : "Shadow Receiver Level" : 1 : "Allows per-entity control over shadow reception. Defaults to 1 on everything (world shadows). 0 = receives NO shadows. > 1 = receive shadows only from corresponding keyed entities (see above) and world. < 1 = receive shadows ONLY from corresponding keyed entities."
 	_ambient(float) : "Ambient Intensity" :  : "Adds a constant value to overall lighting (default 0, range 0 - 255). Use is not recommended. It has a tendency to flatten out variations in light and shade."
 	_color(color1) : "Ambient Color" :  : "RGB color value for ambient and other global light parameters (default is 1 1 1)."
-	_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value. If _minvertexlight and _mingridlight are unset, affects vertex colors and lightgrid in additon to lightmap. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
+	_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value. If _minvertexlight is unset, affects vertex colors in addition to lightmap. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
 	_minvertexlight(float) : "Min Vertex Intensity" : : "Minimum vertex lighting."
-	_mingridlight(float) : "Min Dynamic Intensity" : : "Minimum lightgrid (dynamic entity lighting)."
-	_floodlight(string) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set global floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
+	_floodlight(string) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set localized floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
 ]
 
 @BaseClass base(GameModes, Brushwork) = BModels
