@@ -30,13 +30,15 @@
 
 @BaseClass = Q3Map2_World
 [
+	// can't use "shader" KV type in Worldspawn due to JACK bug with texture browser
 	gridsize(string) : "Dynamic Light Granularity" : "64 64 128" : "Granularity of the lightgrid, created by q3map, which is used to dynamically light certain game objects, like players and items. Value is three integers separated by spaces, representing number of units between grid points in X Y Z. Default gridsize value is 64 64 128. Use larger powers of 2 to reduce BSP size and compile time on very large maps."
-	_blocksize(string) : "BSP Block Size" : "1024 1024 1024" : "Map compiler splits the BSP tree along axial planes (X, Y and Z) for optimization. It does it as often, as specified in _blocksize key for respective axis (in units) (default 1024 1024 1024, 0 = disable, setting single value 'N' equals to setting 'N N N'). I.e. lower values result in more splits and vice versa. Increase the blocksize using larger powers of 2 to reduce compile times on very large maps with a low structural brush density. Maps, having flat architecture, might work better with horizontal splits disabled ('N N 0')."
+	_blocksize(string) : "BSP Block Size" : "1024 1024 1024" : "Map compiler splits the BSP tree along axial planes (X, Y and Z) for optimization. It does it as often, as specified in _blocksize key for respective axis (in units) (default 1024 1024 1024, 0 = disable, setting single value 'N' equals to setting 'N N N'). I.e. lower values result in more splits and vice versa. Increase the blocksize using larger powers of 2 to reduce compile times on very large maps with a low structural brush density. Maps, having flat architecture, might work better with Z splits disabled ('N N 0'). Disabling X and Y splits is not recommended, as that prevents VIS from being able to do its job correctly; raising to 4096 is safe, however."
 	_ambient(float) : "Ambient Intensity" :  : "Adds a constant value to overall lighting (default 0, range 0 - 255). Use is not recommended. It has a tendency to flatten out variations in light and shade."
 	_color(color1) : "Ambient Color" :  : "RGB color value for ambient and other global light parameters (default is 1 1 1)."
-	_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value, levelwide. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
+	// _minlight currently only works on worldspawn (even though it's intended for bmodels), so commented out last part
+	_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value, levelwide. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn." //+"; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
 	_minvertexlight(float) : "Min Vertex Intensity" : : "Minimum vertex lighting, levelwide. Not recommended."
-	_mingridlight(float) : "Min Lightgrid Intensity" : : "Minimum lightgrid (dynamic entity lighting) levelwide."
+	_mingridlight(float) : "Min Lightgrid Intensity" : : "Minimum lightgrid (dynamic entity lighting) levelwide. If you aren't using _ambient, you might want to use this to keep model visibility acceptable on multiplayer maps."
 	_floodlight(string) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set global floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
 	_keeplights(choices) : "Keep Light Entities" : : "Keep light* entities in the BSP. Normally stripped out by the BSP process and read from the .map file by the lighting phase." =
 	[
@@ -48,7 +50,7 @@
 		"" : "No"
 		1 : "Yes"
 	]
-	_noshadersun(choices) : "Ignore Shader Sun" : : "Ignore q3map_sun/sun directives in sky shaders and ONLY use entity sun lights." =
+	_noshadersun(choices) : "Ignore Shader Sun" : : "Ignore q3map_sun(Ext)/sun directives in sky shaders and ONLY use entity sun lights." =
 	[
 		"" : "No"
 		1 : "Yes"
@@ -56,8 +58,9 @@
 	_farplanedist(float) : "Far Clip Distance" : : "Limit on how many units the vis phase of compilation can see. Used in combination with level-wide fog, it can help reduce r_speeds on large, open maps."
 	_foghull(string) : "Fog Hull Shader" : : "Shader to use for fog hull. Foghull shader should be a sky shader. Omit the textures/ prefix."
 	_lightmapscale(float) : "Lightmap Scale" : "1.0" : "Floating point value, scaling the resolution of lightmaps on brushes/patches in the world. Can be overridden in func_group (or other entities) (default 1.0)."
-	_castshadows(integer) : "Shadow Caster Level" : 1 : "Allows per-entity control over shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
-	_receiveshadows(integer) : "Shadow Receiver Level" : 1 : "Allows per-entity control over shadow reception. Defaults to 1 on everything (world shadows). 0 = receives NO shadows. > 1 = receive shadows only from corresponding keyed entities (see above) and world. < 1 = receive shadows ONLY from corresponding keyed entities."
+	// The ENT had these, but really shouldn't be using these on worldspawn; it totes messes things up. If you need to edit these on world brushes, use func_group.
+	//_castshadows(integer) : "Shadow Caster Level" : 1 : "Allows per-entity control over shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
+	//_receiveshadows(integer) : "Shadow Receiver Level" : 1 : "Allows per-entity control over shadow reception. Defaults to 1 on everything (world shadows). 0 = receives NO shadows. > 1 = receive shadows only from corresponding keyed entities (see above) and world. < 1 = receive shadows ONLY from corresponding keyed entities."
 	_celshader(string) : "Cel Shader" : : "Sets the cel shader used for this geometry. Note: Omit the textures/ prefix."
 	_style1alphaGen(string) : "Style Light alphaGen" : : "Values takes standard shader waveform functions (e.g. wave sin 0.5 0.3 0.25 1.5)\nAdditional keyvalues can be added as-needed, up to _style31alphaGen."
 	_style1rgbGen(string) : "Style Light rgbGen" : : "Values take standard shader waveform functions (e.g. wave sin 0.5 0.3 0.25 1.5)\nAdditional keyvalues can be added as-needed, up to _style31rgbGen."
@@ -91,7 +94,7 @@
 
 @BaseClass base(Q3Map2_Brushwork) = Q3Map2_BModels
 [
-	_castshadows(integer) : "Shadow Caster Level" : 0 : "Allows per-entity control over shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
+	_castshadows(integer) : "Shadow Caster Level" : 0 : "Allows per-entity control over shadow casting. Both brushwork and model2 will be used for shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
 	_frame2(integer) : "Q3Map2 Model2 Frame" : : "If set, this frame of model2 will be used for lighting calculations instead of the first frame. Does not affect runtime shadows."
 	_clone(string) : "Entity to Steal (Clone) BModel from" : : "Field value of a brush entity to clone brushes from (can be used to use the same brush model multiple times)"
 	_clonename(string) : "Name for Cloning" : : "Used for _clone. targetname is not parsed for cloning; this must be used instead."
@@ -105,6 +108,12 @@
 	_patchSubdivide(integer) : "Patch2Trisoup Subdivisions" : : "Absolute quality setting for patches on this surface when _patchMeta is used. Takes priority over _patchQuality."
 	max(string) : "maxs Vector Override"
 	min(string) : "mins Vector Override"
+]
+
+// for misc_gamemodel, misc_model_static, etc. where a `model` KV is present
+@BaseClass = Q3Map2_RuntimeModels
+[
+	_castshadows(integer) : "Shadow Caster Level" : 0 : "Cast shadows based upon this entity's model. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
 ]
 
 // TODO - rename to have Q3Map2_ prefix; refactor to allow Raven lights
@@ -172,8 +181,9 @@
 	_clipdepth(float) : "Autoclip thickness" : "2.0" : "Autoclip brushes thickness (default 2.0)."
 	_celshader(shader) : "Cel Shader" : : "Sets the cel shader used for this geometry. Note: Omit the textures/ prefix."
 	_ambient(float) : "Ambient Light Level"
-	_minlight(float) : "Minimum Light Level (minlight)"
-	_minvertexlight(float) : "Minimum Vertex Light Level"
+	// _minlight on non-worldspawn ents is currently broken
+	//_minlight(float) : "Minimum Light Level (minlight)"
+	//_minvertexlight(float) : "Minimum Vertex Light Level"
 	_color(color1) : "Ambient/Minlight Color" : "1 1 1" : "Color to use for _ambient, _minlight, and _minvertexlight"
 	_shadeangle(float) : "Smoothing Angle Override" : : "Overrides vertex normals stored in the original model's geometry."
 	spawnflags(flags) = 

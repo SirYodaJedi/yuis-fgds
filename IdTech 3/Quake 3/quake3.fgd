@@ -29,7 +29,6 @@
 
 @BaseClass base(EditorComment) = worldspawn_BASE
 [
-	// can't use "shader" KV type in Worldspawn due to JACK bug with texture browser
 	message(string) : "Logon Message" : "TODO - set map name" : "Text to print at user logon. Used for name of level."
 	author(string) : "Primary Map Author" : : "Quake Live only, but might as well fill it out."
 	author2(string) : "Secondary Map Author" : : "Quake Live only, but might as well fill it out."
@@ -101,6 +100,7 @@
 		"" : "No"
 		1 : "Yes"
 	]
+	// technically can use any ASCII delineation method except quotes, since it uses strstr(), but spaces are standard.
 	gametype(string) : "In Game Types" : : "Space delineated list of gametypes that will spawn this entity. If null, it will spawn in all game modes.\nQ3A values: ffa tournament single team ctf.\nQ3TA values: oneflag obelisk harvester teamtournament.\nQL values: ffa duel race tdm ca ctf 1f ob har ft dom ad rr"
 	not_gametype(string) : "Not in Game Types (Quake Live)" : : "Quake Live only. Like gametype, but inverted; any gametypes listed here will cause the entity to *not* spawn."
 	// Quake Live gametypes: 
@@ -116,7 +116,7 @@
 	// dom		(domination)
 	// ad		(attack & defend)
 	// rr		(red rover)
-	// name values in Q3A and Q3TA should be more self explantatory
+	// name values in Q3A and Q3TA should be more self explanatory
 ]
 
 @BaseClass = TargetShader
@@ -159,7 +159,7 @@
 	
 	spawnflags(flags) =
 	[
-		1 : "No Drop To Floor" : 0 : "Item will spawn where it was placed in map and won't drop to the floor."
+		1 : "No Drop To Floor" : 0 : "Item will spawn where it was placed in map and won't drop to the floor. If an item is already on the floor and isn't spawning, check this flag."
 	]
 	
 	// The amount of time it takes for an item in the team to respawn is determined by the "wait" value of the item that was picked up previously. So if one of the items in the team has it's "wait" key set to -1 (never respawn), the random respawning cycle of the teamed items will stop after that item is picked up.
@@ -295,7 +295,12 @@
 
 @PointClass size(-8 -8 -8, 8 8 8) offset(0 0 8) color(255 128 0) base(TargetName, GameModes) = item_botroam : "Game Function: An invisible entity which attracts a bot to it. Use to move bots to parts of a map that might otherwise not be used (NEW ENTITY).\n\nThe item_botroam entity can be used when a bot does not roam the whole level or prefers to go to only specific areas. This (invisible) item can be placed in a map just like regular items. Nobody can actually pick up the item it's only used to attract bots to certain places of the map. The value is the weight of the roam_item is relative to the weight assigned other items in the map (each bot has its own weights). The bot character specific item weights are stored with the bot characters AI files (<botname>_i.c for items and <botname>_w.c for weapons) in the botfiles/bots/ sub-folder in the .pk3 file."
 [
-	weight(float) : Weight : : "Non-zero floating point value, most often in the range 0 to 400. (Higher values are allowed but keep in mind that the bot should also be attracted to normal items.  Don't make the weight value too high."
+	weight(float) : "Weight" : : "Non-zero floating point value, most often in the range 0 to 400. (Higher values are allowed but keep in mind that the bot should also be attracted to normal items.  Don't make the weight value too high.)"
+	notbot(choices) : "Also Invisible To Bots" : : "Used to make an item invisible for bot attraction. Renders the entity inert (for if you need to temporarily disable it)." =
+	[
+		"" : "No"
+		1 : "Yes"
+	]
 	spawnflags(flags) =
 	[
 		1 : "No Drop To Floor" : 0 : "Item will spawn where it was placed in map and won't drop to the floor."
