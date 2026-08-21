@@ -154,7 +154,7 @@
 
 @PointClass size(-4 -4 -4, 4 4 4) color(197 225 255) base(EditorComment,Angles) flags(Angle) = _skybox : "Compiler-only entity that specifies the origin of a ''3D skybox'' (a wholly contained, separate area of the map), similar to some games portal skies. When compiled with Q3Map2, the skybox surfaces will be visible from any place where sky is normally visible. It will cast shadows on the normal parts of the map, and can be used with cloud layers and other effects."
 [
-	_scale(float) : "Scale" : "64" : "Scaling factor (default 64), good values are between 50 and 300, depending on the map."
+	_scale(float) : "Scale" : "64" : "Scaling factor (default 64), good values are between 8 and 300, depending on the map. 16 recommended."
 ]
 
 @PointClass size(-16 -16 -16, 16 16 16) color(255 128 64) base(EditorComment,Angles) flags(Angle) studio() = misc_model : "Generic placeholder for inserting models to map. Model triangles are baked to BSP.\n\nSee FGD comment for valid clipping combinations.\n\nMD3, ASE, 3DS, OBJ, FM, LWO, MD2, MDC, MS3D model formats are supported, as well as a whole bunch of other AssImp formats."
