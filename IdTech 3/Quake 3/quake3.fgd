@@ -16,7 +16,7 @@
 // Refactored and expanded by SirYodaJedi
 //
 
-// TODO - utilize BaseClasses to move the actually important KVs upwards.
+// TODO - utilize BaseClasses to move the actually important KVs upwards (already done for most egregious ones).
 // TODO - move Q3Map2 KVs to dedicated 
 
 @mapsize(-65536, 65536)
@@ -168,68 +168,10 @@
 ]
 
 //
-// Editor-only entities
-//
-
-@PointClass studio() base(EditorComment) = _editor_model2_visualizer : "Editor-only entity to display a model at an arbitrary location. Designed to visualize model2 for func_ models in-editor. Does not exist in-game, so it doesn't count towards entity limits."
-[
-	model2(studio) : "Model to display in editor"
-	sequence(integer) : "Frame to display" : 0 : "This should match _frame2 of the entity with a model2."
-	target(target_destination) : "Entity with model2" : : "Fill this out if you want a line tracing from this entity to the entity it is representing the model2 of."
-]
-
-//
 // Lights 
 //
 
-// TODO - move to q3map2.fgd
-
-@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) base(LightBase) = light : "Non-displayed point light source. The -pointscale and -scale arguments to Q3Map2 affect the brightness of these lights. The -skyscale argument affects brightness of entity sun lights."
-[
-	style(choices) : "Lightstyle" : : "Light style index number associated with worldspawn light style. Range 1 to 31."	=
-	[
-		"" : "None"
-		1 : 1
-		2 : 2
-		3 : 3
-		4 : 4
-		5 : 5
-		6 : 6
-		7 : 7
-		8 : 8
-		9 : 9
-		10 : 10
-		11 : 11
-		12 : 12
-		13 : 13
-		14 : 14
-		15 : 15
-		16 : 16
-		17 : 17
-		18 : 18
-		19 : 19
-		20 : 20
-		21 : 21
-		22 : 22
-		23 : 23
-		24 : 24
-		25 : 25
-		26 : 26
-		27 : 27
-		28 : 28
-		29 : 29
-		30 : 30
-		31 : 31
-	]
-	_flare(choices) : "Emit default flare" : : "Emit a flare using the default flare material (`flareshader`). Requires -flares in -bsp stage." =
-	[
-		"" : "No"
-		1 : "Yes"
-	]
-	_flareshader(string) : "Flare Shader" : : "Full path to material to emit flare using. Requires -flares in -bsp stage."
-]
-
-
+@PointClass base(Q3Map2_LightPointStatic) = light : "Non-displayed point light source. The -pointscale and -scale arguments to Q3Map2 affect the brightness of these lights. The -skyscale argument affects brightness of entity sun lights." []
 
 //
 // Ammo
@@ -407,7 +349,7 @@
 // Func entities
 //
 
-@SolidClass base(TargetName,BModels) = func_bobbing : "Solid entity that oscillates back and forth in a linear motion. By default, it will have an amount of displacement in either direction equal to the dimension of the brush in the axis in which it's bobbing. Entity bobs on the Z axis (up-down) by default. It can also emit sound if the ''noise'' key is set. Will crush the player when blocked."
+@BaseClass base(TargetName) = func_bobbing_BASE 
 [
 	speed(float) : "Bob Cycle Time" : 4 : "Amount of time in seconds for one complete oscillation cycle (default 4)."
 	height(float) : "Vertical Travel" : 32 : "Sets the amount of travel of the oscillation movement (default 32)."
@@ -421,8 +363,9 @@
 		2 : "Y Axis" : 0 : "Entity will bob along the Y axis."
 	]
 ]
+@SolidClass base(func_bobbing_BASE, BModels) = func_bobbing : "Solid entity that oscillates back and forth in a linear motion. By default, it will have an amount of displacement in either direction equal to the dimension of the brush in the axis in which it's bobbing. Entity bobs on the Z axis (up-down) by default. It can also emit sound if the ''noise'' key is set. Will crush the player when blocked." []
 
-@SolidClass base(BModels,TargetShader) = func_button : "When a button is touched by a player, it moves in the direction set by the `angles` key, triggers all its targets, stays pressed by an amount of time set by the `wait` key, then returns to it's original position where it can be operated again."
+@BaseClass base(TargetShader) = func_button_BASE
 [
 	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
 	//angle(float) : "Yaw Angle (deprecated)" : : "Determines the direction in which the button will move (up = -1, down = -2)."
@@ -438,8 +381,9 @@
 		1 : "Yes"
 	]
 ]
+@SolidClass base(func_button_BASE, BModels) = func_button : "When a button is touched by a player, it moves in the direction set by the `angles` key, triggers all its targets, stays pressed by an amount of time set by the `wait` key, then returns to it's original position where it can be operated again." []
 
-@SolidClass base(BModels,TargetShader) = func_door : "Normal sliding door entity. By default, the door will activate when player walks close to it or when damage is inflicted to it."
+@BaseClass base(TargetShader) = func_door_BASE
 [
 	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
 	//angle(float) : "Yaw Angle (deprecated)" : : "Determines the opening direction of door (up = -1, down = -2)."
@@ -464,8 +408,9 @@
 		32 : "Need Gold Key (Quake Live)" : 0 : "Quake Live only: require item_key_gold or item_key_master to open this door. Takes precedence over targetname and health."
 	]
 ]
+@SolidClass base(func_door_BASE, BModels) = func_door : "Normal sliding door entity. By default, the door will activate when player walks close to it or when damage is inflicted to it." []
 
-@SolidClass base(TargetName, BModels) = func_pendulum : "Solid entity that describes a pendulum back and forth rotation movement. Rotates on the X axis by default. Pendulum frequency is a physical constant based on the height of the entity and gravity. Blocking the pendulum instantly kills a player\n\nYou need to have an origin brush (textured by common/origin) as part of this entity. The center of that brush will be the point through which the rotation axis passes."
+@BaseClass base(TargetName) = func_pendulum_BASE
 [
 	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
 	//angle(float) : "Yaw Angle (deprecated)" : : "Angle offset of axis of rotation from default X axis (default 0)."
@@ -474,8 +419,9 @@
 	phase(float) : "Swing Phase" : 0 : "Sets the start offset of the swinging cycle. Values must be 0 < phase < 1. Any integer phase value is the same as no offset (default 0)."
 	noise(sound) : "Sound File" : : "Path/name of .wav file to play. Use looping sounds only (e.g. sound/world/drone6.wav)."
 ]
+@SolidClass base(func_pendulum_BASE, BModels) = func_pendulum : "Solid entity that describes a pendulum back and forth rotation movement. Rotates on the X axis by default. Pendulum frequency is a physical constant based on the height of the entity and gravity. Blocking the pendulum instantly kills a player\n\nYou need to have an origin brush (textured by common/origin) as part of this entity. The center of that brush will be the point through which the rotation axis passes." []
 
-@SolidClass base(BModels,TargetShader) = func_plat : "Rising platform the player can ride to reach higher places. Plats must always be drawn in the raised position, so they will operate and be lighted correctly but they spawn in the lowered position (which equals to behavior of func_door with START_OPEN flag set). The plat will stay in the raised position until the player steps off."
+@BaseClass = func_plat_BASE
 [
 	speed(float) : "Move Speed" : 200 : "Determines how fast the plat moves (default 200, -1 = reach the end of move instantly)."
 	lip(float) : "Lip + 2" : 8 : "Lip remaining at start of move. Default value is 8, which results in 6u of physical lip. I.e. for wished amount of move set key to [size + 2 - amount], 2 for full move, [size + 2] for none. Has no effect if height is set."
@@ -484,8 +430,9 @@
 	target(target_destination) : "Target When Raised" : : "Fired when the plat goes to raised position; but not *not* when returning to its lowered position."
 	targetname(target_source) : "Target Name" : : "If set, the trigger that points to this will raise the plat each time it fires. The plat raises and comes back down a second later if no player is on it."
 ]
+@SolidClass base(func_plat_BASE, TargetShader, BModels) = func_plat : "Rising platform the player can ride to reach higher places. Plats must always be drawn in the raised position, so they will operate and be lighted correctly but they spawn in the lowered position (which equals to behavior of func_door with START_OPEN flag set). The plat will stay in the raised position until the player steps off." []
 
-@SolidClass base(TargetName,BModels) = func_rotating : "Solid entity that rotates continuously. Rotates on the Z axis by default and requires an origin brush. It will always start on in the game and is not targetable.\n\nYou need to have an origin brush (textured by common/origin) as part of this entity. The center of that brush will be the point through which the rotation axis passes. It will rotate along the Z axis by default. You can check either the X_AXIS or Y_AXIS box to change that."
+@BaseClass base(TargetName) = func_rotating_BASE
 [
 	speed(float) : "Rotation Speed" : 100 : "Determines how fast entity rotates (default = 100 degrees per second)."
 	noise(sound) : "Sound File" : : "Path/name of .wav file to play. Use looping sounds only (e.g. sound/world/drone6.wav)."
@@ -497,19 +444,22 @@
 		8 : "Y Axis" : 0 : "Entity will rotate along the Y axis."
 	]
 ]
+@SolidClass base(func_rotating_BASE, BModels) = func_rotating : "Solid entity that rotates continuously. Rotates on the Z axis by default and requires an origin brush. It will always start on in the game and is not targetable.\n\nYou need to have an origin brush (textured by common/origin) as part of this entity. The center of that brush will be the point through which the rotation axis passes. It will rotate along the Z axis by default. You can check either the X_AXIS or Y_AXIS box to change that." []
 
+// don't need BaseClass for func_static, since it has no special KVs.
 @SolidClass base(TargetName,BModels) = func_static : "Static bspmodel. Can be used for conditional walls and models. Like func_wall in Quake I+II.\n\nBecause the map has only a single bot navigation file, func_static cannot be used to make significant changes in game play flow between differing game types."
 [
 	// TODO confirm - ENT said this; seems bogus, based upon source code.
 	// "If a model is included with a targeted func_static, the brush(es) of the entity will be removed from the game but the .md3 model won't: It will automatically be moved to the (0 0 0) world origin so you should NOT include an .md3 model to a targeted func_static."
 ]
 
-@SolidClass base(TargetName,BModels) = func_train : "Trains are moving solids that follow a looped string of path_corner entities. Trains in Q3A are very basic, they also REQUIRE AN ORIGIN BRUSH.\n\n1. Trains always start on in the game.\n2. Trains do not damage the player when blocked.\n3. Trains cannot emit sound.\n4. Trains are not triggerable or toggleable.\n5. Trains cannot be block-stopped just by getting in their way, the player must be wedged between the train and another obstacle to block it."
+@BaseClass base(TargetName) = func_train_BASE
 [
 	// noise KV doesn't work b/c code tries to read the sound from path_corner instead
 	target(target_destination) : "First Stop Target" : : "The name of the first path_corner in the train's path. The train will spawn at this path_corner."
 	speed(float) : "Initial Speed" : 100 : "Speed of displacement of train (default 100 or overridden by speed value of path)."
 ]
+@SolidClass base(func_train_BASE, BModels) = func_train : "Trains are moving solids that follow a looped string of path_corner entities. Trains in Q3A are very basic, they also REQUIRE AN ORIGIN BRUSH.\n\n1. Trains always start on in the game.\n2. Trains do not damage the player when blocked.\n3. Trains cannot emit sound.\n4. Trains are not triggerable or toggleable.\n5. Trains cannot be block-stopped just by getting in their way, the player must be wedged between the train and another obstacle to block it." []
 
 //
 // Info entities
@@ -648,7 +598,7 @@
 	]
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) color(0 179 179) base(TargetX)= target_delay : "Time delay trigger intermediary. Like a target_relay, this can only be fired by other triggers which will cause it in turn to fire its own targets."
+@PointClass size(-8 -8 -8, 8 8 8) color(0 179 179) base(TargetX) = target_delay : "Time delay trigger intermediary. Like a target_relay, this can only be fired by other triggers which will cause it in turn to fire its own targets."
 [
 	wait(float) : "Delay" : 1 : "Delay in seconds from when this gets triggered to when it fires its own targets (default 1)."
 	delay(float) : "Delay (deprecated)" : : "Same as wait. For consistency, wait is preferred."
@@ -708,7 +658,7 @@
 [
 	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
 	//angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of push entity."
-	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This sets the pitch and yaw aiming angles of push entity (default 0 0). The roll angle does not apply."
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This sets the pitch and yaw aiming angles of push entity (default 0 0). The roll angle is ignored."
 	speed(float) : "Push Speed" : 1000 : "Speed of push (default 1000). Has no effect if entity targets an aiming entity."
 	target(target_destination) : "Push Target" : : "This points to the aiming entity to which the player will jump. Takes precedence over `angles`."
 	targetname(target_source) : "Target Name" : : "The activating trigger points to this. Push originates from the location of the trigger."
@@ -724,7 +674,7 @@
 	[
 		1 : "Red Team Only" : 0 : "Only red team players can activate trigger."
 		2 : "Blue Team Only" : 0 : "Only blue team players can activate trigger."
-		4 : "Random Target" : 0 : "One of the targeted entities will be triggered at random."
+		4 : "Random Target" : 0 : "One of the targeted entities will be triggered at random, instead of triggering all of them."
 	]
 ]
 

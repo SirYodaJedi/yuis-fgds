@@ -31,15 +31,15 @@
 @BaseClass = Q3Map2_World
 [
 	// can't use "shader" KV type in Worldspawn due to JACK bug with texture browser
-	gridsize(string) : "Dynamic Light Granularity" : "64 64 128" : "Granularity of the lightgrid, created by q3map, which is used to dynamically light certain game objects, like players and items. Value is three integers separated by spaces, representing number of units between grid points in X Y Z. Default gridsize value is 64 64 128. Use larger powers of 2 to reduce BSP size and compile time on very large maps."
-	_blocksize(string) : "BSP Block Size" : "1024 1024 1024" : "Map compiler splits the BSP tree along axial planes (X, Y and Z) for optimization. It does it as often, as specified in _blocksize key for respective axis (in units) (default 1024 1024 1024, 0 = disable, setting single value 'N' equals to setting 'N N N'). I.e. lower values result in more splits and vice versa. Increase the blocksize using larger powers of 2 to reduce compile times on very large maps with a low structural brush density. Maps, having flat architecture, might work better with Z splits disabled ('N N 0'). Disabling X and Y splits is not recommended, as that prevents VIS from being able to do its job correctly; raising to 4096 is safe, however."
+	gridsize(vector) : "Dynamic Light Granularity" : "64 64 128" : "Granularity of the lightgrid, created by q3map, which is used to dynamically light certain game objects, like players and items. Value is three integers separated by spaces, representing number of units between grid points in X Y Z. Default gridsize value is 64 64 128. Use larger powers of 2 to reduce BSP size and compile time on very large maps."
+	_blocksize(vector) : "BSP Block Size" : "1024 1024 1024" : "Map compiler splits the BSP tree along axial planes (X, Y and Z) for optimization. It does it as often, as specified in _blocksize key for respective axis (in units) (default 1024 1024 1024, 0 = disable, setting single value 'N' equals to setting 'N N N'). I.e. lower values result in more splits and vice versa. Increase the blocksize using larger powers of 2 to reduce compile times on very large maps with a low structural brush density. Maps, having flat architecture, might work better with Z splits disabled ('N N 0'). Disabling X and Y splits is not recommended, as that prevents VIS from being able to do its job correctly; raising to 4096 is safe, however."
 	_ambient(float) : "Ambient Intensity" :  : "Adds a constant value to overall lighting (default 0, range 0 - 255). Use is not recommended. It has a tendency to flatten out variations in light and shade."
 	_color(color1) : "Ambient Color" :  : "RGB color value for ambient and other global light parameters (default is 1 1 1)."
 	// _minlight currently only works on worldspawn (even though it's intended for bmodels), so commented out last part
 	_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value, levelwide. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn." //+"; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
 	_minvertexlight(float) : "Min Vertex Intensity" : : "Minimum vertex lighting, levelwide. Not recommended."
-	_mingridlight(float) : "Min Lightgrid Intensity" : : "Minimum lightgrid (dynamic entity lighting) levelwide. If you aren't using _ambient, you might want to use this to keep model visibility acceptable on multiplayer maps."
-	_floodlight(string) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set global floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
+	_mingridlight(float) : "Min Lightgrid Intensity" : : "Minimum lightgrid (dynamic entity lighting) levelwide. If you aren't using a global _ambient, you might want to use this to keep model visibility acceptable on multiplayer maps."
+	_floodlight(color255) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set global floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
 	_keeplights(choices) : "Keep Light Entities" : : "Keep light* entities in the BSP. Normally stripped out by the BSP process and read from the .map file by the lighting phase." =
 	[
 		"" : "No"
@@ -89,14 +89,14 @@
 	// minlight is currently nonfunctional on everything except worldspawn, which is the one place you never want to use it
 	//_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value. If _minvertexlight is unset, affects vertex colors in addition to lightmap. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
 	//_minvertexlight(float) : "Min Vertex Intensity" : : "Minimum vertex lighting."
-	_floodlight(string) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set localized floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
 ]
 
+// if using an editor that supports wirebox(), add `wirebox( min,max )`
 @BaseClass base(Q3Map2_Brushwork) = Q3Map2_BModels
 [
 	_castshadows(integer) : "Shadow Caster Level" : 0 : "Allows per-entity control over shadow casting. Both brushwork and model2 will be used for shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
 	_frame2(integer) : "Q3Map2 Model2 Frame" : : "If set, this frame of model2 will be used for lighting calculations instead of the first frame. Does not affect runtime shadows."
-	_clone(string) : "Entity to Steal (Clone) BModel from" : : "Field value of a brush entity to clone brushes from (can be used to use the same brush model multiple times)"
+	_clone(string) : "Entity to Steal (Clone) BModel from" : : "Field value of a brush entity to clone brushes from (to use the same brush model multiple times; useful for triggers that have different settings in different game modes)"
 	_clonename(string) : "Name for Cloning" : : "Used for _clone. targetname is not parsed for cloning; this must be used instead."
 	// why isn't _patchMeta et al in func_group?
 	_patchMeta(choices) : "Convert Patch Meshes to Trisoup" : "" : "Generate a triangle soup from patch meshes (''curves'') in this entity)" = 
@@ -104,10 +104,10 @@
 		"" : "No"
 		1 : "Yes"
 	]
-	_patchQuality(integer) : "Patch2Trisoup Quality" : "1.0" : "Quality multiplier for patches on this surface when _patchMeta is used."
+	_patchQuality(integer) : "Patch2Trisoup Quality" : 1 : "Quality multiplier for patches on this surface when _patchMeta is used."
 	_patchSubdivide(integer) : "Patch2Trisoup Subdivisions" : : "Absolute quality setting for patches on this surface when _patchMeta is used. Takes priority over _patchQuality."
-	max(string) : "maxs Vector Override"
-	min(string) : "mins Vector Override"
+	max(vector) : "maxs Vector Override"
+	min(vector) : "mins Vector Override"
 ]
 
 // for misc_gamemodel, misc_model_static, etc. where a `model` KV is present
@@ -117,9 +117,8 @@
 ]
 
 // TODO - rename to have Q3Map2_ prefix; refactor to allow Raven lights
-@BaseClass base(EditorComment) = LightBase
+@BaseClass = Q3Map2_LightBase
 [
-	targetname(string) : "Target Name (unused)" : : "Toggled lights are not supported." // for clarity when porting
 	light(float) : "Brightness" : 300 : "Overrides the default 300 intensity. Negative values may be used for negative lights."
 	_color(color1) : "RGB color" : "1 1 1" : "Weighted RGB value of light color (default 1.0 1.0 1.0 = white)."
 	target(target_destination) : "Spotlight Target" : : "Lights pointed at a target (info_null) will be spotlights."
@@ -150,6 +149,43 @@
 	]
 ]
 
+@BaseClass base(EditorComment) = LightEnt_TargetnameUnused
+[
+	targetname(string) : "Target Name (unused)" : : "Toggled lights are not supported." // for clarity when porting
+]
+
+@BaseClass base(EditorComment) = LightEnt_TargetnameUsed
+[
+	targetname(target_source) : "Target Name" : : "Name which is used to toggle this light in-game."
+]
+
+// For "light" on games that don't support toggled lights
+@BaseClass base(LightEnt_TargetnameUnused, Q3Map2_LightBase) size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) = Q3Map2_LightPointStatic
+[
+	style(integer) : "Lightstyle" : : "Light style index number associated with worldspawn light style. Range 1 to 31."
+	_flare(choices) : "Emit default flare" : : "Emit a flare using the default flare material (`flareshader`). Requires -flares in -bsp stage." =
+	[
+		"" : "No"
+		1 : "Yes"
+	]
+	_flareshader(string) : "Flare Shader" : : "Full path to material to emit flare using. Requires -flares in -bsp stage."
+]
+
+// for "light" on games that do support toggled lights
+@BaseClass base(LightEnt_TargetnameUsed, Q3Map2_LightBase) size(-8 -8 -8, 8 8 8) iconsprite("sprites/light.spr") flags(Light) = Q3Map2_LightPointDynamic
+[
+	_flare(choices) : "Emit default flare" : : "Emit a flare using the default flare material (`flareshader`). Requires -flares in -bsp stage." =
+	[
+		"" : "No"
+		1 : "Yes"
+	]
+	_flareshader(string) : "Flare Shader" : : "Full path to material to emit flare using. Requires -flares in -bsp stage."
+	style(integer) : "Lightstyle" : : "Light style index number associated with default game-set lightstyle."
+]
+
+// for all other lights
+@BaseClass base(LightEnt_TargetnameUnused, Q3Map2_LightBase) = Q3Map2_LightInternal []
+
 // ==============================================================
 //					Q3Map2 internal entities
 // ==============================================================
@@ -166,7 +202,7 @@
 	_scale(float) : "Scale" : "64" : "Scaling factor (default 64), good values are between 8 and 300, depending on the map. 16 recommended."
 ]
 
-@PointClass size(-16 -16 -16, 16 16 16) color(255 128 64) base(EditorComment,Angles) flags(Angle) studio() = misc_model : "Generic placeholder for inserting models to map. Model triangles are baked to BSP.\n\nSee FGD comment for valid clipping combinations.\n\nMD3, ASE, 3DS, OBJ, FM, LWO, MD2, MDC, MS3D model formats are supported, as well as a whole bunch of other AssImp formats."
+@PointClass size(-16 -16 -16, 16 16 16) color(255 128 64) base(EditorComment,Angles) studio() = misc_model : "Generic placeholder for inserting models to map. Model triangles are baked to BSP.\n\nSee FGD comment for valid clipping combinations.\n\nMD3, ASE, 3DS, OBJ, FM, LWO, MD2, MDC, MS3D model formats are supported, as well as a whole bunch of other AssImp formats."
 [
 	model(studio) : "Model File" : : "Path/name of model to use (e.g. models/mapobjects/teleporter/teleporter.md3)."
 	//frame(integer) : "Model Frame" : : "Frame of model to load (doesn't work)."
@@ -234,9 +270,20 @@
 ]
 
 //
+// Editor-only entities
+//
+
+@PointClass studio() base(EditorComment) = _editor_model2_visualizer : "Editor-only entity to display a model at an arbitrary location. Designed to visualize model2 for func_ models in-editor. Does not exist in-game, so it doesn't count towards entity limits."
+[
+	model2(studio) : "Model to display in editor"
+	sequence(integer) : "Frame to display" : 0 : "This should match _frame2 of the entity with a model2."
+	target(target_destination) : "Entity with model2" : : "Fill this out if you want a line tracing from this entity to the entity it is representing the model2 of."
+]
+
+//
 // Internal-only lights
 //
 
-@PointClass size(-6 -6 -6, 6 6 6) iconsprite("sprites/light.spr") flags(Light) base(LightBase) = lightJunior : "Non-displayed point light source THAT ONLY AFFECTS ENTITIES (lightgrid). The -pointscale and -scale arguments to Q3Map2 affect the brightness of these lights. The -skyscale argument affects brightness of entity sun lights." []
+@PointClass size(-6 -6 -6, 6 6 6) iconsprite("sprites/light.spr") flags(Light) base(Q3Map2_LightInternal) = lightJunior : "Non-displayed point light source THAT ONLY AFFECTS ENTITIES (lightgrid). The -pointscale and -scale arguments to Q3Map2 affect the brightness of these lights. The -skyscale argument affects brightness of entity sun lights." []
 
-@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/dod/lightspot.spr") flags(Light) base(LightBase) = light_spot : "All classnames prefixed with `light` except lightJunior act the same as `light`; I just use this separate classname as an alias for clarity." []
+@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/dod/lightspot.spr") flags(Light) base(Q3Map2_LightInternal) = light_spot : "All classnames prefixed with `light` except lightJunior act the same as `light`; I just use this separate classname as an alias for clarity." []
