@@ -1,0 +1,232 @@
+//
+// Generic BaseClasses
+//
+
+@BaseClass = EditorComment
+[
+	_comment(string) : "Editor Comment" : : "Field that is ignored by the game and compilers. Can be used for quick locational notes when mapping."
+]
+
+@BaseClass = Angles
+[
+	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
+	//angle(float) : "Yaw Angle (deprecated)" : : "Like `angles`, but only affects the Z axis."
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Individual control of pitch (Y), yaw (Z), and roll (X) (default 0 0 0)."
+]
+
+@BaseClass = TargetName
+[
+	targetname(target_source) : "Target Name"
+]
+
+@BaseClass = Target
+[
+	target(target_destination) : "Target"
+]
+
+//
+// Q3Map2 bases
+//
+
+@BaseClass = Q3Map2_World
+[
+	gridsize(string) : "Dynamic Light Granularity" : "64 64 128" : "Granularity of the lightgrid, created by q3map, which is used to dynamically light certain game objects, like players and items. Value is three integers separated by spaces, representing number of units between grid points in X Y Z. Default gridsize value is 64 64 128. Use larger powers of 2 to reduce BSP size and compile time on very large maps."
+	_blocksize(string) : "BSP Block Size" : "1024 1024 1024" : "Map compiler splits the BSP tree along axial planes (X, Y and Z) for optimization. It does it as often, as specified in _blocksize key for respective axis (in units) (default 1024 1024 1024, 0 = disable, setting single value 'N' equals to setting 'N N N'). I.e. lower values result in more splits and vice versa. Increase the blocksize using larger powers of 2 to reduce compile times on very large maps with a low structural brush density. Maps, having flat architecture, might work better with horizontal splits disabled ('N N 0')."
+	_ambient(float) : "Ambient Intensity" :  : "Adds a constant value to overall lighting (default 0, range 0 - 255). Use is not recommended. It has a tendency to flatten out variations in light and shade."
+	_color(color1) : "Ambient Color" :  : "RGB color value for ambient and other global light parameters (default is 1 1 1)."
+	_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value, levelwide. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
+	_minvertexlight(float) : "Min Vertex Intensity" : : "Minimum vertex lighting, levelwide. Not recommended."
+	_mingridlight(float) : "Min Lightgrid Intensity" : : "Minimum lightgrid (dynamic entity lighting) levelwide."
+	_floodlight(string) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set global floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
+	_keeplights(choices) : "Keep Light Entities" : : "Keep light* entities in the BSP. Normally stripped out by the BSP process and read from the .map file by the lighting phase." =
+	[
+		"" : "No"
+		1 : "Yes"
+	]
+	_keepModels(choices) : "Keep misc_model Entities" : : "Keep misc_model entities in the BSP. Normally stripped out by the BSP process after baking into the map." =
+	[
+		"" : "No"
+		1 : "Yes"
+	]
+	_noshadersun(choices) : "Ignore Shader Sun" : : "Ignore q3map_sun/sun directives in sky shaders and ONLY use entity sun lights." =
+	[
+		"" : "No"
+		1 : "Yes"
+	]
+	_farplanedist(float) : "Far Clip Distance" : : "Limit on how many units the vis phase of compilation can see. Used in combination with level-wide fog, it can help reduce r_speeds on large, open maps."
+	_foghull(string) : "Fog Hull Shader" : : "Shader to use for fog hull. Foghull shader should be a sky shader. Omit the textures/ prefix."
+	_lightmapscale(float) : "Lightmap Scale" : "1.0" : "Floating point value, scaling the resolution of lightmaps on brushes/patches in the world. Can be overridden in func_group (or other entities) (default 1.0)."
+	_castshadows(integer) : "Shadow Caster Level" : 1 : "Allows per-entity control over shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
+	_receiveshadows(integer) : "Shadow Receiver Level" : 1 : "Allows per-entity control over shadow reception. Defaults to 1 on everything (world shadows). 0 = receives NO shadows. > 1 = receive shadows only from corresponding keyed entities (see above) and world. < 1 = receive shadows ONLY from corresponding keyed entities."
+	_celshader(string) : "Cel Shader" : : "Sets the cel shader used for this geometry. Note: Omit the textures/ prefix."
+	_style1alphaGen(string) : "Style Light alphaGen" : : "Values takes standard shader waveform functions (e.g. wave sin 0.5 0.3 0.25 1.5)\nAdditional keyvalues can be added as-needed, up to _style31alphaGen."
+	_style1rgbGen(string) : "Style Light rgbGen" : : "Values take standard shader waveform functions (e.g. wave sin 0.5 0.3 0.25 1.5)\nAdditional keyvalues can be added as-needed, up to _style31rgbGen."
+	
+	// Q3Map2 meta keys
+	_indexmap(string) : "Terrain Blending Map" : : "Path/name for the art file used to guide the mapping of textures on the terrain surface."
+	_layers(integer) : "Terrain Layers" : : "Number of unique root shaders that will be used on the terrain."
+	_shader(string) : "Terrain MetaShader" : : "Path to the metashader used to assign textures to the terrain entity. Note: Omit the textures/ prefix."
+]
+
+@BaseClass = Q3Map2_Brushwork
+[
+	// TODO - sift through and find missing KVs
+	_targetname(target_source) : "Q3Map2 Internal Name" : : "misc_model's `target` KV prioritizes this over regular targetname, so that entities which have their behavior changed by having a targetname can have baked models."
+	_lightmapscale(float) : "Lightmap Scale" : "1.0" : "Floating point value, scaling the resolution of lightmaps on brushes/patches in this entity (default 1.0). Should not be used in conjunction with _samplesize."
+	_samplesize(integer) : "Luxel Size" : : "Override the default luxel size, in units per luxel, taking priority over -samplesize and q3map_sampleSize (otherwise, default 16). Should not be used in conjunction with _lightmapscale."
+	_shadeangle(float) : "Smooth Shading Threshold Angle" : : "Override the default threshold angle used to decide whether to shade smooth."
+	_indexmap(string) : "Terrain Blending Map" : : "Path/name for the art file used to guide the mapping of textures on the terrain surface."
+	_layers(integer) : "Terrain Layers" : : "Number of unique root shaders that will be used on the terrain."
+	_shader(shader) : "Terrain MetaShader" : : "Path to the metashader used to assign textures to the terrain entity. Note: Omit the textures/ prefix."
+	_offsets(string) : "Terrain Z Offsets" : : "Space separated list of z offsets for index map"
+	_celshader(shader) : "Cel Shader" : : "Sets the cel shader used for this geometry. Note: Omit the textures/ prefix."
+	_receiveshadows(integer) : "Shadow Receiver Level" : 1 : "Allows per-entity control over shadow reception. Defaults to 1 on everything (world shadows). 0 = receives NO shadows. > 1 = receive shadows only from corresponding keyed entities (see above) and world. < 1 = receive shadows ONLY from corresponding keyed entities."
+	_ambient(float) : "Ambient Intensity" :  : "Adds a constant value to overall lighting (default 0, range 0 - 255). Use is not recommended. It has a tendency to flatten out variations in light and shade."
+	_color(color1) : "Ambient Color" :  : "RGB color value for ambient and other global light parameters (default is 1 1 1)."
+	// minlight is currently nonfunctional on everything except worldspawn, which is the one place you never want to use it
+	//_minlight(float) : "Min Lightmap Intensity " : : "Minimum light value. If _minvertexlight is unset, affects vertex colors in addition to lightmap. Uses the _color key to set color. Since it does not add unlike ambient, but overrides existing light values, affected areas will get flat constant light. Not recommended on worldspawn; should be used on specific entities (ex: func_door) that get faces which are going to be inevitably pitch black due to spawning obscured."
+	//_minvertexlight(float) : "Min Vertex Intensity" : : "Minimum vertex lighting."
+	_floodlight(string) : "Floodlight" : : "A sextet of values r g b dist intensity directional_power to set localized floodlight parameters (good defaults are 240 240 255 1024 128 1). Floodlight effect is sort of Ambient Occlusion."
+]
+
+@BaseClass base(Q3Map2_Brushwork) = Q3Map2_BModels
+[
+	_castshadows(integer) : "Shadow Caster Level" : 0 : "Allows per-entity control over shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
+	_frame2(integer) : "Q3Map2 Model2 Frame" : : "If set, this frame of model2 will be used for lighting calculations instead of the first frame. Does not affect runtime shadows."
+	_clone(string) : "Entity to Steal (Clone) BModel from" : : "Field value of a brush entity to clone brushes from (can be used to use the same brush model multiple times)"
+	_clonename(string) : "Name for Cloning" : : "Used for _clone. targetname is not parsed for cloning; this must be used instead."
+	// why isn't _patchMeta et al in func_group?
+	_patchMeta(choices) : "Convert Patch Meshes to Trisoup" : "" : "Generate a triangle soup from patch meshes (''curves'') in this entity)" = 
+	[
+		"" : "No"
+		1 : "Yes"
+	]
+	_patchQuality(integer) : "Patch2Trisoup Quality" : "1.0" : "Quality multiplier for patches on this surface when _patchMeta is used."
+	_patchSubdivide(integer) : "Patch2Trisoup Subdivisions" : : "Absolute quality setting for patches on this surface when _patchMeta is used. Takes priority over _patchQuality."
+	max(string) : "maxs Vector Override"
+	min(string) : "mins Vector Override"
+]
+
+// TODO - rename to have Q3Map2_ prefix; refactor to allow Raven lights
+@BaseClass base(EditorComment) = LightBase
+[
+	targetname(string) : "Target Name (unused)" : : "Toggled lights are not supported." // for clarity when porting
+	light(float) : "Brightness" : 300 : "Overrides the default 300 intensity. Negative values may be used for negative lights."
+	_color(color1) : "RGB color" : "1 1 1" : "Weighted RGB value of light color (default 1.0 1.0 1.0 = white)."
+	target(target_destination) : "Spotlight Target" : : "Lights pointed at a target (info_null) will be spotlights."
+	radius(float) : "Spotlight Radius" : 60 : "Overrides the default 64 unit radius of a spotlight at the target point."
+	_sun(choices) : "Spotlight is Sun" : : "Set this key to 1 on a spotlight to make an infinite sun light." =
+	[
+		"" : "No"
+		1 : "Yes"
+	]
+	fade(float) : "Linear Fade" : "1.0" : "Fades light attenuation. Only affects linear lights."
+	scale(float) : "Brightness Scale" : "1.0" : "Scales the light value."
+	_deviance(float) : "Penumbra Deviance" : : "Penumbra effect - distance measured in world units for point/spot lights, and degrees for suns (~0.5-3)."
+	_samples(integer) : "Penumbra Samples" : 1 : "Penumbra effect - the number of random jitters distributed over the solid arc (~16)."
+	_filter(choices) : "Lightmap Filtering" : : "Filter lightmaps from this light, similar to -filter." =
+	[
+		"" : "No"
+		1 : "Yes"
+	]
+	_filterradius(float) : "Filter Radius" : : "Filters lightmaps within set radius."
+	_anglescale(float) : "Light Attenuation Scale" : 1 : "Scales light attenuation. Smaller values lessens angle attenuation, larger values for sharper, more faceted lighting (default 1.0)."
+	spawnflags(flags) = 
+	[
+		1 : "Linear Falloff" : 0 : "Use a linear falloff. Default is inverse distance squared (more realistic), unless -wolf."
+		2 : "No Angle Attenuation" : 0 : "Ignore angle attenuation (unless -wolf, in which case enables angle attenuation)."
+		16 : "No Grid Light" : 0 : "Do not affect the lightgrid (dynamic entity lighting). If used on lightJunior, causes the light to be inert."
+		32 : "Unnormalized RGB" : 0 : "Do not normalize light color. Recommended if you don't have at least one color channel that is 1 (color1) or 255 (color255)."
+		64 : "Distance attenuation" : 0 : "Use distance attenuation used for sun and area lights (why did vortex add this, this is always set...?)."
+	]
+]
+
+// ==============================================================
+//					Q3Map2 internal entities
+// ==============================================================
+
+@SolidClass base(EditorComment,TargetName) = func_null : "Nonexistent entity that can be used for invisible texlights and shadows. Keep in mind that it will still count towards the bmodel limit." []
+
+@SolidClass base(EditorComment) = _decal : "Compiler-only entity that specifies a decal to be projected. Should contain 1 or more patch meshes (curves) and target an info_null entity. Patch mesh should be using a shader with polygonoffset (or other blending methods) or z-fighting will occur. The distance between the center of the _decal entity and the target is the axis and distance of projection."
+[
+	target(target_destination) : "Target" : : "The name of the entity targeted for projection."
+]
+
+@PointClass size(-4 -4 -4, 4 4 4) color(197 225 255) base(EditorComment,Angles) flags(Angle) = _skybox : "Compiler-only entity that specifies the origin of a ''3D skybox'' (a wholly contained, separate area of the map), similar to some games portal skies. When compiled with Q3Map2, the skybox surfaces will be visible from any place where sky is normally visible. It will cast shadows on the normal parts of the map, and can be used with cloud layers and other effects."
+[
+	_scale(float) : "Scale" : "64" : "Scaling factor (default 64), good values are between 50 and 300, depending on the map."
+]
+
+@PointClass size(-16 -16 -16, 16 16 16) color(255 128 64) base(EditorComment,Angles) flags(Angle) studio() = misc_model : "Generic placeholder for inserting models to map. Model triangles are baked to BSP.\n\nSee FGD comment for valid clipping combinations.\n\nMD3, ASE, 3DS, OBJ, FM, LWO, MD2, MDC, MS3D model formats are supported, as well as a whole bunch of other AssImp formats."
+[
+	model(studio) : "Model File" : : "Path/name of model to use (e.g. models/mapobjects/teleporter/teleporter.md3)."
+	//frame(integer) : "Model Frame" : : "Frame of model to load (doesn't work)."
+	skin(string) : "Skin" : : "Name of .skin file to load."
+	modelscale(scale) : "Uniform Scale" : "1" : "Floating-point value used to scale a model up or down (default 1.0)."
+	modelscale_vec(vector) : "Scale XYZ" : : "Floating-point vector used to scale a model's axes individually (default 1.0 1.0 1.0)."
+	_remap(string) : "Material Remaps" : : "Used to remap textures/materials in the model. To remap all materials to a given material, use *;models/mymodel/mytexture. To remap a specific material, use models/mymodel/old;models/mymodel/new. Any key starting with _remap prefix will work, so if you need more remappings, create _remap2, _remap3 etc keys."
+	target(target_destination) : "Target" : : "Used to attach the misc_model to a brush entity, where its targetname or _targetname key is the same value. If the model moves, model2 should be used if available, as misc_model lighting is prebaked."
+	_lightmapscale(float) : "Lightmap Scale" : "1.0" : "Floating point value, scaling the resolution of lightmaps on this model (if model is using lightmapped materials) (default 1.0)."
+	_castshadows(integer) : "Shadow Caster Level" : 1 : "Allows per-entity control over shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
+	_receiveshadows(integer) : "Shadow Receiver Level" : 1 : "Allows per-entity control over shadow reception. Defaults to 1 on everything (world shadows). 0 = receives NO shadows. > 1 = receive shadows only from corresponding keyed entities (see above) and world. < 1 = receive shadows ONLY from corresponding keyed entities."
+	_clipdepth(float) : "Autoclip thickness" : "2.0" : "Autoclip brushes thickness (default 2.0)."
+	_celshader(shader) : "Cel Shader" : : "Sets the cel shader used for this geometry. Note: Omit the textures/ prefix."
+	_ambient(float) : "Ambient Light Level"
+	_minlight(float) : "Minimum Light Level (minlight)"
+	_minvertexlight(float) : "Minimum Vertex Light Level"
+	_color(color1) : "Ambient/Minlight Color" : "1 1 1" : "Color to use for _ambient, _minlight, and _minvertexlight"
+	_shadeangle(float) : "Smoothing Angle Override" : : "Overrides vertex normals stored in the original model's geometry."
+	spawnflags(flags) = 
+	[
+		1 : "_RMG_BSP" : 0 : "in SoF2, append a _RMG_BSP suffix to shader names instead of _BSP"
+		2 : "Clip Model" : 0 : "CLIPMODEL: Clips the model for player/weapon collisions; extruding every face along most perpendicular axial direction. For use on large architectural or terrain models, not for small decorative models."
+		4 : "Force Meta" : 0 : "Converts model triangles to BSP metasurfaces; required for lightmapped models.\nIf the model has materials defined a .shader file, use q3map_forceMeta in the material instead."
+		8 : "Extrude Face Normals" : 0 : "EXTRUDE_FACE_NORMALS: extrude along the model face normals for clipping"
+		16 : "Extrude Terrain" : 0 : "EXTRUDE_TERRAIN: extrude each surface of the model along its average axial direction ( up/down/west/east/north/south ); faces with not matching direction (or too steep) are clipped in default mode"
+		32 : "Color to Alpha" : 0 : "Use the color value as alpha (for terrain blending)"
+		128 : "Extrude Vertex Normals" : 0 : "EXTRUDE_VERTEX_NORMALS: extrude along the model vertex normals for clipping; accurate collisions, if normals are fine; bad ones are replaced with 45 degrees to face"
+		256 : "Pyramidal Clip" : 0 : "PYRAMIDAL_CLIP: pyramidal clipping brushes (4-sided); accurate collisions"
+		512 : "Extrude Downwards" : 0 : "EXTRUDE_DOWNWARDS: for horizontal terrain; when not possible, extrude in default mode"
+		1024 : "Extrude Upwards" : 0 : "EXTRUDE_UPWARDS"
+		2048 : "Max Extrude" : 0 : "MAX_EXTRUDE: Extrude to the max/min point of every model surface to reduce bsp size (uses axial back plane)"
+		4096 : "Axial Backplane" : 0 : "AXIAL_BACKPLANE: use axial back plane for clipping brushes to effectively reduce bsp size; might cause unwanted collisions, make sure to -debugclip; negative _clipdepth / -clipdepth limits max thickness of resulting brushes (making non-axial backplane, if hit the limit)"
+		
+		// other possible modes of clipping:
+		// CLIPMODEL+AXIAL_BACKPLANE
+		// EXTRUDE_FACE_NORMALS+PYRAMIDAL_CLIP - truncated pyramid with 45 degrees sides
+		// EXTRUDE_TERRAIN+MAX_EXTRUDE
+		// EXTRUDE_TERRAIN+AXIAL_BACKPLANE
+		// EXTRUDE_VERTEX_NORMALS + PYRAMIDAL_CLIP - vertex normals mode: don't check for sides, sticking outwards
+		// PYRAMIDAL_CLIP+AXIAL_BACKPLANE - pyramid with 3 of 4 sides axial (->small bsp)
+		// EXTRUDE_DOWNWARDS+EXTRUDE_UPWARDS
+		// EXTRUDE_DOWNWARDS+MAX_EXTRUDE
+		// EXTRUDE_DOWNWARDS+AXIAL_BACKPLANE
+		// EXTRUDE_DOWNWARDS+EXTRUDE_UPWARDS+MAX_EXTRUDE
+		// EXTRUDE_DOWNWARDS+EXTRUDE_UPWARDS+AXIAL_BACKPLANE
+		// EXTRUDE_UPWARDS+MAX_EXTRUDE
+		// EXTRUDE_UPWARDS+AXIAL_BACKPLANE
+	]
+]
+
+@SolidClass base(TargetName,EditorComment,Q3Map2_Brushwork) = func_group : "This is not an entity as such. It is strictly an editor utility to group world brushes and patches together for convenience (selecting, moving, copying, applying special compilation parameters etc). You cannot group entities with this. Func_group contents are merged into worldspawn entity during compilation process.\n\nTo make a func_group into a terrain entity, refer to the Terrain Construction documentation."
+[
+	_castshadows(integer) : "Shadow Caster Level" : 1 : "Allows per-entity control over shadow casting. Defaults to 0 on entities, 1 on world. 0 = no shadow casting. 1 = cast shadows on world. > 1 = cast shadows on entities with _rs (or _receiveshadows) with the corresponding value, AND world. Negative values imply same, but DO NOT cast shadows on world."
+		
+	// == OLD TERRAIN KEYS (Note: Obsolete with Q3Map2) ==
+	//alphamap(string) : "Alphamap" : : "This is the path/name for the art file used to guide the mapping of textures on the terrain surface."
+	//layers(integer) : "Layers" : : "This Integer value denotes number of unique root shaders that will be used on the terrain."
+	//shader(shader) : "Metashader" : : "This is the path to the metashader used to assign textures to the terrain entity."
+	//terrain(choices) : "Is Terrain" : 1 : "This is an on/off flag. When set to 1, the entity becomes a terrain entity. Note: Unnecessary when compiling with Q3Map2. See Q3Map2 keys." =
+	//[
+	//	0 : "False"
+	//	1 : "True"
+	//]
+]
+
+//
+// Internal-only lights
+//
+
+@PointClass size(-6 -6 -6, 6 6 6) iconsprite("sprites/light.spr") flags(Light) base(LightBase) = lightJunior : "Non-displayed point light source THAT ONLY AFFECTS ENTITIES (lightgrid). The -pointscale and -scale arguments to Q3Map2 affect the brightness of these lights. The -skyscale argument affects brightness of entity sun lights." []
+
+@PointClass size(-8 -8 -8, 8 8 8) iconsprite("sprites/dod/lightspot.spr") flags(Light) base(LightBase) = light_spot : "All classnames prefixed with `light` except lightJunior act the same as `light`; I just use this separate classname as an alias for clarity." []
