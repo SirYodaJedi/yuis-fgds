@@ -17,7 +17,7 @@
 //
 // Note that this FGD and those linked to it are written with the expectation that default values are automatically
 // written to the map. It won't completely break your map if your editor doesn't do that, but you'll be missing out
-// on desirable defaults for a few entites.
+// on desirable defaults for a few entities.
 //
 
 // TODO - utilize BaseClasses to move the actually important KVs upwards (already done for most egregious ones).
@@ -176,6 +176,7 @@
 // Lights 
 //
 
+// need this here instead of q3map2.fgd b/c some other games have it as a runtime entity if named (even ExtendClass wouldn't help)
 @PointClass base(Q3Map2_LightPointStatic) = light : "Non-displayed point light source. The -pointscale and -scale arguments to Q3Map2 affect the brightness of these lights. The -skyscale argument affects brightness of entity sun lights." []
 
 //
@@ -716,7 +717,7 @@
 // Triggers
 //
 
-@SolidClass base(TargetName,GameModes) = trigger_hurt : "Any player that touches this will be hurt by dmg points of damage once per server frame (very fast). A sizzling sound is also played while the player is being hurt.\n\nTargeting a trigger_hurt will have no effect if spawnflag 2 is not set."
+@SolidClass base(TargetName,GameModes) = trigger_hurt : "Any player that touches this will be hurt by dmg points of damage once per server frame (very fast). A sizzling sound is also played while the player is being hurt, unless spawnflag 4 is set.\n\nTargeting a trigger_hurt will have no effect if spawnflag 2 is not set."
 [
 	dmg(integer) : "Damage Inflicted" : 5 : "Number of points of damage inflicted to player per server frame (default 5 - integer values only)."
 	spawnflags(flags) = 
@@ -725,7 +726,7 @@
 		2 : "Toggleable" : 1 : "Allows trigger_hurt to be toggled on/off. I'm not sure why you would disable this."
 		4 : "Silent" : 0 : "Suppresses the sizzling sound while player is being hurt."
 		8 : "No Power-Up Protection" : 0 : "Player will be hurt regardless of protection. The invulnerability power-up (item_enviro) does not protect the player from damage caused by this entity regardless of whether this spawnflag is set or not."
-		16 : "Damage Once Per Second" : 0 : "Changes the damage rate to once per second."
+		16 : "Damage Once Per Second" : 0 : "Changes the damage rate to once per second instead of once per server frame."
 	]
 ]
 
