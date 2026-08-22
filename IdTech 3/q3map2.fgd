@@ -144,7 +144,7 @@
 		1 : "Linear Falloff" : 0 : "Use a linear falloff. Default is inverse distance squared (more realistic), unless -wolf."
 		2 : "No Angle Attenuation" : 0 : "Ignore angle attenuation (unless -wolf, in which case enables angle attenuation)."
 		16 : "No Grid Light" : 0 : "Do not affect the lightgrid (dynamic entity lighting). If used on lightJunior, causes the light to be inert."
-		32 : "Unnormalized RGB" : 0 : "Do not normalize light color. Recommended if you don't have at least one color channel that is 1 (color1) or 255 (color255)."
+		32 : "Unnormalized RGB" : 0 : "Do not normalize light color. Recommended if you don't have at least one color channel that is 1 (color1) or 255 (color255), but means you *have* to use color1 notation."
 		64 : "Distance attenuation" : 0 : "Use distance attenuation used for sun and area lights (why did vortex add this, this is always set...?)."
 	]
 ]
