@@ -15,9 +15,12 @@
 // Converted to FGD by DEF2FGD 1.2 by FreeSlave
 // Refactored and expanded by SirYodaJedi
 //
+// Note that this FGD and those linked to it are written with the expectation that default values are automatically
+// written to the map. It won't completely break your map if your editor doesn't do that, but you'll be missing out
+// on desirable defaults for a few entites.
+//
 
 // TODO - utilize BaseClasses to move the actually important KVs upwards (already done for most egregious ones).
-// TODO - move Q3Map2 KVs to dedicated 
 
 @mapsize(-65536, 65536)
 
@@ -258,15 +261,15 @@
 	wait(float) : "Respawn Delay" : 25 : "Time in seconds before item respawns after being picked up (default 25, -1 = never respawn)."
 ]
 
-@PointClass color(0 179 0) studio("models/powerups/armor/shard.md3") = item_armor_shard : "Green Armor Shard - 5 points. All armor can be cumulated up to a maximum of 200 points and slowly wears out to 100 points."
+@PointClass color(0 179 0) studio("models/powerups/armor/shard.md3") base(ItemArmor) = item_armor_shard : "Green Armor Shard - 5 points. All armor can be cumulated up to a maximum of 200 points and slowly wears out to 100 points."
 [
 	count(integer) : "Armor Points Given" : 5 : "TODO - verify this works; not in original ENT."
 ]
-@PointClass color(255 192 77) studio("models/powerups/armor/armor_yel.md3") = item_armor_combat : "Yellow Armor - 50 points. All armor can be cumulated up to a maximum of 200 points and slowly wears out to 100 points."
+@PointClass color(255 192 77) studio("models/powerups/armor/armor_yel.md3") base(ItemArmor) = item_armor_combat : "Yellow Armor - 50 points. All armor can be cumulated up to a maximum of 200 points and slowly wears out to 100 points."
 [
 	count(integer) : "Armor Points Given" : 50 : "TODO - verify this works; not in original ENT."
 ]
-@PointClass color(153 0 0) studio("models/powerups/armor/armor_red.md3") = item_armor_body : "Red Armor - 100 points. All armor can be cumulated up to a maximum of 200 points and slowly wears out to 100 points."
+@PointClass color(153 0 0) studio("models/powerups/armor/armor_red.md3") base(ItemArmor) = item_armor_body : "Red Armor - 100 points. All armor can be cumulated up to a maximum of 200 points and slowly wears out to 100 points."
 [
 	count(integer) : "Armor Points Given" : 100 : "TODO - verify this works; not in original ENT."
 ]
@@ -546,7 +549,7 @@
 [
 	spawnflags(flags) = 
 	[
-		1 : "initial" : 0 : "Makes the spawnpoint the initial place for the player to spawn at the beginning of the game."
+		1 : "Initial" : 0 : "Makes the spawnpoint the initial place for the player to spawn at the beginning of the game."
 	]
 ]
 
