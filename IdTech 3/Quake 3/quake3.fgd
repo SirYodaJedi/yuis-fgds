@@ -21,6 +21,7 @@
 //
 
 // TODO - utilize BaseClasses to move the actually important KVs upwards (already done for most egregious ones).
+// TODO - check my notes from the plane flight to Quebec
 
 @mapsize(-65536, 65536)
 
@@ -142,8 +143,8 @@
 @BaseClass base(GameModes, Q3Map2_BModels) = BModels
 [
 	model2(studio) : "Aux Model (Model2)" : : "Path/name of model to display (.md3 files only, e.g. models/mapobjects/jets/jets01.md3). This can be useful if this entity is supposed to move or rotate from its original position, as the baked lighting may look weird.\nThe origin point of the model will correspond to the origin point defined by the origin brush. WeapClip brushes should be used for collision."
-	light(float) : "Model2 Constant Light" : : "Diameter of constant light of model2, included with entity (default 0, range 0 - 1024)."
-	color(string) : "Model2 Constant Color" : : "Color of constant light of model2, included with entity (default 1 1 1)."
+	light(float) : "Model2 Constant Light" : 0 : "Diameter of constant light of model2, included with entity (default 0, range 0 - 1024)."
+	color(color1) : "Model2 Constant Color" : "1 1 1" : "Color of constant light of model2, included with entity (default 1 1 1)."
 ]
 
 @BaseClass base(TargetShader, GameModes) size(-16 -16 -16, 16 16 16) offset(0 0 16) = ItemBase
@@ -155,7 +156,7 @@
 	]
 	// `wait` is set per item type, to permit default autofill
 	// ditto for `count`, which is set either per type, or per item
-	random(float) : "Respawn Delay Variance" : : "Random time variance in seconds added or subtracted from wait delay (default 0 - see ItemBase notes in FGD)."
+	random(float) : "Respawn Delay Variance" : 0 : "Random time variance in seconds added or subtracted from wait delay (default 0). When the random key is set, its value is used to calculate a minimum and a maximum delay. The final time delay will be a random value anywhere between the minimum and maximum values: (min delay = wait - random) (max delay = wait + random)."
 	team(string) : "Team Name" : : "Set this to team items. Teamed items will respawn randomly after team master is picked up (see ItemBase notes in FGD)."
 	target(target_destination) : "Target" : : "Picking up the item will trigger the entity this points to."
 	targetname(target_source) : "Target Name" : : "A target_give entity, pointed to this, gives the item to player. Activating this by other entities will make the item to respawn."
@@ -165,9 +166,10 @@
 		1 : "No Drop To Floor" : 0 : "Item will spawn where it was placed in map and won't drop to the floor. If an item is already on the floor and isn't spawning, check this flag."
 	]
 	
+	// TODO - try to understand this, so that it can be re-written in the 
 	// The amount of time it takes for an item in the team to respawn is determined by the "wait" value of the item that was picked up previously. So if one of the items in the team has it's "wait" key set to -1 (never respawn), the random respawning cycle of the teamed items will stop after that item is picked up.
 	//
-	// When the random key is set, its value is used to calculate a minimum and a maximum delay. The final time delay will be a random value anywhere between the minimum and maximum values: (min delay = wait - random) (max delay = wait + random).
+	// 
 ]
 
 //
@@ -342,7 +344,7 @@
 
 @BaseClass base(ItemBase) bobparms( 180 8 0, -180 8 12 ) = TeamFlag
 [
-	wait(float) : "Respawn Delay" : : "Time in seconds before item respawns after being picked up (default ??, -1 = never respawn)."
+	// probably don't want wait on flags
 ]
 
 @PointClass base(TeamFlag) color(255 51 0) studio("models/flags/r_flag.md3") = team_CTF_redflag : "Red team flag for CTF games.\n\nThis cannot be suspended (or the bots won't find it). It must be reachable by players of both teams, since it is where a player must return an opponent's flag. " []
@@ -371,7 +373,7 @@
 @BaseClass base(TargetShader) = func_button_BASE
 [
 	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
-	//angle(float) : "Yaw Angle (deprecated)" : : "Determines the direction in which the button will move (up = -1, down = -2)."
+	//angle(float) : "Yaw Angle (deprecated)" : 0 : "Determines the direction in which the button will move (up = -1, down = -2)."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Pitch and yaw moving direction angles of button (default 0 0). The roll angle does not apply."
 	target(target_destination) : "Target" : : "All entities with a matching targetname will be triggered."
 	targetname(target_source) : "Target Name" : : "If set, other entities can be used to activate the button along with touch or damage way of doing this."
@@ -389,7 +391,7 @@
 @BaseClass base(TargetShader) = func_door_BASE
 [
 	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
-	//angle(float) : "Yaw Angle (deprecated)" : : "Determines the opening direction of door (up = -1, down = -2)."
+	//angle(float) : "Yaw Angle (deprecated)" : 0 : "Determines the opening direction of door (up = -1, down = -2)."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Pitch and yaw moving direction angles of door (default 0 0). The roll angle does not apply."
 	target(target_destination) : "Target When Opened" : : "Fired when the door opens; but not *not* when it closes."
 	targetname(target_source) : "Target Name" : : "If set, a func_button or trigger is required to activate the door (unless using health key)."
@@ -416,8 +418,8 @@
 @BaseClass base(TargetName) = func_pendulum_BASE
 [
 	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
-	//angle(float) : "Yaw Angle (deprecated)" : : "Angle offset of axis of rotation from default X axis (default 0)."
-	angles(angle) : "Pitch Yaw Roll (Y Z X)" :  : "Pitch, yaw and roll offsets of axis of rotation from default X axis (default 0 0 0)."
+	//angle(float) : "Yaw Angle (deprecated)" : 0 : "Angle offset of axis of rotation from default X axis (default 0)."
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Pitch, yaw and roll offsets of axis of rotation from default X axis (default 0 0 0)."
 	speed(float) : "Max Swing Angle" : 30 : "Angle of swing arc in either direction from initial position (default 30)."
 	phase(float) : "Swing Phase" : 0 : "Sets the start offset of the swinging cycle. Values must be 0 < phase < 1. Any integer phase value is the same as no offset (default 0)."
 	noise(sound) : "Sound File" : : "Path/name of .wav file to play. Use looping sounds only (e.g. sound/world/drone6.wav)."
@@ -481,7 +483,7 @@
 @PointClass size(-16 -16 -16, 16 16 16) color(255 0 255) flags(Angle) iconsprite("sprites/camera.spr") base(GameModes) = info_player_intermission : "Camera for intermission screen between matches. This also automatically generates the podium for bot arena matches (see notes). Can be aimed by setting the `angles` key or by targeting an aiming entity. Use only one per level.\n\nIn genuine bot arena matches, the podium for the 1st, 2nd and 3rd place players at the end of the match is generated by this entity. The podium's origin will automatically be located 128 units in the direction of the camera's view and 84 units down from the y height of the view line at that point. It will also always be generated on a level plane regardless of the pointing angle of the camera so if that angle is too steep, part of the podium model might not be visible. Make sure you leave at least 106 units of free space in front of where the camera points to otherwise the podium model won't be visible at all."
 [
 	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
-	//angle(float) : "Yaw Angle (deprecated)" : : "Yaw angle of sight direction."
+	//angle(float) : "Yaw Angle (deprecated)" : 0 : "Yaw angle of sight direction."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Orientation of camera, if target is absent (default 0 0 0)."
 	target(target_destination) : "Camera Target" : : "Point this to an info_notnull or target_position entity to set the camera's pointing angles."
 ]
@@ -493,7 +495,7 @@
 @PointClass size(-8 -8 -8, 8 8 8) color(255 128 64) flags(Angle) base(GameModes) iconsprite("sprites/camera.spr") = misc_portal_camera : "Portal camera. This camera is used to project its view onto a portal surface in the level through the intermediary of a misc_portal_surface entity. Use the `angles` KV or target a target_position or info_notnull entity to set the camera's pointing direction.."
 [
 	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
-	//angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of the portal camera (default 0)."
+	//angle(float) : "Yaw Angle (deprecated)" : 0 : "Yaw aiming angle of the portal camera (default 0)."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This sets the pitch and yaw aiming angles of the portal camera (default 0 0). Use roll key to set roll angle."
 	roll(float) : "Roll Angle" : : "Roll angle of camera. For axial directions a value of 0 is upside down and 180 is the same as the player's view. For other sorts of directions values of 90 and -90 may work (inconsistent math). Irrelevant if either of the rotation spawnflags are enabled."
 	target(target_destination) : "Camera Target" : : "Point this to a target_position entity to set the camera's pointing direction. Roll KV is still required."
@@ -575,10 +577,10 @@
 [
 	targetname(target_source) : "Target Name" : : "Activating trigger points to this."
 	// `angle` is commented-out because Jack's yaw widget annoyingly prioritizes it even if empty
-	//angle(float) : "Yaw Angle (deprecated)" : : "Yaw aiming angle of shooter."
+	//angle(float) : "Yaw Angle (deprecated)" : 0 : "Yaw aiming angle of shooter."
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This sets the pitch and yaw aiming angles of shooter (default 0 0). The roll angle does not apply."
 	target(target_destination) : "Target to shoot at" : : "This points to a target_position entity for aiming the shooter; takes precedence over `angles`."
-	random(float) : "Angle Variance" : 1 : "Random aiming variance in degrees (range 0 - 90, default 1).\n\nWhen the random key is set, its value is used to calculate a maximum angle deviation from the normal trajectory formed by a straight line between the shooter and the aiming entity it targets. The final trajectory will be a random value anywhere between no deviation at all (0) to maximum deviation (value of the random key / 2). Setting random key to 0 won't disable random, setting it to 180, 360, 0.0000001, or 1e-7 will do."
+	random(float) : "Angle Variance" : 1 : "Random aiming variance in degrees (range 0 - 90, default 1).\n\nWhen the random key is set, its value is used to calculate a maximum angle deviation from the normal trajectory formed by a straight line between the shooter and the aiming entity it targets. The final trajectory will be a random value anywhere between no deviation at all (0) to maximum deviation (value of the random key / 2). Setting random key to 0 won't disable random, setting it to 180, 360, or 0.0000001 will do." // Vanilla QVM library's atof() doesn't support e notation, so 1e-7 won't work.
 ]
 
 @PointClass base(ShooterBase) = shooter_grenade : "This will shoot a grenade each time it's triggered. Aiming is done by setting the `angles` KV or by targeting an info_notnull, target_position or any other entity." []
@@ -632,7 +634,7 @@
 @PointClass size(-8 -8 -8, 8 8 8) color(0 128 0) base(GameModes,TargetName) = target_location : "Location marker used by bots and players for team orders and team chat in the course of Teamplay games. The closest target_location in sight is used for the location. If none is in sight, the closest in distance is used."
 [
 	message(string) : "Location Name" : "TODO - set location name" : "Name of the location (text string). Displayed in parentheses in front of all team chat and order messages."
-	count(choices) : "Color" : : "Color of the location text displayed in parentheses during team chat. Set to 0-7 for color." =
+	count(choices) : "Color" : 0 : "Color of the location text displayed in parentheses during team chat. Set to 0-7 for color." =
 	[
 		0 : "White (default)"
 		1 : "Red"
@@ -640,7 +642,7 @@
 		3 : "Yellow"
 		5 : "Cyan"
 		6 : "Magenta"
-		7 : "White"
+		7 : "White, again"
 	]
 ]
 
@@ -691,14 +693,14 @@
 @PointClass size(-8 -8 -8, 8 8 8) color(0 179 179) base(TargetName,GameModes) iconsprite("sprites/speaker.spr") = target_speaker : "`Sound generating entity that plays .wav files. Normal non-looping sounds play each time the target_speaker is triggered. Looping sounds can be set to play by themselves (no activating trigger) or be toggled on/off by a trigger.\n\nThe combination of the `wait` and `random` keys can be used to play non-looping sounds without requiring an activating trigger but both keys must be used together. The value of the `random` key is used to calculate a minimum and a maximum delay. The final time delay will be a random value anywhere between the minimum and maximum values: (min delay = wait - random) (max delay = wait + random).`\n\nUnlike Quake I+II, looping is handled purely via entity code; loop cues in the WAV are not parsed."
 [
 	noise(sound) : "Sound File" : : "Path/name of .wav file to play (e.g. `sound/world/growl1.wav` - see notes). Must be mono.\n\nWAV file extension will be automatically applied unless present, even if another file extension is present, except in Spearmint. This means that using `filename.ogg` will load `filename.ogg.wav` in vanilla, but `filename.ogg` proper in Spearmint.\n`developer 1` will complain in the console if the sound is 8-bit and/or isn't 22050 Hz, but 8-bit WAVs and 44100 Hz or 11025 Hz WAVs are completely allowed (there even are vanilla sounds that break the rules).\n\nThe path portion value of the `noise` key can be replaced by the implicit folder character `*` for triggered sounds that belong to a particular player model. For example, if you want to create a ''bottomless pit'' in which the player screams and dies when he falls into, you would place a trigger_multiple over the floor of the pit and target a target_speaker with it. Then, you would set the `noise` key to `*falling1.wav`. The * character means the current player model's sound folder. So if your current player model is Visor, * = sound/player/visor, if your current player model is Sarge, * = sound/player/sarge, etc. This cool feature provides an excellent way to create ''player-specific'' triggered sounds in your levels."
-	random(float) : "Repeat Variance" : : "Random time variance in seconds added or subtracted from wait delay (wait key must be set - see notes)."
-	wait(float) : "Delay before allowed to repeat" : : "Delay in seconds between each time the sound is played (random key must be set - see notes)."
+	random(float) : "Repeat Variance" : 0 : "Random time variance in seconds added or subtracted from wait delay (wait key must be set - see notes)."
+	wait(float) : "Delay before allowed to repeat" : 0 : "Delay in seconds between each time the sound is played (random key must be set - see notes)."
 	spawnflags(flags) = 
 	[
 		1 : "Loop, Start On" : 0 : "Sound will loop and initially start on in level (will toggle on/off when triggered)."
 		2 : "Loop, Start Off" : 0 : "Sound will loop and initially start off in level (will toggle on/off when triggered)."
 		4 : "No Distance Attenuation" : 0 : "Sound will play full volume throughout the level."
-		8 : "Audible Only To Activator" : 0 : "Sound will play only for the player that activated the speaker."
+		8 : "Audible Only To Activator" : 0 : "Sound will play only for the player that activated the speaker. Always enabled for character sounds ('*' prefix)."
 	]
 ]
 
@@ -729,8 +731,8 @@
 
 @SolidClass base(TargetX) = trigger_multiple : "Variable size repeatable trigger. It will fire the entities it targets when touched by player. Can be made to operate like a trigger_once entity by setting the `wait` key to -1. It can also be activated by another trigger that targets it."
 [
-	wait(float) : "Delay Before Retriggerable" : : "Time in seconds until trigger becomes re-triggerable after it's been touched (default 0.5, -1 = trigger once)."
-	random(float) : "Retriggerability Variance" : : "Random time variance in seconds added or subtracted from wait delay (default 0). When the random key is set, its value is used to calculate a minimum and a maximum delay. The final time delay will be a random value anywhere between the minimum and maximum values: (min delay = wait - random) (max delay = wait + random)."
+	wait(float) : "Delay Before Retriggerable" : "0.5" : "Time in seconds until trigger becomes re-triggerable after it's been touched (default 0.5, -1 = trigger once)."
+	random(float) : "Retriggerability Variance" : 0 : "Random time variance in seconds added or subtracted from wait delay (default 0). When the random key is set, its value is used to calculate a minimum and a maximum delay. The final time delay will be a random value anywhere between the minimum and maximum values: (min delay = wait - random) (max delay = wait + random)."
 	spawnflags(flags) = 
 	[
 		1 : "Red Team Only" : 0 : "Only may be triggered by red team."
